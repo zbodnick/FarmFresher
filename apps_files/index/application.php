@@ -76,7 +76,7 @@
 		//echo"email1: ".$_POST['email']."\n";
 		$msg = "Hello new applicant! Your new username to login is:\n".$username;
 		$msg = wordwrap($msg,70);
-		$header = "From: drooffco@gwu.edu";
+		$header = "From: wdaughtridge@gwu.edu";
 		$retval = mail($_POST['email'],"New Login Information",$msg, $header);
          
          /*if( $retval == true ) {
