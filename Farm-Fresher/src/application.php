@@ -181,9 +181,9 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row pt-3 border-top">
 				<div class="text-primary col-lg form-group">
-					<h4>YOU WILL RECEIVE AN EMAIL AFTER SUBMITTING APPLICATION WITH LOGIN INFORMATION<h4>
+					<h4 class="font-italic">Remember your password, you will recieve an email upon submission of your application with login instructions<h4>
 				</div>
 			</div>
 
@@ -197,9 +197,9 @@ if (isset($_POST['submit'])) {
 					<input type="password" id="password2" name="password2" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row pt-3 border-top">
 				<div class="col-lg form-group">
-					<h4 class="text-primary">TESTS:<h4>
+					<h4 class="font-italic text-primary">TESTS:<h4>
 				</div>
 			</div>
 
@@ -249,60 +249,65 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row pt-3 border-top">
 				<div class="text-primary col-lg form-group">
-					<h4>PRIOR DEGREES<h4>
+					<h4 class="font-italic">PRIOR DEGREES<h4>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-md-3 form-group">
-					<label for="ms_year">Year:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="ms_year" value="" />
+
+				<div class="col form-group">
+					<label for="ms_prior">MS:</label>
+					<input class="form-control form-control-lg text-muted" type="checkbox" name="ms_prior" value="1" />
 				</div>
-				<div class="col-md-3 form-group">
+
+				<div class="col form-group">
 					<label for="ms_gpa">GPA:</label>
 					<input class="form-control form-control-lg text-muted" type="text" name="ms_gpa" value="" />
 				</div>
-				<div class="col-md-3 form-group">
+				<div class="col form-group">
 					<label for="ms_major">Major:</label>
 					<input class="form-control form-control-lg text-muted" type="text" name="ms_major" value="" />
 				</div>
-				<div class="col-md-3 form-group">
-						<label for="ms_prior">MS:</label>
-						<input class="form-control form-control-lg text-muted" type="checkbox" name="ms_prior" value="1" />
+				<div class="col form-group">
+					<label for="ms_year">Year:</label>
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="ms_year" value="" />
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-3 form-group">
+				<div class="col form-group">
 					<label for="ms_uni">University:</label>
 					<input class="form-control form-control-lg text-muted" type="text" name="ms_uni" value="" />
 				</div>
-				<div class="col-md-3 form-group">
-					<label for="b_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="number" name="b_gpa" value="" />
-				</div>
-				<div class="col-md-3 form-group">
-					<label for="b_major">Major:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="b_major" value="" />
-				</div>
-				<div class="col-md-3 form-group">
-					<label for="b_prior">BS/BA:</label>
-					<input class="form-control form-control-lg text-muted" type="checkbox" name="b_prior" value="1" />
-				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-md-6 form-group">
+
+				<div class="col form-group">
+					<label for="b_prior">BS/BA:</label>
+					<input class="form-control form-control-lg text-muted" type="checkbox" name="b_prior" value="1" />
+				</div>
+
+
+				<div class="col form-group">
+					<label for="b_gpa">GPA:</label>
+					<input class="form-control form-control-lg text-muted" type="number" name="b_gpa" value="" />
+				</div>
+
+				<div class="col form-group">
+					<label for="b_major">Major:</label>
+					<input class="form-control form-control-lg text-muted" type="text" name="b_major" value="" />
+				</div>
+
+				<div class="col form-group">
 					<label for="b_year">Year:</label>
 					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="b_year" value="" />
 				</div>
 
-				<div class="col-md-6 form-group">
+				<div class="col form-group">
 					<label for="b_uni">University:</label>
 					<input class="form-control form-control-lg text-muted" type="text" name="b_uni" value="" />
 				</div>
+
 			</div>
 
 			<div class="row">
