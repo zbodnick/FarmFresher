@@ -150,8 +150,6 @@ ALTER TABLE transcript
 ADD foreign key (crseid) references course(courseid);
 
 
-SET FOREIGN_KEY_CHECKS = 1;
-
 INSERT INTO users (id, p_level, password) VALUES (10000000, 'Admin', 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 'GS', 'gs123');
 INSERT INTO users (id, p_level, password) VALUES (10000002, 'Faculty', 'bhagiweb');
@@ -335,3 +333,5 @@ INSERT INTO personalinfo VALUES (77777777, 'Eric', 'Clapton', '1996-02-02', 'Was
 INSERT INTO personalinfo VALUES (88888888, 'Bhagirath', 'Narahari', '1966-12-12', 'Washington, DC, 22236', 2024892716);
 INSERT INTO personalinfo VALUES (99999999, 'Eric', 'Clapton', '1981-02-02', 'Washington, DC, 22236', 2024892717);
 INSERT INTO personalinfo VALUES (2, 'Jake', 'Harris', '1999-01-01', 'Atlanta, GA, 44436', 2024892718);
+
+SET FOREIGN_KEY_CHECKS = 1;
