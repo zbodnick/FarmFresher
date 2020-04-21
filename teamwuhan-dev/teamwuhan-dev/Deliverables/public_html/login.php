@@ -3,7 +3,7 @@
 
   // If the session var is empty, show any error message and the log-in form; otherwise confirm the log-in
   // TODO: Start the session
-  session_start();  
+  session_start();
 
   // Clear the error message
   $error_msg = "";
@@ -18,24 +18,24 @@
       $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
       $user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
 
-       
+
       if (!empty($user_username) && !empty($user_password)) {
         // TODO: Look up the username and password in the database
-	$query = "select uemail, passwd, uID, utype from suser  where uemail = '$user_username' and passwd = '$user_password'";      
-	//echo "the query sent is: " . $query . "</br>";       
+	$query = "select id, password, utype from user where id = '$user_username' and password = '$user_password'";
+	//echo "the query sent is: " . $query . "</br>";
 	$data = mysqli_query($dbc, $query);
 
-        // If The log-in is OK 
+        // If The log-in is OK
         if (mysqli_num_rows($data) == 1) {
-          
-          
+
+
           $row = mysqli_fetch_array($data);
 
           //TODO: so set the user ID and username session vars
-          $_SESSION['uID'] = $row['uID'];
+          $_SESSION['id'] = $row['id'];
           $_SESSION['uType'] = $row['utype'];
 
-          //TODO: redirect to index.php 
+          //TODO: redirect to index.php
           $home_url = 'http://' . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . '/advising.php';
           header('Location: ' . $home_url);
         }
@@ -49,10 +49,10 @@
         $error_msg = 'Sorry, you must enter your username and password to log in.';
       }
     }
-  }  
-  if (empty($_SESSION['uID'])) {
+  }
+  if (empty($_SESSION['id'])) {
   	echo '<p class="error">' . $error_msg . '</p>';
-  
+
   }
 
   // Insert the page header

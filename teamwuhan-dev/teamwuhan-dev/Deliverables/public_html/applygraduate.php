@@ -67,7 +67,7 @@
   $choursCSCI = $choursCSCI->fetch_assoc();
   $choursCSCItotal = $choursCSCI['choursCSCI'];
 
-  $query4 = "SELECT program FROM student WHERE unid = $uid;" ;
+  $query4 = "SELECT program FROM student WHERE u_id = $uid;" ;
   $studenttype = mysqli_query($dbc, $query4);
   $studenttype = $studenttype->fetch_assoc();
   $program = $studenttype['program'];

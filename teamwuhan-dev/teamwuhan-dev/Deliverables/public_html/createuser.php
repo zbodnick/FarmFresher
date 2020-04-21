@@ -17,7 +17,7 @@
 
   //$sql = "UPDATE personalinfo SET ftname = '$_POST[fname]', ltname = '$_POST[lname]', dob = '$_POST[dob]', address = '$_POST[address]', cell = '$_POST[cell]' WHERE universid = $_POST[id]";
     $dbc->query('SET foreign_key_checks = 0');
-    $sql = "INSERT INTO suser (utype, uemail, passwd) VALUES ( '$_POST[typeofuser]', '$_POST[email]', '$_POST[password]' );";
+    $sql = "INSERT INTO users (utype, id, password) VALUES ( '$_POST[typeofuser]', '$_POST[email]', '$_POST[password]' );";
        if($dbc->query($sql) == TRUE)
        {
          header("refresh:1; url=newuser.php");
@@ -31,7 +31,7 @@
        //faculty
        //student
 
-       $query = "select uid from suser where uemail = '$_POST[email]'";
+       $query = "select uid from users where id = '$_POST[email]'";
        $result = mysqli_query($dbc, $query);
        $results = $result->fetch_assoc();
        $uid = $results["uid"];

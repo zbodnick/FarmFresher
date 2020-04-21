@@ -1,5 +1,5 @@
 <?php
-  
+
   //Start session to gather variables, Print page title
   session_start();
 	$page_title = 'GWU Advising System Catalog';
@@ -9,14 +9,14 @@
   require_once('appvars.php');
 	require_once('header.php');
   require_once('navmenu.php');
-   
+
   //Load DBC
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  
-  
+
+
   //These are the checks we run at the start of the page. Depending on user status,
   //we can accept their form 1 data, accept their thesis, or graduate them and move them into alumni.
-  if(isset($_POST["acceptform1"])){              
+  if(isset($_POST["acceptform1"])){
     //Accept user's form 1 data
     $query = "insert into formone (universityid, cid) VALUES ('$_POST[acceptform1]', 'APPROVED')";
     mysqli_query($dbc, $query);
@@ -26,29 +26,29 @@
     //Update user's status to "waiting for acceptance of graduation"
     $query = "UPDATE student SET applied_to_grad=2 WHERE unid = '$_POST[acceptthesis]'";
     mysqli_query($dbc, $query);
-    echo '<center><h3>Student Thesis Accepted</h3></center><hr />';  
+    echo '<center><h3>Student Thesis Accepted</h3></center><hr />';
   }
   else if(isset($_POST["cleargrad"])){
     //Graduate User
     $query = "UPDATE student SET applied_to_grad=3 WHERE unid = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
-    $query = "UPDATE suser SET utype='alumni' WHERE uid = '$_POST[cleargrad]'";
+    $query = "UPDATE users SET utype='alumni' WHERE id = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
-    
+
     //Move user into alumni
     $query = "INSERT INTO alumni (univid, yeargrad) VALUES ('$_POST[cleargrad]', 2020)";
     mysqli_query($dbc, $query);
-    echo '<center><h3>Student Graduated</h3></center><hr />';  
+    echo '<center><h3>Student Graduated</h3></center><hr />';
   }
   else if(isset($_POST["Assign"])){
     //Update User's advisor ID
     $query = "UPDATE student SET advisorid = '$_POST[assignAdvi]' WHERE unid = '$_POST[assignstuID]'";
     mysqli_query($dbc, $query);
-    
-    echo "<center><h3>Student Advisor updated to '$_POST[assignAdvi]'</h3></center><hr />";  
+
+    echo "<center><h3>Student Advisor updated to '$_POST[assignAdvi]'</h3></center><hr />";
   }
-  
-  
+
+
   //SEARCH BAR
   echo '<form action="" method="post">';
   echo  '<label for="univID">University ID:</label><br>';
@@ -56,16 +56,16 @@
   echo  '<input type="submit" name="Search" value="Search">';
   echo	'</form>';
   echo '<hr />';
-  
+
   //IF A USER HAS BEEN SEARCHED
   if(isset($_POST["Search"])){
-  
+
     //THIS ONLY ALLOWS FOR AN ADVISOR TO LOOK UP THEIR STUDENTS AND ONLY THEIR STUDENTS
     if((strcmp($_SESSION['uType'], 'advisor') == 0)){
-      echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';  
+      echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';
       $input = $_POST['univID'];
-      
-      
+
+
       //LOADING SEARCHED STUDENT BASIC DATA INTO A TABLE
       $query = "select * from student WHERE unid = '$input' and advisorid = '$_SESSION[uID]' and (NOT applied_to_grad = 3)";
       $result = mysqli_query($dbc, $query);
@@ -84,10 +84,10 @@
         }
         echo '</table></div>';
         echo '<hr />';
-        
-        
+
+
         //SHOW STUDENT'S TRANSCRIPT (ONLY IF BASIC DATA APPEARS)
-        $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = '$_POST[univID]'";       
+        $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = '$_POST[univID]'";
         $result = mysqli_query($dbc, $query);
         echo '<center><h4>Transcript</h4></center><div class="transcript">';
         if ($result->num_rows > 0){
@@ -98,12 +98,12 @@
           }
           echo '</table></div>';
           echo '<hr />';
-          
-          
+
+
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
           $query = "select * from formone, course where universityid = '$_POST[univID]' and cid = courseid";
           $result = mysqli_query($dbc, $query);
-    
+
           echo '<center><h4>Form One Data</h4></center><div class="formdata">';
           if ($result->num_rows > 0){
             echo '<table style="width:100%">';
@@ -112,41 +112,41 @@
                 echo "<tr><td>" . $row["courseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["credits"]. "</td></tr>";
             }
             echo '</table></div>';
-            
-            
+
+
             //CHECK TO SEE IF STUDENT'S FORM 1 HAS BEEN APPROVED
             $query = "select * from formone where universityid = '$_POST[univID]' and cid = 'APPROVED'";
             $result = mysqli_query($dbc, $query);
-            if ($result->num_rows <= 0){            
+            if ($result->num_rows <= 0){
               //IF IT HAS NOT BEEN APPROVED, GIVE A BUTTON TO APPROVE IT
               echo  '<form action="" method="post">';
               echo  '<button type="submit" name="acceptform1" value="'.$_POST["univID"].'">Accept Form 1</button>';
-              echo	'</form>';                    
+              echo	'</form>';
             }
             $query = "select program, applied_to_grad from student where unid = '$_POST[univID]'";
-            $result = mysqli_query($dbc, $query); 
+            $result = mysqli_query($dbc, $query);
             if($result->num_rows > 0){
               //IF IT HAS BEEN APPROVED, CHECK TO SEE IF USER IS A PHD STUDENT AND NEEDS THEIR THESIS APPROVED
               $row = $result->fetch_assoc();
               if(strcmp($row["program"], 'PHD') == 0 && $row["applied_to_grad"] == 1){
                 echo  '<form action="" method="post">';
                 echo  '<button type="submit" name="acceptthesis" value="'.$_POST["univID"].'">Accept Thesis</button>';
-                echo	'</form>';   
-                
-              }        
+                echo	'</form>';
+
+              }
             }
           }else{
             echo "<center>No Form Data Found</center>";
-          }        
+          }
         }else{
           echo "<center>No Results Found</center>";
-        }        
+        }
       }else{
         echo '<center>Student Not Found</center>';
-      }  
-      
-      
-    // THIS IS FOR GS AND ADMIN : ALLOWS THEM TO VIEW EVERY USER AND THEIR ADVISOR ID'S. CANNOT CLEAR A USER'S THESIS.        
+      }
+
+
+    // THIS IS FOR GS AND ADMIN : ALLOWS THEM TO VIEW EVERY USER AND THEIR ADVISOR ID'S. CANNOT CLEAR A USER'S THESIS.
     }else{
       //ALLOW GS/ADMIN TO ASSIGN THE STUDENT'S ADVISOR
       echo '<br><form action="" method="post">';
@@ -155,10 +155,10 @@
       echo  '<input type="hidden" id="assignstuID" name="assignstuID" value ="'.$_POST['univID'].'">';
       echo  '<input type="submit" name="Assign" value="Assign">';
       echo	'</form><br>';
-  
-      echo '<center><h4>Student Found</h4></center><div class="basicdata">';  
+
+      echo '<center><h4>Student Found</h4></center><div class="basicdata">';
       $input = $_POST['univID'];
-      
+
       //LOADING BASIC STUDENT DATA
       $query = "select * from student WHERE unid = '$input' and (NOT applied_to_grad = 3)";
       $result = mysqli_query($dbc, $query);
@@ -177,10 +177,10 @@
         }
         echo '</table></div>';
         echo '<hr />';
-        
-        
+
+
         //SHOW STUDENT'S TRANSCRIPT (ONLY IF BASIC DATA APPEARS)
-        $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = '$_POST[univID]'";       
+        $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = '$_POST[univID]'";
         $result = mysqli_query($dbc, $query);
         echo '<center><h4>Transcript</h4></center><div class="transcript">';
         if ($result->num_rows > 0){
@@ -191,8 +191,8 @@
           }
           echo '</table></div>';
           echo '<hr />';
-          
-          
+
+
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
           $query = "select * from formone, course where universityid = '$_POST[univID]' and cid = courseid";
           $result = mysqli_query($dbc, $query);
@@ -204,8 +204,8 @@
                 echo "<tr><td>" . $row["courseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["credits"]. "</td></tr>";
             }
             echo '</table></div>';
-            
-            
+
+
             //CHECK TO SEE IF STUDENT'S FORM 1 HAS BEEN APPROVED
             $query = "select * from formone where universityid = '$_POST[univID]' and cid = 'APPROVED'";
             $result = mysqli_query($dbc, $query);
@@ -213,10 +213,10 @@
               //IF IT HAS NOT BEEN APPROVED, GIVE A BUTTON TO APPROVE IT
               echo  '<form action="" method="post">';
               echo  '<button type="submit" name="acceptform1" value="'.$_POST["univID"].'">Accept Form 1</button>';
-              echo	'</form>';                   
+              echo	'</form>';
             }
             $query = "select program, applied_to_grad from student where unid = '$_POST[univID]'";
-            $result = mysqli_query($dbc, $query); 
+            $result = mysqli_query($dbc, $query);
             if($result->num_rows > 0){
               //IF IT HAS BEEN APPROVED, CHECK TO SEE IF USER IS A PHD STUDENT AND NEEDS THEIR THESIS APPROVED
               $row = $result->fetch_assoc();
@@ -224,33 +224,33 @@
                   //IF THEY ARE, GIVE A BUTTON FOR ADVISOR TO GRADUATE THEM
                 echo  '<form action="" method="post">';
                 echo  '<button type="submit" name="cleargrad" value="'.$_POST["univID"].'">Clear For Graduation</button>';
-                echo	'</form>';   
-              }           
+                echo	'</form>';
+              }
             }
           }else{
             echo "<center>No Form Data Found</center>";
-          }        
+          }
         }else{
           echo "<center>No Results Found</center>";
-        }        
+        }
       }else{
         echo '<center>Student Not Found</center>';
-      }    
+      }
     }
   }
-  
-  
-  
-  
-  
+
+
+
+
+
   //SHOW ALL STUDENTS : THIS IS ONLY SHOWN IF A STUDENT HAS NOT YET BEEN SEARCHED
-  else{  
+  else{
     //DISPLAY ALL USERS FOR GS AND ADMIN
     if((strcmp($_SESSION['uType'], 'gs') == 0 || strcmp($_SESSION['uType'], 'admin') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="stuData">';
    	  $query = "select * from student, personalinfo where universid = unid and (NOT applied_to_grad = 3)";
       $result= mysqli_query($dbc, $query);
-      
+
       //PRINT OUT ALL USERS TO A TABLE
       if ($result->num_rows > 0){
         echo '<table style="width:100%">';
@@ -262,16 +262,16 @@
       }
       else{
         echo "0 results";
-      }     
+      }
     }
-    
-    
+
+
     //DISPLAY ONLY USERS FOR THE SELECTED ADVISOR
     else if((strcmp($_SESSION['uType'], 'advisor') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="advstuData">';
    	  $query = "select * from student, personalinfo where advisorid = '$_SESSION[uID]' and universid = unid and (NOT applied_to_grad = 3)";
       $result= mysqli_query($dbc, $query);
-      
+
       //PRINT OUT USERS TO A TABLE
       if ($result->num_rows > 0){
         echo '<table style="width:100%">';
@@ -283,8 +283,8 @@
       }
       else{
         echo "0 results";
-      }    
-      
+      }
+
     }
   }
   $dbc->close();
