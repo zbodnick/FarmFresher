@@ -11,7 +11,7 @@ CREATE TABLE suser (
 
 DROP TABLE IF EXISTS student CASCADE;
 CREATE TABLE student (
-  unid        int auto_increment, --uid
+  unid        int auto_increment, --uid!
   program     varchar(5), --program
   gpa         double(2,1), --!ADD
   formid      int, --!ADD
