@@ -54,14 +54,14 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $back = $_GET['backPage'];
   }
 
-  echo '<hr />';
-  if($back == "reviewer_portal.php"){
-    echo '<div class="nav"><button id="btn" onclick="window.location.href = \'reviewer_portal.php\';">Back</button></div>';
-  }
-  if($back == "gscac_portal.php"){
-    echo '<div class="nav"><button id="btn" onclick="window.location.href = \'gscac_portal.php\';">Back</button></div>';
-  }
-  echo '<hr />';
+  // echo '<hr />';
+  // if($back == "reviewer_portal.php"){
+  //   echo '<div class="nav"><button id="btn" onclick="window.location.href = \'reviewer_portal.php\';">Back</button></div>';
+  // }
+  // if($back == "gscac_portal.php"){
+  //   echo '<div class="nav"><button id="btn" onclick="window.location.href = \'gscac_portal.php\';">Back</button></div>';
+  // }
+  // echo '<hr />';
 
 ?>
   <body>
