@@ -85,8 +85,6 @@ primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
 
-SET FOREIGN_KEY_CHECKS = 1;
-
 INSERT INTO users (id, p_level, password) VALUES (10000000, 'Admin', 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 'GS', 'gs123');
 INSERT INTO users (id, p_level, password) VALUES (10000002, 'Faculty', 'bhagiweb');
@@ -210,8 +208,10 @@ CREATE TABLE applicant (
   address varchar(255)
 );
 
-DROP TABLE IF EXISTS application CASCADE;
-CREATE TABLE application (
+ALTER TABLE applicant ADD FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE;
+
+DROP TABLE IF EXISTS app CASCADE;
+CREATE TABLE app (
   applicationID int UNIQUE PRIMARY KEY AUTO_INCREMENT,
   username int(8),
   transID int,
@@ -243,6 +243,8 @@ CREATE TABLE application (
   final_decision varchar(255) /*accept/reject/accept with aid*/
 );
 
+ALTER TABLE app ADD FOREIGN KEY (username) REFERENCES applicant (username) ON DELETE CASCADE;
+
 /* OVERLAPS
 
 DROP TABLE IF EXISTS user CASCADE;
@@ -261,6 +263,9 @@ CREATE TABLE reviewer_application (
   status int
 );
 
+ALTER TABLE reviewer_application ADD FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE;
+ALTER TABLE reviewer_application ADD FOREIGN KEY (applicantid) REFERENCES app (username);
+
 DROP TABLE IF EXISTS reccomender CASCADE;
 CREATE TABLE reccomender (
   applicationID int PRIMARY KEY,
@@ -268,11 +273,16 @@ CREATE TABLE reccomender (
   reccomendation VARCHAR(8000)
 );
 
-ALTER TABLE application ADD FOREIGN KEY (username) REFERENCES applicant (username) ON DELETE CASCADE;
-ALTER TABLE reviewer_application ADD FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE;
-ALTER TABLE reviewer_application ADD FOREIGN KEY (applicantid) REFERENCES application (username);
-ALTER TABLE applicant ADD FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE;
-ALTER TABLE reccomender ADD FOREIGN KEY (applicationID) REFERENCES application (applicationID);
+ALTER TABLE reccomender ADD FOREIGN KEY (applicationID) REFERENCES app (applicationID);
+
+-- INSERT INTO applicant VALUES (40404040, 'Noah', 'Lyles', 111111111, '1 abc st');
+-- INSERT INTO applicant VALUES (40404040, 'Yohan', 'Blake', 222222222, '2 abc st');
+-- INSERT INTO applicant VALUES (30303030, 'Usain', 'Bolt', 333333333, '3 abc st');
+
+-- INSERT INTO application VALUES (1, 'nlyles', 1000, 10000, 150, 5, 100000, 0, 0, 'PhD');
+-- INSERT INTO application VALUES (2, 'yblake', 1001, 10001, 140, 4, 100001, 0, 0, 'MS');
+-- INSERT INTO application VALUES (3, 'ubolt', 1002, 10002, 160, 6, 100002, 0, 0, 'PhD');
+
 
 /*
   ┌─┐  ─┐
@@ -285,3 +295,5 @@ ALTER TABLE reccomender ADD FOREIGN KEY (applicationID) REFERENCES application (
 └┐▒▒▒▒▒▒┌┘
  └┐▒▒▒▒┌
 */
+
+SET FOREIGN_KEY_CHECKS = 1;
