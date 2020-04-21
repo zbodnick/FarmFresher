@@ -181,7 +181,7 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 
-			<div class="row pt-3 border-top">
+			<div class="row pt-4 border-top">
 				<div class="text-primary col-lg form-group">
 					<h4 class="font-italic">Remember your password, you will recieve an email upon submission of your application with login instructions<h4>
 				</div>
@@ -197,9 +197,9 @@ if (isset($_POST['submit'])) {
 					<input type="password" id="password2" name="password2" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 			</div>
-			<div class="row pt-3 border-top">
+			<div class="row pt-4 border-top text-center">
 				<div class="col-lg form-group">
-					<h4 class="font-italic text-primary">TESTS:<h4>
+					<h4 class="text-primary">TESTS<h4>
 				</div>
 			</div>
 
@@ -249,9 +249,9 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 
-			<div class="row pt-3 border-top">
+			<div class="row pt-4 border-top text-center">
 				<div class="text-primary col-lg form-group">
-					<h4 class="font-italic">PRIOR DEGREES<h4>
+					<h4>PRIOR DEGREES<h4>
 				</div>
 			</div>
 
@@ -287,7 +287,6 @@ if (isset($_POST['submit'])) {
 					<input class="form-control form-control-lg text-muted" type="checkbox" name="b_prior" value="1" />
 				</div>
 
-
 				<div class="col form-group">
 					<label for="b_gpa">GPA:</label>
 					<input class="form-control form-control-lg text-muted" type="number" name="b_gpa" value="" />
@@ -310,13 +309,16 @@ if (isset($_POST['submit'])) {
 
 			</div>
 
-			<div class="row">
-				<div class="col-md text-center">
-					<div class="form-check form-check-inline pl-5">
+			<div class="row pt-4 border-top">
+				<div class="col-md text-right">
+					<h4 class="text-primary mr-0">Applying for: <h4>
+				</div>
+				<div class="col-md text-left ml-0">
+					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="ms" name="dgr" value="ms">
 						<label class="form-check-label" for="ms">MS</label>
 					</div>
-					<div class="form-check form-check-inline pr-5">
+					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="phd" name="dgr" value="phd">
 						<label class="form-check-label" for="phd">PhD</label>
 					</div>
@@ -330,14 +332,14 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 
-			<div class="row pt-2 pb-5">
+			<div class="row pt-3 mb-2">
 				<div class="col-lg">
 					<label for="recommender">Recommender's Email</label>
 					<input class="form-control form-control-lg text-muted" name="recommender" value="" required></textarea>
 				</div>
 			</div>
 					
-			<div class="row">
+			<div class="row mb-3 mt-2">
                 <div class="col text-center">
                     <input type="submit" id="btn" value="Submit Application" name="submit" class="btn btn-primary btn-lg px-5">
                 </div>
