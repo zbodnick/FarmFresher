@@ -30,10 +30,10 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $degree = $_GET['degree_type'];
   }
   if (isset($_GET['GRE_ScoreVerbal'])) {
-    $greMath = $_GET['GRE_ScoreVerbal'];
+    $greEnglish = $_GET['GRE_ScoreVerbal'];
   }
   if (isset($_GET['GRE_ScoreQuantitative'])) {
-    $greEnglish = $_GET['GRE_ScoreQuantitative'];
+    $greMath = $_GET['GRE_ScoreQuantitative'];
   }
   if (isset($_GET['applicationID'])) {
     $appid = $_GET['applicationID'];
@@ -75,8 +75,18 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               <?php echo $first?> <?php echo $last?>
           </div>
           <div class="col-md-6 form-group">
+              <label for="fname">Degree Type</label>                            
+              <?php echo $degree?>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6 form-group">
               <label for="fname">Application ID </label>                            
               <?php echo $appid?>
+          </div>
+          <div class="col-md-6 form-group">
+              <label for="fname">Transcript ID</label>                            
+              <?php echo $transcript?>
           </div>
       </div>
       <div class="row">
@@ -86,21 +96,11 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
           </div>
           <div class="col-md-6 form-group">
               <label for="fname">GRE Score - Quantitative</label>                            
-              <?php echo $recommID?>
+              <?php echo $greMath?>
           </div>
-      </div>
-      <div class="row">
           <div class="col-md-6 form-group">
               <label for="fname">Recommendation</label>                            
-              <?php echo $transcript?>
-          </div>
-          <div class="col-md-6 form-group">
-              <label for="fname">Transcript ID</label>                            
-              <?php echo $transcript?>
-          </div>
-          <div class="col-md-6 form-group">
-              <label for="fname">Degree Type</label>                            
-              <?php echo $degree?>
+              <?php echo $recommID?>
           </div>
       </div>
     </form>
