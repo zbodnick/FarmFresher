@@ -191,3 +191,97 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (16, 'CSCI 6283', 'CSCI 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
+
+
+/* -----------------------------------------------------------------------------
+
+                            ╔══════════════╗
+----------------------------    APPS SQL    ------------------------------------
+                            ╚══════════════╝
+
+--------------------------------------------------------------------------------
+*/
+DROP TABLE IF EXISTS applicant CASCADE;
+CREATE TABLE applicant (
+  username int(8) PRIMARY KEY,
+  fname varchar(255),
+  lname varchar(255),
+  ssn int(9),
+  address varchar(255)
+);
+
+DROP TABLE IF EXISTS application CASCADE;
+CREATE TABLE application (
+  applicationID int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  username int(8),
+  transID int,
+  recommenderEmail varchar(255),
+  GRE_ScoreVerbal varchar(10),
+  GRE_ScoreQuantitative varchar(10),
+  GRE_Date varchar(10),
+  AdvGRE_Score varchar(10),
+  AdvGRE_Subject varchar(255),
+  AdvGRE_Date varchar(10),
+  TOEFL_Score varchar(10),
+  TOEFL_Date varchar(10),
+  MS_Prior varchar(10),
+  MS_GPA varchar(4),
+  MS_Major varchar(255),
+  MS_Year varchar(10),
+  MS_University varchar(255),
+  B_Prior varchar(10),
+  B_GPA varchar(4),
+  B_Major varchar(255),
+  B_Year varchar(10),
+  B_University varchar(255),
+  experience varchar(1000),
+  interests varchar(1000),
+  completion int, /* 0=application not complete, 1=complete*/
+  recommendation int, /*0=under review 1=reject, 2=borderline, 3=admit without aid, 4=admit with aid*/
+  reviewer_comment varchar(255),
+  degree_type varchar(255),
+  final_decision varchar(255) /*accept/reject/accept with aid*/
+);
+
+/* OVERLAPS
+
+DROP TABLE IF EXISTS user CASCADE;
+CREATE TABLE user (
+  username int(8) PRIMARY KEY,
+  password varchar(255),
+  permission int, 
+  fname varchar(255),
+  lname varchar(255)
+); */
+
+DROP TABLE IF EXISTS reviewer_application CASCADE;
+CREATE TABLE reviewer_application (
+  username int(8) PRIMARY KEY,
+  applicantid int,
+  status int
+);
+
+DROP TABLE IF EXISTS reccomender CASCADE;
+CREATE TABLE reccomender (
+  applicationID int PRIMARY KEY,
+  email varchar(255),
+  reccomendation VARCHAR(8000)
+);
+
+ALTER TABLE application ADD FOREIGN KEY (username) REFERENCES applicant (username) ON DELETE CASCADE;
+ALTER TABLE reviewer_application ADD FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE;
+ALTER TABLE reviewer_application ADD FOREIGN KEY (applicantid) REFERENCES application (username);
+ALTER TABLE applicant ADD FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE;
+ALTER TABLE reccomender ADD FOREIGN KEY (applicationID) REFERENCES application (applicationID);
+
+/*
+  ┌─┐  ─┐
+　│▒│ /▒/
+　│▒│/▒/
+　│▒ /▒/─┬─┐
+　│▒│▒|▒│▒│
+┌┴─┴─┐-┘─┘
+│▒┌──┘▒▒▒│
+└┐▒▒▒▒▒▒┌┘
+ └┐▒▒▒▒┌
+*/
