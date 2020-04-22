@@ -44,7 +44,7 @@
               //echo "Date of Birth: "."<input type = text  name = dob value = '".$dob."'> <br>";
               echo "Address: "."<input type = text  name = address value = '".$address."'> <br>";
               //echo "Cellphone: "."<input type = text  name = cell value = '".$cell."'> <br>";
-              echo "<input type = hidden name = id value ='".$row['universid']."'>";
+              echo "<input type = hidden name = id value ='".$row['u_id']."'>";
               echo "<input type = submit>";
               echo "</form>";
               echo '<br>';
@@ -65,7 +65,7 @@
               //echo "Date of Birth: "."<input type = text  name = dob value = '".$dob."'> <br>";
               echo "Address: "."<input type = text  name = address value = '".$address."'> <br>";
               //echo "Cellphone: "."<input type = text  name = cell value = '".$cell."'> <br>";
-              echo "<input type = hidden name = id value ='".$row['universid']."'>";
+              echo "<input type = hidden name = id value ='".$row['f_id']."'>";
               echo "<input type = submit>";
               echo "</form>";
               echo '<br>';
