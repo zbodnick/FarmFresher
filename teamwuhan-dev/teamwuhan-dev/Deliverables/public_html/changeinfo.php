@@ -30,7 +30,7 @@
           if(mysqli_num_rows($result) == 0){
             $ftname = " ";
             $ltname = " ";
-            $dob = " ";
+            $dob = "1900-01-01";
             $address = " ";
             $cell = " ";
             if(mysqli_num_rows(mysqli_query($dbc, "select fname from student where u_id = $id")) > 0){
