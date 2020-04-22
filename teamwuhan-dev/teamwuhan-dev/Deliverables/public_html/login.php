@@ -20,7 +20,7 @@
 
 
       if (!empty($user_username) && !empty($user_password)) {
-	       $query = "select id, password, utype from users where id = $user_username and password = '$user_password'";
+	       $query = "select id, password, p_level from users where id = $user_username and password = '$user_password'";
 	//echo "the query sent is: " . $query . "</br>";
 	       $data = mysqli_query($dbc, $query);
 
@@ -30,7 +30,7 @@
           $row = mysqli_fetch_array($data);
 
           $_SESSION['id'] = $row['id'];
-          $_SESSION['uType'] = $row['utype'];
+          $_SESSION['uType'] = $row['p_level'];
 
           //TODO: redirect to index.php
           $home_url = 'http://' . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . '/advising.php';

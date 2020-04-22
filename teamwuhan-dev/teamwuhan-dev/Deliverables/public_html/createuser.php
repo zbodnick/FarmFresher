@@ -17,7 +17,7 @@
 
   //$sql = "UPDATE personalinfo SET ftname = '$_POST[fname]', ltname = '$_POST[lname]', dob = '$_POST[dob]', address = '$_POST[address]', cell = '$_POST[cell]' WHERE universid = $_POST[id]";
     $dbc->query('SET foreign_key_checks = 0');
-    $sql = "INSERT INTO users (utype, id, password) VALUES ( '$_POST[typeofuser]', '$_POST[email]', '$_POST[password]' );";
+    $sql = "INSERT INTO users (p_level, id, password) VALUES ( '$_POST[typeofuser]', '$_POST[email]', '$_POST[password]' );";
        if($dbc->query($sql) == TRUE)
        {
          header("refresh:1; url=newuser.php");

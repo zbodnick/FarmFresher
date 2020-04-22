@@ -2,7 +2,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS users CASCADE;
 create table users(
-  utype      varchar(10),
   id int UNIQUE,
   p_level varchar(20) NOT NULL,
   password varchar(20) NOT NULL,

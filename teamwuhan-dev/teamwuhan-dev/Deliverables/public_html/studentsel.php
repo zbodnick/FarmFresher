@@ -32,7 +32,7 @@
     //Graduate User
     $query = "UPDATE student SET applied_to_grad=3 WHERE unid = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
-    $query = "UPDATE users SET utype='alumni' WHERE id = '$_POST[cleargrad]'";
+    $query = "UPDATE users SET p_level='alumni' WHERE id = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
 
     //Move user into alumni
