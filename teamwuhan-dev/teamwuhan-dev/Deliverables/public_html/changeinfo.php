@@ -46,7 +46,7 @@
               echo "<input type = submit>";
               echo "</form>";
               echo '<br>';
-            }elseif(mysqli_num_rows(mysqli_query($dbc, "select fname from faculty where u_id = $id")) > 0){
+            }elseif(mysqli_num_rows(mysqli_query($dbc, "select fname from faculty where f_id = $id")) > 0){
               $ftname = $row["fname"];
               $ltname = $row["lname"];
               //$dob = $row["dob"];
