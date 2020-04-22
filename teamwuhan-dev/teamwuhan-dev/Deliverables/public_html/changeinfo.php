@@ -35,7 +35,7 @@
                 //$dob = $row["dob"];
                 $address = $row["addr"];
                 //$cell = $row["cell"];
-              }
+
               //DISPLAYING USER'S PERSONAL INFO
               echo "<form action= updateinfo.php method = post> <br>";
               echo "First Name: "."<input type = text  name = fname value = '".$ftname."'> <br>";
@@ -47,6 +47,7 @@
               echo "<input type = submit>";
               echo "</form>";
               echo '<br>';
+            }
             }elseif(mysqli_num_rows(mysqli_query($dbc, "select fname from faculty where f_id = $id")) > 0){
               while($row = mysqli_fetch_array(mysqli_query($dbc, "select * from faculty where f_id = $id"))){
                 $ftname = $row["fname"];
@@ -54,7 +55,7 @@
                 //$dob = $row["dob"];
                 $address = $row["addr"];
                 //$cell = $row["cell"];
-              }
+              
               //DISPLAYING USER'S PERSONAL INFO
               echo "<form action= updateinfo.php method = post> <br>";
               echo "First Name: "."<input type = text  name = fname value = '".$ftname."'> <br>";
@@ -66,6 +67,7 @@
               echo "<input type = submit>";
               echo "</form>";
               echo '<br>';
+            }
             }else{
               echo '<body>No personal info found<br/></body>';
               $ftname = " ";
