@@ -15,7 +15,7 @@
       $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
       // Grab the user-entered log-in data
-      $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
+      $user_username = ($_POST['username']);
       $user_password = mysqli_real_escape_string($dbc, trim($_POST['password']));
 
 
