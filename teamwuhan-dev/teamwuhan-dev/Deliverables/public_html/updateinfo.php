@@ -23,6 +23,7 @@
        else
        {
          echo "No Update";
+         echo $dbc->error;
        }
 
     $dbc->close();
