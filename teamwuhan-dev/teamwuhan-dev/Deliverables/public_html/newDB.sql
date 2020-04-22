@@ -2,7 +2,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS users CASCADE;
 create table users(
-  utype      varchar(10), --!ADD
+  utype      varchar(10),
   id int UNIQUE,
   p_level varchar(20) NOT NULL,
   password varchar(20) NOT NULL,
@@ -18,10 +18,10 @@ create table student(
   email varchar(30) NOT NULL,
   major varchar(20) NOT NULL,
   program varchar(3),
-  gpa         double(2,1), --!ADD
-  formid      int, --!ADD
-  advisorid   int, --!ADD
-  applied_to_grad  int, --!ADD
+  gpa         double(2,1),
+  formid      int,
+  advisorid   int,
+  applied_to_grad  int,
   primary key (u_id),
   foreign key (u_id) references users(id)
 );
@@ -89,7 +89,7 @@ prereq2 varchar(20) DEFAULT NULL,
 primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
---BELOW IS ADDED FROM JAKE
+
 DROP TABLE IF EXISTS course CASCADE;
 CREATE TABLE course (
  courseid      varchar(8),
@@ -254,9 +254,6 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (16, 'CSCI 6283', 'CSCI 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
-
---BELOW IS Jake
-
 
 INSERT INTO course VALUES ( 'CSCI6221', 'SW Paradigms', 3, null, null);
 INSERT INTO course VALUES ( 'CSCI6461', 'Computer Architecture', 3, null, null);

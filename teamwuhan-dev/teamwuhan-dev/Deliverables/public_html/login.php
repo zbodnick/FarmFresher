@@ -20,7 +20,6 @@
 
 
       if (!empty($user_username) && !empty($user_password)) {
-        // TODO: Look up the username and password in the database
 	       $query = "select id, password, utype from users where id = $user_username and password = '$user_password'";
 	//echo "the query sent is: " . $query . "</br>";
 	       $data = mysqli_query($dbc, $query);
@@ -30,7 +29,6 @@
 
           $row = mysqli_fetch_array($data);
 
-          //TODO: so set the user ID and username session vars
           $_SESSION['id'] = $row['id'];
           $_SESSION['uType'] = $row['utype'];
 
