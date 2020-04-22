@@ -67,7 +67,7 @@
 
 
       //LOADING SEARCHED STUDENT BASIC DATA INTO A TABLE
-      $query = "select * from student WHERE unid = '$input' and advisorid = '$_SESSION[uID]' and (NOT applied_to_grad = 3)";
+      $query = "select * from student WHERE unid = '$input' and advisorid = '$_SESSION[id]' and (NOT applied_to_grad = 3)";
       $result = mysqli_query($dbc, $query);
       if(mysqli_num_rows($result) > 0){
         echo '<table style="width:100%">';

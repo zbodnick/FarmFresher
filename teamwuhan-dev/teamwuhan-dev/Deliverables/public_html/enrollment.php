@@ -14,12 +14,12 @@
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
   // Grab the user-entered log-in data
-  $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = " . $_SESSION['uID'];
+  $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = " . $_SESSION['id'];
 
   $result= mysqli_query($dbc, $query);
 
   echo '<center><h3>Transcript</h3></center><div>';
-  echo "<center><h4>University ID : ".$_SESSION['uID']."</h4></center>";
+  echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
   if ($result->num_rows > 0)
     {
     // output data of each row
@@ -30,46 +30,46 @@
         echo "<tr><td>" . $row["yeartaken"]. "</td><td>" . $row["semester"]. "</td><td>" . $row["crseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["grade"]. "</td><td>" . $row["chours"]. "</td></tr>";
       }
     echo '</table></div>';
-    
+
     //IF USER IS AN ALUMNI, SHOW FINAL GPA
     if(strcmp($_SESSION['uType'], 'alumni') == 0){
-      $query = "select gpa from student where unid = " . $_SESSION['uID'];
+      $query = "select gpa from student where unid = " . $_SESSION['id'];
       $result = mysqli_query($dbc, $query);
       $row = $result->fetch_assoc();
-      
+
       echo "<br><center><h4>Final GPA : ".$row["gpa"]."</h4></center>";
     }else{
-      $uid = $_SESSION['uID'];
-      $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM transcript WHERE univerid = $uid;";
+      $id = $_SESSION['id'];
+      $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM transcript WHERE univerid = $id;";
       $numberOfAs = mysqli_query($dbc, $queryA);
       $numberOfAs = $numberOfAs->fetch_assoc();
       $resultA= $numberOfAs['totalA'];
-    
-      $queryB = "SELECT SUM(CASE grade WHEN 'B' THEN 1 ELSE 0 END) totalB FROM transcript WHERE univerid = $uid;";
+
+      $queryB = "SELECT SUM(CASE grade WHEN 'B' THEN 1 ELSE 0 END) totalB FROM transcript WHERE univerid = $id;";
       $numberOfBs = mysqli_query($dbc, $queryB);
       $numberOfBs = $numberOfBs->fetch_assoc();
       $resultB= $numberOfBs['totalB'];
-    
-      $queryC = "SELECT SUM(CASE grade WHEN 'C' THEN 1 ELSE 0 END) totalC FROM transcript WHERE univerid = $uid;";
+
+      $queryC = "SELECT SUM(CASE grade WHEN 'C' THEN 1 ELSE 0 END) totalC FROM transcript WHERE univerid = $id;";
       $numberOfCs = mysqli_query($dbc, $queryC);
       $numberOfCs = $numberOfCs->fetch_assoc();
       $resultC= $numberOfCs['totalC'];
-    
-      $queryD = "SELECT SUM(CASE grade WHEN 'D' THEN 1 ELSE 0 END) totalD FROM transcript WHERE univerid = $uid;";
+
+      $queryD = "SELECT SUM(CASE grade WHEN 'D' THEN 1 ELSE 0 END) totalD FROM transcript WHERE univerid = $id;";
       $numberOfDs = mysqli_query($dbc, $queryD);
       $numberOfDs = $numberOfDs->fetch_assoc();
       $resultD= $numberOfDs['totalD'];
-    
-      $queryF = "SELECT SUM(CASE grade WHEN 'F' THEN 1 ELSE 0 END) totalF FROM transcript WHERE univerid = $uid;";
+
+      $queryF = "SELECT SUM(CASE grade WHEN 'F' THEN 1 ELSE 0 END) totalF FROM transcript WHERE univerid = $id;";
       $numberOfFs = mysqli_query($dbc, $queryF);
       $numberOfFs = $numberOfFs->fetch_assoc();
       $resultF= $numberOfFs['totalF'];
-      
-      $query2 = "SELECT SUM(chours) cHOURS FROM transcript WHERE univerid = $uid;";
+
+      $query2 = "SELECT SUM(chours) cHOURS FROM transcript WHERE univerid = $id;";
       $chours = mysqli_query($dbc, $query2);
       $chours = $chours->fetch_assoc();
       $totalhours= $chours['cHOURS'] + 0.00;
-      
+
       function avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours){
             $attemptedhours = ($resultA * 4.00 * 3.00) + ($resultB * 3.00 * 3.00) + ($resultC * 2.00 * 3.00) + ($resultD * 1.00 * 3.00) + ($resultF * 0.00 * 3.00);
             $avggpa = $attemptedhours / $totalhours;

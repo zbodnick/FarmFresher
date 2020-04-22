@@ -14,13 +14,13 @@
 
   echo '<h4>Create New User </h4>';
 
-  if (isset($_SESSION['uID']))
+  if (isset($_SESSION['id']))
   {
 
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  $uid = $_SESSION['uID'];
+  $id = $_SESSION['id'];
 
-       if (empty($_SESSION['uID']))
+       if (empty($_SESSION['id']))
        {
          echo '<p class="error">' . $error_msg . '</p>';
        }

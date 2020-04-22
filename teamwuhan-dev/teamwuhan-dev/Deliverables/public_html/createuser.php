@@ -31,21 +31,21 @@
        //faculty
        //student
 
-       $query = "select uid from users where id = '$_POST[email]'";
+       $query = "select id from users where id = '$_POST[email]'";
        $result = mysqli_query($dbc, $query);
        $results = $result->fetch_assoc();
-       $uid = $results["uid"];
+       $id = $results["id"];
 
     if($_POST['typeofuser'] == 'student'){
-        $sql = "INSERT INTO student VALUES ('$uid', NULL, NULL, NULL, NULL, 0)";
+        $sql = "INSERT INTO student VALUES ('$id', NULL, NULL, NULL, NULL, 0)";
         mysqli_query($dbc, $sql);
     }
     if($_POST['typeofuser'] == 'faculty'){
-        $sql = "INSERT INTO faculty VALUES ('$uid')";
+        $sql = "INSERT INTO faculty VALUES ('$id')";
         mysqli_query($dbc, $sql);
     }
     if($_POST['typeofuser'] == 'alumni'){
-        $sql = "INSERT INTO alumni VALUES ('$uid', NULL)";
+        $sql = "INSERT INTO alumni VALUES ('$id', NULL)";
         mysqli_query($dbc, $sql);
     }
 

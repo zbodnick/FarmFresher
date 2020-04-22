@@ -11,20 +11,20 @@
 
      echo '<h4>Personal Information: </h4>';
 
-     if (isset($_SESSION['uID']))
+     if (isset($_SESSION['id']))
      {
 
     echo '<body>Change info below<br/></body>';
 
      $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-     $uid = $_SESSION['uID'];
+     $id = $_SESSION['id'];
 
-          if (empty($_SESSION['uID']))
+          if (empty($_SESSION['id']))
           {
           	echo '<p class="error">' . $error_msg . '</p>';
           }
 
-          $query = "select * from personalinfo where universid = $uid";
+          $query = "select * from personalinfo where universid = $id";
           $result = mysqli_query($dbc, $query);
 
           if(mysqli_num_rows($result) == 0){
@@ -36,7 +36,7 @@
             $cell = " ";
 
             $dbc->query('SET foreign_key_checks = 0');
-            $val = "INSERT INTO personalinfo VALUES ($uid, 'X', 'X', '1900-01-01', 'X', 0);";
+            $val = "INSERT INTO personalinfo VALUES ($id, 'X', 'X', '1900-01-01', 'X', 0);";
             if($dbc->query($val) == FALSE){
               echo "$dbc->error";
             }
@@ -68,7 +68,7 @@
     $dbc->query('SET foreign_key_checks = 1');
     $dbc->close();
   }else{
-    echo 'Error No UID';
+    echo 'Error No ID';
   }
 
   require_once('footer.php');

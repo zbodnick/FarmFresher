@@ -18,9 +18,9 @@
       die("Connection failed: " . $dbc->connect_error);
     }
     $dbc->query('SET foreign_key_checks = 0');
-    $uid = $_SESSION['uID'];
+    $id = $_SESSION['id'];
 
-    $query = "SELECT * from formone where universityid = $uid";
+    $query = "SELECT * from formone where universityid = $id";
     $result = mysqli_query($dbc, $query);
 
     if(mysqli_num_rows($result) > 0){
@@ -189,13 +189,13 @@
 
     //error checking... if theres form1 data already in there it resets it.
     /*
-    $query = "SELECT * from formone where universityid = $uid";
+    $query = "SELECT * from formone where universityid = $id";
     $result = mysqli_query($dbc, $query);
     $results = mysqli_num_rows($result);
 
     if($results > 0){
       echo "Form One Data already found... reset</br>";
-      $query = "DELETE from formone where universityid = $uid";
+      $query = "DELETE from formone where universityid = $id";
       $result = mysqli_query($dbc, $query);
     }*/
     //
@@ -203,70 +203,70 @@
     if(isset($_POST['submit']))
     {
       if($_COOKIE["CSCI6221"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6221')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6221')");
       }
       if($_COOKIE["CSCI6212"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6212')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6212')");
       }
       if($_COOKIE["CSCI6220"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6220')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6220')");
       }
       if($_COOKIE["CSCI6232"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6232')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6232')");
       }
       if($_COOKIE["CSCI6233"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6233')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6233')");
       }
       if($_COOKIE["CSCI6241"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6241')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6241')");
       }
       if($_COOKIE["CSCI6242"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6242')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6242')");
       }
       if($_COOKIE["CSCI6246"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6246')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6246')");
       }
       if($_COOKIE["CSCI6251"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6251')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6251')");
       }
       if($_COOKIE["CSCI6254"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6254')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6254')");
       }
       if($_COOKIE["CSCI6260"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6260')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6260')");
       }
       if($_COOKIE["CSCI6262"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6262')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6262')");
       }
       if($_COOKIE["CSCI6283"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6283')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6283')");
       }
       if($_COOKIE["CSCI6284"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6284')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6284')");
       }
       if($_COOKIE["CSCI6286"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6286')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6286')");
       }
       if($_COOKIE["CSCI6325"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6325')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6325')");
       }
       if($_COOKIE["CSCI6339"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6339')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6339')");
       }
       if($_COOKIE["CSCI6384"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6384')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6384')");
       }
       if($_COOKIE["CSCI6461"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'CSCI6461')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6461')");
       }
       if($_COOKIE["ECE6241"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'ECE6241')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'ECE6241')");
       }
       if($_COOKIE["ECE6242"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'ECE6242')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'ECE6242')");
       }
       if($_COOKIE["MATH6210"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($uid, 'MATH6210')");
+        $dbc->query("INSERT INTO formone VALUES ($id, 'MATH6210')");
       }
 
 
