@@ -28,6 +28,11 @@
           $result = mysqli_query($dbc, $query);
 
           if(mysqli_num_rows($result) == 0){
+            $ftname = " ";
+            $ltname = " ";
+            $dob = " ";
+            $address = " ";
+            $cell = " ";
             if(mysqli_num_rows(mysqli_query($dbc, "select fname from student where u_id = $id")) > 0){
               $result = mysqli_query($dbc, "select * from student where u_id = $id");
               while($row = mysqli_fetch_array($result)){

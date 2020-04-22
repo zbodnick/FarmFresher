@@ -13,7 +13,7 @@
 
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-  $sql = "UPDATE personalinfo SET ftname = '$_POST[fname]', ltname = '$_POST[lname]', address = '$_POST[address]', WHERE universid = $_POST[id]";
+  $sql = "UPDATE personalinfo SET ftname = '$_POST[fname]', ltname = '$_POST[lname]', dob = '$_POST[dob]', address = '$_POST[address]', cell = '$_POST[cell]' WHERE universid = $_POST[id]";
 
        if($dbc->query($sql) == TRUE)
        {
