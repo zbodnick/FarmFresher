@@ -32,7 +32,7 @@
             $ltname = " ";
             $dob = "1900-01-01";
             $address = " ";
-            $cell = " ";
+            $cell = 0;
             if(mysqli_num_rows(mysqli_query($dbc, "select fname from student where u_id = $id")) > 0){
               $result = mysqli_query($dbc, "select * from student where u_id = $id");
               while($row = mysqli_fetch_array($result)){
