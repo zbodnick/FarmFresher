@@ -29,7 +29,8 @@
 
           if(mysqli_num_rows($result) == 0){
             if(mysqli_num_rows(mysqli_query($dbc, "select fname from student where u_id = $id")) > 0){
-              while($row = mysqli_fetch_array(mysqli_query($dbc, "select * from student where u_id = $id"))){
+              $result = mysqli_query($dbc, "select * from student where u_id = $id")
+              while($row = mysqli_fetch_array($result)){
                 $ftname = $row["fname"];
                 $ltname = $row["lname"];
                 //$dob = $row["dob"];
@@ -49,13 +50,14 @@
               echo '<br>';
             }
             }elseif(mysqli_num_rows(mysqli_query($dbc, "select fname from faculty where f_id = $id")) > 0){
-              while($row = mysqli_fetch_array(mysqli_query($dbc, "select * from faculty where f_id = $id"))){
+              $result = mysqli_query($dbc, "select * from faculty where f_id = $id")
+              while($row = mysqli_fetch_array($result)){
                 $ftname = $row["fname"];
                 $ltname = $row["lname"];
                 //$dob = $row["dob"];
                 $address = $row["addr"];
                 //$cell = $row["cell"];
-              
+
               //DISPLAYING USER'S PERSONAL INFO
               echo "<form action= updateinfo.php method = post> <br>";
               echo "First Name: "."<input type = text  name = fname value = '".$ftname."'> <br>";
