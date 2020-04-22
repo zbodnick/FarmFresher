@@ -29,7 +29,7 @@
 
           if(mysqli_num_rows($result) == 0){
             if(mysqli_num_rows(mysqli_query($dbc, "select fname from student where u_id = $id")) > 0){
-              while($row = mysqli_fetch_array(mysqli_query($dbc, "select fname from student where u_id = $id"))){
+              while($row = mysqli_fetch_array(mysqli_query($dbc, "select * from student where u_id = $id"))){
                 $ftname = $row["fname"];
                 $ltname = $row["lname"];
                 //$dob = $row["dob"];
@@ -48,7 +48,7 @@
               echo "</form>";
               echo '<br>';
             }elseif(mysqli_num_rows(mysqli_query($dbc, "select fname from faculty where f_id = $id")) > 0){
-              while($row = mysqli_fetch_array(mysqli_query($dbc, "select fname from faculty where f_id = $id"))){
+              while($row = mysqli_fetch_array(mysqli_query($dbc, "select * from faculty where f_id = $id"))){
                 $ftname = $row["fname"];
                 $ltname = $row["lname"];
                 //$dob = $row["dob"];
