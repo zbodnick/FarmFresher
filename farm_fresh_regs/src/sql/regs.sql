@@ -290,6 +290,10 @@ INSERT INTO reviewer_application VALUES(10000002,1,0);
 INSERT INTO reviewer_application VALUES(10000003,2,0);
 INSERT INTO reviewer_application VALUES(10000004,3,0);
 
+INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
+INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
+INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
+
 INSERT INTO reccomender VALUES(1,'wdaughtridge@gwu.edu','looks like a great applicant');
 INSERT INTO reccomender VALUES(2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
 INSERT INTO reccomender VALUES(3,'wdaughtridge@gwu.edu','absolutely');
