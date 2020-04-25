@@ -243,7 +243,6 @@ CREATE TABLE application (
   final_decision varchar(255) /*accept/reject/accept with aid*/
 );
 
-/*
 DROP TABLE IF EXISTS user CASCADE;
 CREATE TABLE user (
   username int(8) PRIMARY KEY,
@@ -251,7 +250,7 @@ CREATE TABLE user (
   permission int, 
   fname varchar(255),
   lname varchar(255)
-); */
+); 
 
 DROP TABLE IF EXISTS reviewer_application CASCADE;
 CREATE TABLE reviewer_application (
@@ -288,14 +287,15 @@ INSERT INTO reviewer_application VALUES(10000002,1,0);
 INSERT INTO reviewer_application VALUES(10000003,2,0);
 INSERT INTO reviewer_application VALUES(10000004,3,0);
 
-INSERT INTO reccomender VALUES(1,'wdaughtridge@gwu.edu','looks like a great applicant');
-INSERT INTO reccomender VALUES(2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
-INSERT INTO reccomender VALUES(3,'wdaughtridge@gwu.edu','absolutely');
-
 INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
 
+INSERT INTO reccomender VALUES(1,'wdaughtridge@gwu.edu','looks like a great applicant');
+INSERT INTO reccomender VALUES(2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
+INSERT INTO reccomender VALUES(3,'wdaughtridge@gwu.edu','absolutely');
+
+SET FOREIGN_KEY_CHECKS = 1;
 /*
   ┌─┐  ─┐
 　│▒│ /▒/
@@ -307,5 +307,3 @@ INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'passwo
 └┐▒▒▒▒▒▒┌┘
  └┐▒▒▒▒┌
 */
-
-SET FOREIGN_KEY_CHECKS = 1;
