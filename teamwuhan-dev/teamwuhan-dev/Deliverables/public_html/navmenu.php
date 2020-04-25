@@ -4,7 +4,7 @@
   if (isset($_SESSION['uType'])) {
     //Set different buttons up for pages depending on
     echo '<a href="advising.php">Home</a> ';
-    if(strcmp($_SESSION['uType'], 'student') == 0){
+    if(strcmp($_SESSION['uType'], 'Student') == 0){
       echo '<a href="enrollment.php">View Enrollment</a> ';
       echo '<a href="form1.php">Form 1</a> ';
       echo '<a href="applygraduate.php">Apply to Graduate</a> ';
