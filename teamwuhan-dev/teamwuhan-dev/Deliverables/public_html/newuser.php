@@ -28,7 +28,7 @@
        //FORM TO CREATE USER
        echo "<form action= createuser.php method = post> <br>";
        echo "Type of User: "."<input type = text  name = typeofuser value = ''> <br>";
-       echo "Email: "."<input type = text  name = email value = ''> <br>";
+       echo "ID: "."<input type = text  name = email value = ''> <br>";
        echo "Password: "."<input type = text  name = password value = ''> <br>";
        echo "<input type = submit>";
        echo "</form>";
