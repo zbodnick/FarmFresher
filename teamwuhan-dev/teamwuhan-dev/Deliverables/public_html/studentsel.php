@@ -180,7 +180,7 @@
 
 
         //SHOW STUDENT'S TRANSCRIPT (ONLY IF BASIC DATA APPEARS)
-        $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_POST['univid'] ." and catalog.c_id = courses_taken.crn;";
+        $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_POST['univID'] ." and catalog.c_id = courses_taken.crn;";
         $result = mysqli_query($dbc, $query);
         echo '<center><h4>Transcript</h4></center><div class="transcript">';
         if ($result->num_rows > 0){//
