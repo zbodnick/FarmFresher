@@ -160,13 +160,13 @@
       $input = $_POST['univID'];
 
       //LOADING BASIC STUDENT DATA
-      $query = "select * from student WHERE unid = '$input' and (NOT applied_to_grad = 3)";
+      $query = "select * from student WHERE u_id = '$input' and (NOT applied_to_grad = 3)";
       $result = mysqli_query($dbc, $query);
       if(mysqli_num_rows($result) > 0){
         echo '<table style="width:100%">';
         echo '<tr><th>University ID</th><th>Advisor ID</th><th>GPA</th><th>Program</th><th>Applied to Grad?</th></tr>';
         while($row = $result->fetch_assoc()){
-          echo "<td>" . $row["unid"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["gpa"]. "</td><td>" . $row["program"]. "</td>";
+          echo "<td>" . $row["u_id"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["gpa"]. "</td><td>" . $row["major"]. "</td>";
           $stuID = $row["unid"];
           if($row["applied_to_grad"] == 0){
             echo "<td>No</td></tr>";
