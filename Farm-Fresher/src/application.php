@@ -54,8 +54,6 @@ if (!empty($id)) {
 
 include ('php/connectvars.php');		
 
-$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
 
 function randNum () {
 	$new = rand(10000001,99999999);
@@ -64,7 +62,8 @@ function randNum () {
 }
 
 function check($new) {	
-	$query = "SELECT * FROM user where username='".$new."'";
+	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	$query = "SELECT * FROM users where id=".$new;
 	$data = mysqli_query($dbc, $query);
 	if(mysqli_num_rows($data)) {
 		randNum();
@@ -72,13 +71,14 @@ function check($new) {
 }
 
 if (isset($_POST['submit'])) {
+	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 	$username = randNum();
 
 	$user = "INSERT INTO users VALUES (".$username.",'Applicant','".$_POST['password']."')";
 	$userdata = mysqli_query($dbc, $user);
 	
-	$applicant = "INSERT INTO applicant VALUES (".$username.",'".$_POST['fname']."','".$_POST['lname']."',".$_POST['ssn'].",'".$_POST['address']."')";
+	$applicant = "INSERT INTO applicant VALUES (".$username.",'".$_POST['fname']."','".$_POST['lname']."','".$_POST['email']."',".$_POST['ssn'].",'".$_POST['address']."')";
 	$applicantdata = mysqli_query($dbc, $applicant);
 
 	$maxID = "SELECT max(applicationID) as ID FROM application";
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 	$msg = wordwrap($msg,70);
 	$retval = mail($_POST['recommender'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
 
-	header("Location: index.php");
+	header("Location: login.php");
 }
 
 ?>
@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="ssn">SSN</label>
-					<input type="text" id="ssn" name="ssn" class="form-control form-control-lg text-muted" value="">
+					<input type="text" id="ssn" name="ssn" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 			</div>
 
@@ -227,12 +227,12 @@ if (isset($_POST['submit'])) {
 
 			<div class="row">
 				<div class="col-md-6 form-group">
-					<label for="toefl_date">TOEFL Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="toefl_date" value="">
-				</div>
-				<div class="col-md-6 form-group">
 					<label for="toefl">TOEFL Score:</label>
 					<input class="form-control form-control-lg text-muted" type="number" name="toefl" value="">
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="toefl_date">TOEFL Year Taken:</label>
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="toefl_date" value="">
 				</div>
 			</div>
 
@@ -246,7 +246,8 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="ms_prior">MS:</label>
-					<input class="form-control form-control-lg text-muted" type="checkbox" name="ms_prior" value="1" />
+					<input name="ms_prior" type="hidden" value="N/A" />
+					<input class="form-control form-control-lg text-muted" type="checkbox" name="ms_prior" value="Yes" />
 				</div>
 
 				<div class="col form-group">
@@ -271,7 +272,8 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_prior">BS/BA:</label>
-					<input class="form-control form-control-lg text-muted" type="checkbox" name="b_prior" value="1" />
+					<input name="b_prior" type="hidden" value="N/A" />
+					<input class="form-control form-control-lg text-muted" type="checkbox" name="b_prior" value="Yes" />
 				</div>
 
 				<div class="col form-group">
@@ -302,11 +304,11 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md text-left ml-0">
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="ms" name="dgr" value="ms">
+						<input class="form-check-input" type="radio" id="ms" name="dgr" value="ms" required>
 						<label class="form-check-label" for="ms">MS</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="phd" name="dgr" value="phd">
+						<input class="form-check-input" type="radio" id="phd" name="dgr" value="phd" required>
 						<label class="form-check-label" for="phd">PhD</label>
 					</div>
 				</div>
@@ -316,6 +318,13 @@ if (isset($_POST['submit'])) {
 				<div class="col-md">
 					<label for="experience">Experience</label>
 					<textarea class="form-control form-control-lg text-muted" name="experience" rows="4" cols="50"></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md">
+					<label for="interests">Interests</label>
+					<textarea class="form-control form-control-lg text-muted" name="interests" rows="4" cols="50"></textarea>
 				</div>
 			</div>
 

@@ -88,6 +88,9 @@
         if (preg_match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%&*-]).{8,}$^", $_POST['newPassword'])) {
           $passSubmissionValid = true;
         }
+        else {
+            $passSubmissionValid = false;
+        }
       }
 
       if (empty($_POST['newPasswordConfirm'])) {
@@ -119,7 +122,10 @@
               $showSuccessMsg = false;
               $infoUpdatedMsg = "Error: Update was not processed. Contact an administrator.";
           }
-          
+        }
+        else {
+            $infoUpdatedMsg = "Password Did Not Meet Necessary Criteria";
+            $showSuccessMsg = false;
         }
     }
     mysqli_close($dbc);
@@ -139,7 +145,7 @@
                 echo "<div class='alert alert-success' role='alert'>
                             $infoUpdatedMsg
                         </div>";
-                } else if ($passSubmissionValid && !$showSuccessMsg) {
+                } else if (!$passSubmissionValid && !$showSuccessMsg) {
                     echo "<div class='alert alert-danger' role='alert'>
                             $infoUpdatedMsg
                         </div>";
