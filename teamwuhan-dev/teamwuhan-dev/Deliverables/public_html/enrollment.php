@@ -13,7 +13,7 @@
 
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-  $query = "select DISTINCT u_id, semester, year, grade, title, crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
+  $query = "select DISTINCT u_id, semester, year, grade, title, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
 
   $result= mysqli_query($dbc, $query);
 
