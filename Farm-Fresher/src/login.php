@@ -62,6 +62,10 @@
         $error_msg = 'Sorry, you must enter your user id and password to log in.';
       }
     }
+    else if (isset($_POST['apply'])) {
+        $home_url = "application.php";
+        header('Location: ' . $home_url);
+    }
   }
 ?>
 
@@ -94,12 +98,12 @@
           <div class="row">
             <div class="col-12">
               <input type="submit" value="Log In" class="btn btn-primary btn-lg px-5" name="submit">
+              <input type="submit" value="Apply Now" class="btn btn-primary btn-lg px-5" name="apply">
 <?php
   if (empty($_SESSION['id'])) {
     echo '<br><br><p class="text-danger">' . $error_msg . '</p>';
   }
 ?>
-              <p><a href="application.php" class="btn btn-primary px-4 rounded-0">Apply Now</a></p>
               </div>
             </div>
         </form>
