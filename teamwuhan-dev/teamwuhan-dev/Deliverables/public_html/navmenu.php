@@ -4,21 +4,21 @@
   if (isset($_SESSION['uType'])) {
     //Set different buttons up for pages depending on
     echo '<a href="advising.php">Home</a> ';
-    if(strcmp($_SESSION['uType'], 'Student') == 0){
+    if(strcmp($_SESSION['uType'], 'student') == 0){
       echo '<a href="enrollment.php">View Enrollment</a> ';
       echo '<a href="form1.php">Form 1</a> ';
       echo '<a href="applygraduate.php">Apply to Graduate</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'Alumni') == 0){
+    else if(strcmp(strtolower($_SESSION['uType']), 'alumni') == 0){
       echo '<a href="enrollment.php">View Final Transcript</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'GS') == 0){
+    else if(strcmp(strtolower($_SESSION['uType']), 'gs') == 0){
       echo '<a href="studentsel.php">Student Data</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'Advisor') == 0){
+    else if(strcmp(strtolower($_SESSION['uType']), 'advisor') == 0){
       echo '<a href="studentsel.php">Student Data</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'Admin') == 0){
+    else if(strcmp(strtolower($_SESSION['uType']), 'admin') == 0){
       echo '<a href="newuser.php">Create a New User</a> ';
       echo '<a href="studentsel.php">Student Data</a> ';
       echo '<a href="reset.php">Reset</a> ';
