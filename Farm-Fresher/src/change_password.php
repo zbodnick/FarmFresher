@@ -119,13 +119,13 @@
           
           if (!mysqli_query($dbc, $query)) {
               echo "Error: " .$query . "<br/>" . mysqli_error($dbc);
-              $showSuccessMsg = false;
+              $showSuccessMsg = true;
               $infoUpdatedMsg = "Error: Update was not processed. Contact an administrator.";
           }
         }
         else {
             $infoUpdatedMsg = "Password Did Not Meet Necessary Criteria";
-            $showSuccessMsg = false;
+            $showSuccessMsg = true;
         }
     }
     mysqli_close($dbc);
@@ -145,7 +145,7 @@
                 echo "<div class='alert alert-success' role='alert'>
                             $infoUpdatedMsg
                         </div>";
-                } else if (!$passSubmissionValid && !$showSuccessMsg) {
+                } else if (!$passSubmissionValid && $showSuccessMsg) {
                     echo "<div class='alert alert-danger' role='alert'>
                             $infoUpdatedMsg
                         </div>";

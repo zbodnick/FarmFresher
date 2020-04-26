@@ -116,38 +116,38 @@
             </div>
           </div>
       <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-              <div class="feature-1 border">
-                <div class="icon-wrapper bg-primary">
-                  <span class="flaticon-school-material text-white"></span>
-                </div>
-                <div class="feature-1-content">
+      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="feature-1 border">
+              <div class="icon-wrapper bg-primary">
+                <span class="flaticon-mortarboard text-white"></span>
+              </div>
+              <div class="feature-1-content">
                   <h2>View Application</h2>
-                  <p>View your currently submitted application.<br></br></p>
+                  <p>View your currently submitted application.</p>
                   <p><a href="application_view.php" class="btn btn-primary px-4 rounded-0">View Application</a></p>
                 </div>
               </div> 
             </div>
-            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-              <div class="feature-1 border">
-                <div class="icon-wrapper bg-primary">
-                  <span class="flaticon-mortarboard text-white"></span>
-                </div>
-                <div class="feature-1-content">
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="feature-1 border">
+              <div class="icon-wrapper bg-primary">
+                <span class="flaticon-mortarboard text-white"></span>
+              </div>
+              <div class="feature-1-content">
                   <h2>Account Information</h2>
                   <p>View and edit your personal account information.</p>
                   <p><a href="account.php" class="btn btn-primary px-4 rounded-0">View Account</a></p>
                 </div>
               </div>
             </div>
-          <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-              <div class="feature-1 border">
-                <div class="icon-wrapper bg-primary">
-                  <span class="flaticon-mortarboard text-white"></span>
-                </div>
-                <div class="feature-1-content">
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="feature-1 border">
+              <div class="icon-wrapper bg-primary">
+                <span class="flaticon-mortarboard text-white"></span>
+              </div>
+              <div class="feature-1-content">
                   <h2>Change Password</h2>
-                  <p>Change Your Password.<br></br><br /></p>
+                  <p>Change Your Password.<br><br/></p>
                   <p><a href="change_password.php" class="btn btn-primary px-4 rounded-0">Change Password</a></p>
                 </div>
               </div>

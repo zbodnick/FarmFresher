@@ -24,7 +24,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   <body>
     <br><br>
     <div class="container pt-3">
-    <h1 class="text-primary">Review Form</h1>
+    <h1 class="text-primary">Application Review</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <?php 
         $query = "SELECT * FROM application WHERE username = ". $_SESSION["id"];

@@ -84,9 +84,9 @@ if (isset($_POST['submit'])) {
 	$maxID = "SELECT max(applicationID) as ID FROM application";
 	$data = mysqli_query($dbc, $maxID);
 	$row = mysqli_fetch_array($data);
-	
+	$appID = $row['ID']+1;
 	$application = "INSERT INTO application VALUES (
-		".($row['ID']+1).",
+		".$appID.",
 		".$username.",
 		0,
 		'".$_POST['recommender']."',
@@ -117,13 +117,30 @@ if (isset($_POST['submit'])) {
 		'n/a')";
 	$applicationdata = mysqli_query($dbc, $application);
 
-	//echo"email1: ".$_POST['email']."\n";
+	$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";
+	$reviewerQ = mysqli_query($dbc, $reviewerIDS);
+	
+	if(mysqli_num_rows($reviewerQ) != 0) {
+		$row = mysqli_fetch_array($reviewerQ);
+
+		$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['id'] .",". $username .",0)";
+		$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+	}
+	else {
+		$reviewerIDS = "SELECT count(username) as count,username from reviewer_application  group by username order by count asc, username asc";
+		$reviewerQ = mysqli_query($dbc, $reviewerIDS);
+
+		$row = mysqli_fetch_array($reviewerQ);
+		$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['username'] .",". $username .",0)";
+		$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+	}
+
 	$msg = "Hello new applicant! Your new username to login is:\n".$username;
 	$msg = wordwrap($msg,70);
 	$header = "From: wdaughtridge@gwu.edu";
 	$retval = mail($_POST['email'],"New Login Information",$msg, $header);
 
-	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname'].". The applicationID that you will need later is ".($row['ID']+1).". Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/reccomendation.php";
+	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname'].". The applicationID that you will need later is ".($appID).". Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/reccomendation.php";
 	$msg = wordwrap($msg,70);
 	$retval = mail($_POST['recommender'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
 
@@ -278,7 +295,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="number" name="b_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" name="b_gpa" value="" />
 				</div>
 
 				<div class="col form-group">

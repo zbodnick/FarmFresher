@@ -248,7 +248,7 @@ CREATE TABLE `application` (
 
 CREATE TABLE `reviewer_application` (
   `username` int(8) PRIMARY KEY,
-  `applicantid` int,
+  `applicantid` int(8),
   `status` int
 );
 
@@ -275,9 +275,9 @@ INSERT INTO `application` VALUES(2,55555555, 0,'bestBeatle@gwu.edu', '100', '600
 INSERT INTO `application` VALUES(3,33333333, 0,'paulM@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
                                '100', '2014', '', '', '', '', '', 'BA', '4.0', 'Sound Engin.', '1972', 'Abbey Rd Uni', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', '');
 
-INSERT INTO reviewer_application VALUES(10000002,1,0);
-INSERT INTO reviewer_application VALUES(10000003,2,0);
-INSERT INTO reviewer_application VALUES(10000004,3,0);
+INSERT INTO reviewer_application VALUES(10000002,66666666,0);
+INSERT INTO reviewer_application VALUES(10000003,55555555,0);
+INSERT INTO reviewer_application VALUES(10000004,33333333,0);
 
 INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
