@@ -61,19 +61,19 @@
   if(isset($_POST["Search"])){
 
     //THIS ONLY ALLOWS FOR AN ADVISOR TO LOOK UP THEIR STUDENTS AND ONLY THEIR STUDENTS
-    if((strcmp($_SESSION['uType'], 'advisor') == 0)){
+    if((strcmp($_SESSION['uType'], 'Advisor') == 0)){
       echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';
       $input = $_POST['univID'];
 
 
       //LOADING SEARCHED STUDENT BASIC DATA INTO A TABLE
-      $query = "select * from student WHERE unid = '$input' and advisorid = '$_SESSION[id]' and (NOT applied_to_grad = 3)";
+      $query = "select * from student WHERE u_id = '$input' and advisorid = '$_SESSION[id]' and (NOT applied_to_grad = 3)";
       $result = mysqli_query($dbc, $query);
       if(mysqli_num_rows($result) > 0){
         echo '<table style="width:100%">';
         echo '<tr><th>University ID</th><th>Advisor ID</th><th>GPA</th><th>Program</th><th>Applied to Grad?</th></tr>';
         while($row = $result->fetch_assoc()){
-          echo "<td>" . $row["unid"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["gpa"]. "</td><td>" . $row["program"]. "</td>";
+          echo "<td>" . $row["u_id"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["gpa"]. "</td><td>" . $row["major"]. "</td>";
           $stuID = $row["unid"];
           if($row["applied_to_grad"] == 0){
             echo "<td>No</td></tr>";
