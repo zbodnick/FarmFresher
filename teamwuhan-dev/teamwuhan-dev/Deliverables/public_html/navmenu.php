@@ -9,16 +9,16 @@
       echo '<a href="form1.php">Form 1</a> ';
       echo '<a href="applygraduate.php">Apply to Graduate</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'alumni') == 0){
+    else if(strcmp($_SESSION['uType'], 'Alumni') == 0){
       echo '<a href="enrollment.php">View Final Transcript</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'gs') == 0){
+    else if(strcmp($_SESSION['uType'], 'GS') == 0){
       echo '<a href="studentsel.php">Student Data</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'advisor') == 0){
+    else if(strcmp($_SESSION['uType'], 'Advisor') == 0){
       echo '<a href="studentsel.php">Student Data</a> ';
     }
-    else if(strcmp($_SESSION['uType'], 'admin') == 0){
+    else if(strcmp($_SESSION['uType'], 'Admin') == 0){
       echo '<a href="newuser.php">Create a New User</a> ';
       echo '<a href="studentsel.php">Student Data</a> ';
       echo '<a href="reset.php">Reset</a> ';
