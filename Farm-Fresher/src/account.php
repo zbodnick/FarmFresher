@@ -61,6 +61,11 @@
         $idFormat = 'f_id';
         break;
 
+        case 'Applicant':
+        $userTable = 'applicant';
+        $idFormat = 'username';
+        break;
+
         case 'Admin':
         if($_SESSION['id'] != 10000000){
             header("Location: home.php");
@@ -83,6 +88,7 @@
 
     $user_userTable = mysqli_real_escape_string($dbc, trim($userTable));
     $user_idFormat = mysqli_real_escape_string($dbc, trim($idFormat));
+    $account_info_query;
 
     $account_info_query = "SELECT fname, lname, addr, email FROM $user_userTable WHERE $user_idFormat = $id ";
 

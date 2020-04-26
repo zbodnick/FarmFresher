@@ -209,8 +209,9 @@ CREATE TABLE `applicant` (
   `username` int(8) PRIMARY KEY,
   `fname` varchar(255),
   `lname` varchar(255),
+  `email` varchar(255),
   `ssn` int(9),
-  `address` varchar(255)
+  `addr` varchar(255)
 );
 
 CREATE TABLE `application` (
@@ -263,9 +264,9 @@ ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `a
 ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 ALTER TABLE `reccomender` ADD FOREIGN KEY (`applicationID`) REFERENCES `application` (`applicationID`);
 
-INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 111111111, '123 Fairy Tale Lane');
-INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 222111111, '321 Penny Lane');
-INSERT INTO applicant VALUES(33333333, 'Paul', 'McCartney', 333333333, '542 Abbey Road');
+INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
+INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 'rstarr@gwu.edu', 222111111, '321 Penny Lane');
+INSERT INTO applicant VALUES(33333333, 'Paul', 'McCartney', 'pmccartney@gwu.edu', 333333333, '542 Abbey Road');
 
 INSERT INTO `application` VALUES(1,66666666, 0,'lovesYoko@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
                                '100', '2014', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', '');

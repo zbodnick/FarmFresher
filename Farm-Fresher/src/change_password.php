@@ -33,6 +33,11 @@
         $idFormat = 'f_id';
         break;
 
+        case 'Applicant':
+        $userTable = 'applicant';
+        $idFormat = 'username';
+        break;
+
         case 'Admin':
         header("Location: home.php");
         break;
@@ -129,7 +134,7 @@
 
                 <?php
                 $empty_string = "";
-
+                
                 if ($passSubmissionValid && $showSuccessMsg) {
                 echo "<div class='alert alert-success' role='alert'>
                             $infoUpdatedMsg
