@@ -167,7 +167,7 @@
         echo '<tr><th>University ID</th><th>Advisor ID</th><th>GPA</th><th>Program</th><th>Applied to Grad?</th></tr>';
         while($row = $result->fetch_assoc()){
           echo "<td>" . $row["u_id"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["gpa"]. "</td><td>" . $row["major"]. "</td>";
-          $stuID = $row["unid"];
+          $stuID = $row["u_id"];
           if($row["applied_to_grad"] == 0){
             echo "<td>No</td></tr>";
           }
@@ -180,14 +180,14 @@
 
 
         //SHOW STUDENT'S TRANSCRIPT (ONLY IF BASIC DATA APPEARS)
-        $query = "select crseid, title, semester, yeartaken, grade, chours from transcript, course where courseid = crseid and univerid = '$_POST[univID]'";
+        $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_POST['univid'] ." and catalog.c_id = courses_taken.crn;";
         $result = mysqli_query($dbc, $query);
         echo '<center><h4>Transcript</h4></center><div class="transcript">';
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0){//
           echo '<table style="width:100%">';
           echo '<tr><th>Year</th><th>Semester</th><th>Course ID</th><th>Title</th><th>Grade</th><th>Credits</th></tr>';
           while($row = $result->fetch_assoc()){
-              echo "<tr><td>" . $row["yeartaken"]. "</td><td>" . $row["semester"]. "</td><td>" . $row["crseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["grade"]. "</td><td>" . $row["chours"]. "</td></tr>";
+              echo "<tr><td>" . $row["year"]. "</td><td>" . $row["semester"]. "</td><td>" . $row["crn"]. "</td><td>" . $row["title"]. "</td><td>" . $row["grade"]. "</td><td>" . $row["credits"]. "</td></tr>";
           }
           echo '</table></div>';
           echo '<hr />';
