@@ -13,7 +13,7 @@
 
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-  $query = "select DISTINCT u_id, semester, year, grade, title from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
+  $query = "select DISTINCT u_id, semester, year, grade, title, crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
 //select A.u_id, A.semester, A.year, A.grade, A.courseid from (select DISTINCT course.courseid, u_id, year, semester, grade, credits from courses_taken join schedule join course) as A;
   $result= mysqli_query($dbc, $query);
 
@@ -25,9 +25,10 @@
     // output data of each row
     echo '<table style="width:100%">';
     echo '<tr><th>Year</th><th>Semester</th><th>Course ID</th><th>Title</th><th>Grade</th><th>Credits</th></tr>';
+    
     while($row = $result->fetch_assoc())
       {
-        echo "<tr><td>" . $row["yeartaken"]. "</td><td>" . $row["semester"]. "</td><td>" . $row["crseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["grade"]. "</td><td>" . $row["chours"]. "</td></tr>";
+        echo "<tr><td>" . $row["year"]. "</td><td>" . $row["semester"]. "</td><td>" . $row["crseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["grade"]. "</td><td>" . $row["chours"]. "</td></tr>";
       }
     echo '</table></div>';
 
