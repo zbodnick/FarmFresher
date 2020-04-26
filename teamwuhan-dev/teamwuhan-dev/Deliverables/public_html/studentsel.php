@@ -246,9 +246,9 @@
   //SHOW ALL STUDENTS : THIS IS ONLY SHOWN IF A STUDENT HAS NOT YET BEEN SEARCHED
   else{
     //DISPLAY ALL USERS FOR GS AND ADMIN
-    if((strcmp($_SESSION['uType'], 'gs') == 0 || strcmp($_SESSION['uType'], 'admin') == 0)){
+    if((strcmp($_SESSION['uType'], 'GS') == 0 || strcmp($_SESSION['uType'], 'Admin') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="stuData">';
-   	  $query = "select * from student, personalinfo where universid = unid and (NOT applied_to_grad = 3)";
+   	  $query = "select * from student";
       $result= mysqli_query($dbc, $query);
 
       //PRINT OUT ALL USERS TO A TABLE
@@ -256,7 +256,7 @@
         echo '<table style="width:100%">';
         echo '<tr><th>First Name</th><th>Last Name</th><th>University ID</th><th>Advisor ID</th><th>Program</th></tr>';
         while($row = $result->fetch_assoc()){
-          echo "<tr><td>" . $row["ftname"]. "</td><td>" . $row["ltname"]. "</td><td>" . $row["unid"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["program"]. "</td></tr>";
+          echo "<tr><td>" . $row["fname"]. "</td><td>" . $row["lname"]. "</td><td>" . $row["u_id"]. "</td><td>" . $row["advisorid"]. "</td><td>" . $row["program"]. "</td></tr>";
         }
         echo '</table></div><br>';
       }
@@ -267,9 +267,9 @@
 
 
     //DISPLAY ONLY USERS FOR THE SELECTED ADVISOR
-    else if((strcmp($_SESSION['uType'], 'advisor') == 0)){
+    else if((strcmp($_SESSION['uType'], 'Advisor') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="advstuData">';
-   	  $query = "select * from student, personalinfo where advisorid = '$_SESSION[uID]' and universid = unid and (NOT applied_to_grad = 3)";
+   	  $query = "select * from student where advisorid = '$_SESSION[uID]'";
       $result= mysqli_query($dbc, $query);
 
       //PRINT OUT USERS TO A TABLE
@@ -277,7 +277,7 @@
         echo '<table style="width:100%">';
         echo '<tr><th>First Name</th><th>Last Name</th><th>University ID</th><th>Program</th></tr>';
         while($row = $result->fetch_assoc()){
-          echo "<tr><td>" . $row["ftname"]. "</td><td>" . $row["ltname"]. "</td><td>" . $row["unid"]. "</td><td>" . $row["program"]. "</td></tr>";
+          echo "<tr><td>" . $row["fname"]. "</td><td>" . $row["lname"]. "</td><td>" . $row["u_id"]. "</td><td>" . $row["program"]. "</td></tr>";
         }
         echo '</table></div><br>';
       }
