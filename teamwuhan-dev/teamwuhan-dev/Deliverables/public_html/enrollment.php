@@ -20,10 +20,12 @@
   echo '<center><h3>Transcript</h3></center><div>';
   echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
 
+
+
   if ($result->num_rows > 0)
     {
     // output data of each row
-    echo '<table style="width:100%">';
+    echo '<table style="width:70%">';
     echo '<tr><th>Year</th><th>Semester</th><th>Course ID</th><th>Title</th><th>Grade</th><th>Credits</th></tr>';
 
     while($row = $result->fetch_assoc())
