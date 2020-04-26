@@ -160,7 +160,7 @@
       $input = $_POST['univID'];
 
       //LOADING BASIC STUDENT DATA
-      $query = "select * from student WHERE u_id = '$input' and (NOT applied_to_grad = 3)";
+      $query = "select * from student WHERE u_id = '$input'"; // and (NOT applied_to_grad = 3)";
       $result = mysqli_query($dbc, $query);
       if(mysqli_num_rows($result) > 0){
         echo '<table style="width:100%">';
