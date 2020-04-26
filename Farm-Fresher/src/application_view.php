@@ -27,10 +27,10 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     <h1 class="text-primary">Review Form</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <?php 
-        $query = "SELECT * FROM application WHERE username = '". $_SESSION["id"] ."'";
+        $query = "SELECT * FROM application WHERE username = ". $_SESSION["id"];
         $data = mysqli_query($dbc, $query);
-        $row = mysqli_fetch_array($data);
-        if ($row == 1) {
+        if (mysqli_num_rows($data) == 1) {
+          $row = mysqli_fetch_array($data);
           $i = 0;
           $cats = array("Application ID","Username","Transcript ID","Recommender Email","GRE Verbal",
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
@@ -38,15 +38,14 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                   "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
                   "Completion","Recommendation","Reviewer Comment","Degree Type","Final Decision");
 
-          foreach ($row as $val) {
+          for ($i; $i < (sizeof($row)/2); $i++) {
             echo '
               <div class="row">
                 <div class="col-md-6 form-group">
-                  '. $cats[$i] .': '. $val .'
+                '. $cats[$i] .': '. $row[$i] .'
                 </div>
               </div>
             ';
-            $i++;
           }
         }
       ?>
