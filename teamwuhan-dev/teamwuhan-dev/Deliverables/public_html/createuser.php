@@ -37,7 +37,7 @@
        $id = $results["id"];
 
     if($_POST['typeofuser'] == 'student'){
-        $sql = "INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES ('$id', "FIRSTNAME", "LASTNAME", "NOADDRESS", "NOEMAIL", "Computer Science", null)";
+        $sql = 'INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES ("$id", "FIRSTNAME", "LASTNAME", "NOADDRESS", "NOEMAIL", "Computer Science", null)';
         mysqli_query($dbc, $sql);
     }
     if($_POST['typeofuser'] == 'faculty'){
