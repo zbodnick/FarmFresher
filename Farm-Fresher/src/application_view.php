@@ -30,22 +30,24 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $query = "SELECT * FROM application WHERE username = '". $_SESSION["id"] ."'";
         $data = mysqli_query($dbc, $query);
         $row = mysqli_fetch_array($data);
-        $i = 0;
-        $cats = array("Application ID","Username","Transcript ID","Recommender Email","GRE Verbal",
-                "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
-                "TOEFL Score","TOEFL Date","MS Prior","MS GPA","MS Major","MS Year","MS University",
-                "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
-                "Completion","Recommendation","Reviewer Comment","Degree Type","Final Decision");
+        if ($row == 1) {
+          $i = 0;
+          $cats = array("Application ID","Username","Transcript ID","Recommender Email","GRE Verbal",
+                  "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
+                  "TOEFL Score","TOEFL Date","MS Prior","MS GPA","MS Major","MS Year","MS University",
+                  "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
+                  "Completion","Recommendation","Reviewer Comment","Degree Type","Final Decision");
 
-        foreach ($row as $val) {
-          echo '
-            <div class="row">
-              <div class="col-md-6 form-group">
-                '. $cats[$i] .': '. $val .'
+          foreach ($row as $val) {
+            echo '
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  '. $cats[$i] .': '. $val .'
+                </div>
               </div>
-            </div>
-          ';
-          $i++;
+            ';
+            $i++;
+          }
         }
       ?>
     </form>

@@ -45,10 +45,11 @@
 
 <?php
 
-$id = $_SESSION["id"];
+if (isset($_SESSION['id'])) 
+	$id = $_SESSION['id'];
 
-if (empty($id)) {
-    header("Location: login.php");
+if (!empty($id)) {
+    header("Location: home.php");
 }
 
 include ('php/connectvars.php');		
@@ -74,7 +75,7 @@ if (isset($_POST['submit'])) {
 
 	$username = randNum();
 
-	$user = "INSERT INTO user VALUES (".$username.",'".$_POST['password']."',1,'".$_POST['fname']."','".$_POST['lname']."')";
+	$user = "INSERT INTO users VALUES (".$username.",'Applicant','".$_POST['password']."')";
 	$userdata = mysqli_query($dbc, $user);
 	
 	$applicant = "INSERT INTO applicant VALUES (".$username.",'".$_POST['fname']."','".$_POST['lname']."',".$_POST['ssn'].",'".$_POST['address']."')";
@@ -119,26 +120,12 @@ if (isset($_POST['submit'])) {
 	//echo"email1: ".$_POST['email']."\n";
 	$msg = "Hello new applicant! Your new username to login is:\n".$username;
 	$msg = wordwrap($msg,70);
-	$header = "From: drooffco@gwu.edu";
+	$header = "From: wdaughtridge@gwu.edu";
 	$retval = mail($_POST['email'],"New Login Information",$msg, $header);
-	 
-	 /*if( $retval == true ) {
-		echo "Message1 sent successfully...";
-	 }else {
-		echo "Message1 could not be sent...";
-	 }*/
 
-	//echo"email2: ".$_POST['recommender']."\n";
 	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname'].". The applicationID that you will need later is ".($row['ID']+1).". Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/reccomendation.php";
-	//You may need to change the link in the email above depending on who's aws account you are using.
 	$msg = wordwrap($msg,70);
 	$retval = mail($_POST['recommender'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
-	 
-	 /*if( $retval == true ) {
-		echo "Message2 sent successfully...";
-	 }else {
-		echo "Message2 could not be sent...";
-	 }*/
 
 	header("Location: index.php");
 }

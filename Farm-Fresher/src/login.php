@@ -99,6 +99,7 @@
     echo '<br><br><p class="text-danger">' . $error_msg . '</p>';
   }
 ?>
+              <p><a href="application.php" class="btn btn-primary px-4 rounded-0">Apply Now</a></p>
               </div>
             </div>
         </form>
