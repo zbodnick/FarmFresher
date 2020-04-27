@@ -204,6 +204,7 @@ drop table if exists applicant cascade;
 drop table if exists application cascade;
 drop table if exists reviewer_application cascade;
 drop table if exists reccomender cascade;
+drop table if exists verification_codes cascade;
 
 CREATE TABLE `applicant` (
   `username` int(8) PRIMARY KEY,
@@ -253,9 +254,16 @@ CREATE TABLE `reviewer_application` (
 );
 
 CREATE TABLE `reccomender` (
+  `fname` varchar(255),
+  `lname` varchar(255),
   `applicationID` int PRIMARY KEY,
   `email` varchar(255),
   `reccomendation` VARCHAR(10000)
+);
+
+CREATE TABLE `verification_codes` (
+  `username` int(8),
+  `verification`  int(5) PRIMARY KEY
 );
 
 ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
@@ -283,9 +291,9 @@ INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'passwo
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
 
-INSERT INTO reccomender VALUES(1,'wdaughtridge@gwu.edu','looks like a great applicant');
-INSERT INTO reccomender VALUES(2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
-INSERT INTO reccomender VALUES(3,'wdaughtridge@gwu.edu','absolutely');
+INSERT INTO reccomender VALUES('Eric','Clapton',1,'wdaughtridge@gwu.edu','looks like a great applicant');
+INSERT INTO reccomender VALUES('Eric','Clapton',2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
+INSERT INTO reccomender VALUES('Eric','Clapton',3,'wdaughtridge@gwu.edu','absolutely');
 
 SET FOREIGN_KEY_CHECKS = 1;
 /*

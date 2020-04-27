@@ -137,12 +137,29 @@ if (isset($_POST['submit'])) {
 
 	$msg = "Hello new applicant! Your new username to login is:\n".$username;
 	$msg = wordwrap($msg,70);
-	$header = "From: wdaughtridge@gwu.edu";
+	$header = "From: farmfresh@gmail.edu";
 	$retval = mail($_POST['email'],"New Login Information",$msg, $header);
 
-	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname'].". The applicationID that you will need later is ".($appID).". Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/reccomendation.php";
+	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! \n 
+			You will recieve a second email shortly with a verification code to verify your recommendation. \n
+			Once you have the verification code, you may follow the link below to complete the recommendation. \n
+			In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), \n
+			the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. \n
+			These steps are for security purposes only. We appreciate your cooperation. \n
+			Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php \n
+			Thank you!";
 	$msg = wordwrap($msg,70);
+	$header = "From: farmfresh@gmail.edu";
 	$retval = mail($_POST['recommender'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+
+	$verification = rand(10001,99999);
+	$msg = "YOUR VERICATION CODE IS: ".$verification." \n for the Farm Fresher University system. Please see previous email for instructions.";
+	$msg = wordwrap($msg,70);
+	$header = "From: farmfresh@gmail.edu";
+	$retval = mail($_POST['recommender'],"Verification Code",$msg, $header);
+
+	$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
+	$verQ = mysqli_query($dbc, $verCode);
 
 	header("Location: login.php");
 }

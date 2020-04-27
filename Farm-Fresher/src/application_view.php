@@ -27,7 +27,11 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     <h1 class="text-primary">Application Review</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <?php 
-        $query = "SELECT * FROM application WHERE username = ". $_SESSION["id"];
+        if (isset($_POST['id']))
+          $id = $_SESSION['id'];
+        else
+          $id = $_SESSION['id'];
+        $query = "SELECT * FROM application WHERE username = ".$id;
         $data = mysqli_query($dbc, $query);
         if (mysqli_num_rows($data) == 1) {
           $row = mysqli_fetch_array($data);
