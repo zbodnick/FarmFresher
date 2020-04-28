@@ -290,9 +290,9 @@ INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'passwo
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
 
-INSERT INTO reccomender VALUES('Eric','Clapton',1,'wdaughtridge@gwu.edu','looks like a great applicant');
-INSERT INTO reccomender VALUES('Eric','Clapton',2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
-INSERT INTO reccomender VALUES('Eric','Clapton',3,'wdaughtridge@gwu.edu','absolutely');
+INSERT INTO recommender VALUES('Eric','Clapton',66666666,'looks like a great applicant');
+INSERT INTO recommender VALUES('Eric','Clapton',55555555,'not so sure - gpa is very low from bachelor degree');
+INSERT INTO recommender VALUES('Eric','Clapton',33333333,'absolutely');
 
 SET FOREIGN_KEY_CHECKS = 1;
 /*
