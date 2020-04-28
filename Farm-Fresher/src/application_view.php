@@ -68,7 +68,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   <body>
     <br><br>
     <div class="container pt-3">
-    <h1 class="text-primary">Application Review</h1>
+    <h1 class="text-primary">View Application</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <?php 
         if (isset($_POST['id']))
@@ -86,20 +86,24 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             echo '<form action="application_view.php" method="post">
                     <input type="submit" id="btn" value="Accept Offer" name="accept" value="accept" class="btn btn-primary btn-lg px-5"/>
                     <input type="submit" id="btn" value="Reject Offer" name="reject" value="reject" class="btn btn-primary btn-lg px-5"/>
-                  </form></div></div>';
+                  </form></div></div><div class="card p-5 mt-4">';
           }
           else if ($row[28] == 2 && !strcmp($_SESSION['p_level'],"Applicant")) {
             echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">CONGRATULATIONS! You have been accepted!</h2>';
             echo '<form action="application_view.php" method="post">
                     <input type="submit" id="btn" value="Accept Offer" name="accept" value="accept" class="btn btn-primary btn-lg px-5"/>
                     <input type="submit" id="btn" value="Reject Offer" name="reject" value="reject" class="btn btn-primary btn-lg px-5"/>
-                  </form>/div></div>';
+                  </form></div></div><div class="card p-5 mt-4">';
           }
           else if ($row[25] == 1 && !strcmp($_SESSION['p_level'],"Applicant")) {
-            echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">We regret to inform you that your application has been rejected.</h2></div></div>';
+            echo '<div class="row"><div class="col-md-6 form-group">
+                  <h2 class="text-primary">We regret to inform you that your application has been rejected.</h2>
+                  </div></div><div class="card p-5 mt-4">';
           }
           else if (!strcmp($_SESSION['p_level'],"Applicant")) {
-            echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">Application Is In Review.</h2></div></div>';
+            echo '<div class="row"><div class="col-md-6 form-group">
+                  <h2 class="text-primary">Application Is In Review.</h2></div></div>
+                  <div class="card p-5 mt-4">';
           }
           $cats = array("Application ID","Username","Transcript","Recommender Email","GRE Verbal",
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
@@ -164,6 +168,6 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         }
       ?>
     </form>
-    <div>
+    </div>
   </body>
 </html>

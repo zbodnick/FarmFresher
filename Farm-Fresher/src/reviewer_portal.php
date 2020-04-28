@@ -10,7 +10,7 @@
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   <br><br><br><br>
-  <div class="container pt-3">
+  <div class="container pt-3 card p-5 mt-4">
 <?php
 
   if (empty($_SESSION['id'])) {

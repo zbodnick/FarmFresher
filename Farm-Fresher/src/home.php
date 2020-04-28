@@ -75,7 +75,7 @@
     </div>
     <br></br>
     <br />
-    <div class="row mb-5 justify-content-center text-center">
+      <div class="row mb-5 justify-content-center text-center">
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
               <div class="icon-wrapper bg-primary">
@@ -167,7 +167,7 @@
             </h2>
           </div>
         </div>
-		<div class="row">
+		  <div class="row mb-5 justify-content-center text-center">
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
               <div class="icon-wrapper bg-primary">
@@ -215,6 +215,22 @@
                 <p><a href="change_password.php" class="btn btn-primary px-4 rounded-0">Change Password</a></p>
               </div>
             </div>
+          </div>
+          </div>
+          <br></br>
+          <div class="row mb-5 justify-content-center text-center">
+              <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="feature-1 border">
+                  <div class="icon-wrapper bg-primary">
+                    <span class="flaticon-mortarboard text-white"></span>
+                  </div>
+                  <div class="feature-1-content">
+                    <h2>Application Review</h2>
+                    <p>View and Submit Application Reviews.</p>
+                    <p><a href="reviewer_portal.php" class="btn btn-primary px-4 rounded-0">Review Applications</a></p>
+                  </div>
+                </div>
+              </div>
           </div>
     </div>    
 <?php
@@ -372,6 +388,22 @@
                 <p><a href="grades.php" class="btn btn-primary px-4 rounded-0">Change Grades</a></p>
               </div>
             </div> 
+          </div>
+          </div>
+          <br></br>
+          <div class="row mb-5 justify-content-center text-center">
+              <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="feature-1 border">
+                  <div class="icon-wrapper bg-primary">
+                    <span class="flaticon-mortarboard text-white"></span>
+                  </div>
+                  <div class="feature-1-content">
+                    <h2>Application Review</h2>
+                    <p>View and Submit Application Reviews.</p>
+                    <p><a href="reviewer_portal.php" class="btn btn-primary px-4 rounded-0">Review Applications</a></p>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
 <?php
