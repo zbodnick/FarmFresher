@@ -23,7 +23,9 @@
 
 if (strcmp($permLevel, "Faculty") == 0) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  $appQ = "SELECT reviewer_application.applicantid from reviewer_application,application where reviewer_application.username=".$_SESSION['id']." AND application.recommendation=0";
+  $appQ = "SELECT reviewer_application.username,reviewer_application.applicantid from reviewer_application JOIN application on 
+           reviewer_application.applicantid=application.username where recommendation=0 and 
+           reviewer_application.username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $appQ);
   echo "<div class='col-md-6 form-group'><h1 class='text-primary'>Admissions Portal</h1></div>";
   if (mysqli_num_rows($data)) {
@@ -43,6 +45,15 @@ if (strcmp($permLevel, "Faculty") == 0) {
               </div>
             </div>";
     }
+  }
+  else {
+    echo "
+    <div class='row'>
+      <div class='col-md-6 form-group'>
+        <h3 class='text-primary'>No Current Application Needing Review</h3>
+      </div>
+    </div>
+    ";
   }
 } else if (strcmp($permLevel, "GS") == 0) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

@@ -47,17 +47,30 @@
 
       $sql = "UPDATE application SET recommendation =".$_POST['recommendation']." WHERE username=".$_POST['id'];
       $res = mysqli_query($dbc,$sql);
+
+      header("Location: home.php");
     }
     else if (strcmp($permLevel, "GS") == 0) {
       $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
       if (!empty($_POST['decision'])) {
         $sql = "UPDATE application SET final_decision =".$_POST['decision']." WHERE username=".$_POST['id'];
         $res = mysqli_query($dbc,$sql);
+
+        $sql = "SELECT email FROM applicant WHERE username=".$_POST['id'];
+        $res = mysqli_query($dbc,$sql);
+        $row = mysqli_fetch_array($res);
+
+        $msg = "Hello! Your application status has been updated. Login to your applicant portal to view.";
+        $msg = wordwrap($msg,70);
+        $header = "From: farmfresh@gmail.edu";
+        $retval = mail($row['email'],"Application Updated",$msg, $header);
       } 
       if (!empty($_POST['received'])) {
         $sql = "UPDATE application SET transID =".$_POST['received']." WHERE username=".$_POST['id'];
         $res = mysqli_query($dbc,$sql);
       }
+
+      header("Location: home.php");
     }
   }
 
@@ -122,6 +135,18 @@ if (strcmp($permLevel, "Faculty") == 0) {
   </div>
 <?php
 } else if (strcmp($permLevel, "GS") == 0) {
+
+  $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $sql = "SELECT final_decision FROM application WHERE username=".$_POST['id'];
+  $res = mysqli_query($dbc,$sql);
+  $row = mysqli_fetch_array($res);
+
+  if ($row['final_decision'] != 0) {
+    echo '
+      <br><br><h1 class="text-primary text-center text-danger">APPLICATION ALREADY HAS A FINAL DECISION. IF ANOTHER IS SUBMITTED, THE CURRENT DECISION WILL BE CHANGED</h1>
+    ';
+  }
+
 ?>
 <br><br>
     <div class="container pt-3">

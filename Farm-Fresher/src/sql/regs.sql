@@ -217,7 +217,7 @@ CREATE TABLE `applicant` (
 
 CREATE TABLE `application` (
   `applicationID` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `username` int(8),
+  `username` int(8) UNIQUE,
   `transID` int,
   `recommenderEmail` varchar(255),
   `GRE_ScoreVerbal` varchar(10),

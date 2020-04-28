@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Student Application</title>
+    <title>Application</title>
     <?php 
     require_once ('header.php'); 
     session_start();
@@ -15,14 +15,51 @@ if (empty($_SESSION['id'])) {
     header("Location: login.php");
 }
 
+include ('php/connectvars.php');	
+
 if (isset($_POST['accept'])) {
-  echo 'accept';
+  $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $query = "SELECT * FROM applicant WHERE username=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+  $applicantData = mysqli_fetch_array($data);
+
+  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','CSCI')";
+  $data = mysqli_query($dbc, $query);
+
+  $query = "UPDATE users SET p_level='Student' WHERE id=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  $query = "DELETE FROM reviewer_application WHERE applicantid=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  $query = "DELETE FROM recommender WHERE applicationID=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  $query = "DELETE FROM application WHERE username=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  $query = "DELETE FROM applicant WHERE username=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  header("Location: logout.php");
 }
 else if (isset($_POST['reject'])) {
-  echo 'reject';
-}
+  $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  
+  $query = "DELETE FROM reviewer_application WHERE applicantid=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
 
-include ('php/connectvars.php');		
+  $query = "DELETE FROM recommender WHERE applicationID=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  $query = "DELETE FROM application WHERE username=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  $query = "DELETE FROM applicant WHERE username=".$_SESSION['id'];
+  $data = mysqli_query($dbc, $query);
+
+  header("Location: logout.php");
+}	
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -111,14 +148,8 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 ';
                 }
             }
-            else if (strcmp($cats[$i],"Reviewer Comment") && strcmp($cats[$i],"Recommendation") && strcmp($cats[$i],"Final Decision") && !strcmp($_SESSION['p_level'],"Applicant")) {
-              echo '
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                  '. $cats[$i] .': '. $row[$i] .'
-                  </div>
-                </div>
-              ';
+            else if ((!strcmp($cats[$i],"Reviewer Comment") || !strcmp($cats[$i],"Recommendation") || !strcmp($cats[$i],"Final Decision")) && !strcmp($_SESSION['p_level'],"Applicant")) {
+              // do nothing
             }
             else {
               echo '
