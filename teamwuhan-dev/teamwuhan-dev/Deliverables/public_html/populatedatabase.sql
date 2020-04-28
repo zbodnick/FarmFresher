@@ -2,7 +2,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS suser CASCADE;
 CREATE TABLE suser (
-  utype      varchar(10),
+  utype      varchar(10), 
   uid        int auto_increment,
   uemail     varchar(30),
   passwd       varchar(30),

@@ -2,10 +2,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS users CASCADE;
 create table users(
-id int UNIQUE,
-p_level varchar(20) NOT NULL,
-password varchar(20) NOT NULL,
-primary key (id)
+  id int UNIQUE,
+  p_level varchar(20) NOT NULL,
+  password varchar(20) NOT NULL,
+  primary key (id)
 );
 
 DROP TABLE IF EXISTS student CASCADE;
@@ -27,38 +27,38 @@ create table student(
 
 DROP TABLE IF EXISTS faculty CASCADE;
 CREATE TABLE faculty(
-f_id int NOT NULL,
-fname varchar(20) NOT NULL,
-lname varchar(20) NOT NULL,
-addr varchar(50) NOT NULL,
-email varchar(30) NOT NULL,
-dept varchar(4) NOT NULL,
-primary key (f_id),
-foreign key (f_id) references users(id)
+  f_id int NOT NULL,
+  fname varchar(20) NOT NULL,
+  lname varchar(20) NOT NULL,
+  addr varchar(50) NOT NULL,
+  email varchar(30) NOT NULL,
+  dept varchar(4) NOT NULL,
+  primary key (f_id),
+  foreign key (f_id) references users(id)
 );
 
 DROP TABLE IF EXISTS catalog CASCADE;
 CREATE TABLE catalog(
-c_id int AUTO_INCREMENT,
-department varchar(20) NOT NULL,
-c_no int NOT NULL,
-title varchar(30) NOT NULL,
-credits int NOT NULL,
-primary key (c_id)
+  c_id int AUTO_INCREMENT,
+  department varchar(20) NOT NULL,
+  c_no int NOT NULL,
+  title varchar(30) NOT NULL,
+  credits int NOT NULL,
+  primary key (c_id)
 );
 
 DROP TABLE IF EXISTS schedule CASCADE;
 create table schedule(
-crn int AUTO_INCREMENT,
-course_id int NOT NULL,
-section_no int NOT NULL,
-semester varchar(20) NOT NULL,
-year YEAR NOT NULL,
-day char(1) NOT NULL,
-start_time TIME NOT NULL,
-end_time TIME NOT NULL,
-primary key (crn),
-foreign key (course_id) references catalog(c_id)
+  crn int AUTO_INCREMENT,
+  course_id int NOT NULL,
+  section_no int NOT NULL,
+  semester varchar(20) NOT NULL,
+  year YEAR NOT NULL,
+  day char(1) NOT NULL,
+  start_time TIME NOT NULL,
+  end_time TIME NOT NULL,
+  primary key (crn),
+  foreign key (course_id) references catalog(c_id)
 );
 
 DROP TABLE IF EXISTS courses_taken CASCADE;
@@ -88,7 +88,6 @@ prereq2 varchar(20) DEFAULT NULL,
 primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
-
 
 DROP TABLE IF EXISTS course CASCADE;
 CREATE TABLE course (
@@ -148,6 +147,7 @@ ALTER TABLE student
 ADD foreign key (u_id) references formone(universityid);
 ALTER TABLE transcript
 ADD foreign key (crseid) references course(courseid);
+
 
 INSERT INTO users (id, p_level, password) VALUES (10000000, 'Admin', 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 'GS', 'gs123');
@@ -254,7 +254,6 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
 
-
 INSERT INTO course VALUES ( 'CSCI6221', 'SW Paradigms', 3, null, null);
 INSERT INTO course VALUES ( 'CSCI6461', 'Computer Architecture', 3, null, null);
 INSERT INTO course VALUES ( 'CSCI6212', 'Algorithms', 3, null, null);
@@ -331,119 +330,4 @@ INSERT INTO personalinfo VALUES (88888888, 'Bhagirath', 'Narahari', '1966-12-12'
 INSERT INTO personalinfo VALUES (99999999, 'Eric', 'Clapton', '1981-02-02', 'Washington, DC, 22236', 2024892717);
 INSERT INTO personalinfo VALUES (2, 'Jake', 'Harris', '1999-01-01', 'Atlanta, GA, 44436', 2024892718);
 
-/* -----------------------------------------------------------------------------
-
-                            ╔══════════════╗
-----------------------------    APPS SQL    ------------------------------------
-                            ╚══════════════╝
-
---------------------------------------------------------------------------------
-*/
-
-drop table if exists applicant cascade;
-drop table if exists application cascade;
-drop table if exists reviewer_application cascade;
-drop table if exists recommender cascade;
-drop table if exists verification_codes cascade;
-
-CREATE TABLE `applicant` (
-  `username` int(8) PRIMARY KEY,
-  `fname` varchar(255),
-  `lname` varchar(255),
-  `email` varchar(255),
-  `ssn` int(9),
-  `addr` varchar(255)
-);
-
-CREATE TABLE `application` (
-  `applicationID` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `username` int(8) UNIQUE,
-  `transID` int,
-  `recommenderEmail` varchar(255),
-  `GRE_ScoreVerbal` varchar(10),
-  `GRE_ScoreQuantitative` varchar(10),
-  `GRE_Date` varchar(10),
-  `AdvGRE_Score` varchar(10),
-  `AdvGRE_Subject` varchar(255),
-  `AdvGRE_Date` varchar(10),
-  `TOEFL_Score` varchar(10),
-  `TOEFL_Date` varchar(10),
-  `MS_Prior` varchar(10),
-  `MS_GPA` varchar(4),
-  `MS_Major` varchar(255),
-  `MS_Year` varchar(10),
-  `MS_University` varchar(255),
-  `B_Prior` varchar(10),
-  `B_GPA` varchar(4),
-  `B_Major` varchar(255),
-  `B_Year` varchar(10),
-  `B_University` varchar(255),
-  `experience` varchar(1000),
-  `interests` varchar(1000),
-  `completion` int, /* 0=application not complete, 1=complete*/
-  `recommendation` int, /*0=under review 1=reject, 2=borderline, 3=admit without aid, 4=admit with aid*/
-  `reviewer_comment` varchar(255),
-  `degree_type` varchar(255),
-  `final_decision` int /*reject/accept/accept with aid*/
-);
-
-CREATE TABLE `reviewer_application` (
-  `username` int(8) PRIMARY KEY,
-  `applicantid` int(8),
-  `status` int
-);
-
-CREATE TABLE `recommender` (
-  `fname` varchar(255),
-  `lname` varchar(255),
-  `applicationID` int(8) PRIMARY KEY,
-  `recommendation` VARCHAR(10000)
-);
-
-CREATE TABLE `verification_codes` (
-  `username` int(8),
-  `verification`  int(5) PRIMARY KEY
-);
-
-ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `applicant` (`username`);
-ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
-ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`);
-ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
-
-INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
-INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 'rstarr@gwu.edu', 222111111, '321 Penny Lane');
-INSERT INTO applicant VALUES(33333333, 'Paul', 'McCartney', 'pmccartney@gwu.edu', 333333333, '542 Abbey Road');
-
-INSERT INTO `application` VALUES(1,66666666, 0,'lovesYoko@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
-                               '100', '2014', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-INSERT INTO `application` VALUES(2,55555555, 0,'bestBeatle@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
-                               '100', '2014', '', '', '', '', '', 'BA', '2.0', 'Drums', '1971', 'Oxford', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-INSERT INTO `application` VALUES(3,33333333, 0,'paulM@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
-                               '100', '2014', '', '', '', '', '', 'BA', '4.0', 'Sound Engin.', '1972', 'Abbey Rd Uni', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-
-INSERT INTO reviewer_application VALUES(10000002,66666666,0);
-INSERT INTO reviewer_application VALUES(10000003,55555555,0);
-INSERT INTO reviewer_application VALUES(10000004,33333333,0);
-
-INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
-INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
-INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
-
-INSERT INTO recommender VALUES('Eric','Clapton',66666666,'looks like a great applicant');
-INSERT INTO recommender VALUES('Eric','Clapton',55555555,'not so sure - gpa is very low from bachelor degree');
-INSERT INTO recommender VALUES('Eric','Clapton',33333333,'absolutely');
-
 SET FOREIGN_KEY_CHECKS = 1;
-/*
-  ┌─┐  ─┐
-　│▒│ /▒/
-　│▒│/▒/
-　│▒ /▒/─┬─┐
-　│▒│▒|▒│▒│
-┌┴─┴─┐-┘─┘
-│▒┌──┘▒▒▒│
-└┐▒▒▒▒▒▒┌┘
- └┐▒▒▒▒┌
-*/
