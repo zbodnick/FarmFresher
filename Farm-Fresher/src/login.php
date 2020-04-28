@@ -96,9 +96,12 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12">
-              <input type="submit" value="Log In" class="btn btn-primary btn-lg px-5" name="submit">
-              <input type="submit" value="Apply Now" class="btn btn-primary btn-lg px-5" name="apply">
+            <div class="col-md-6">
+              <input type="submit" value="Log In" class="btn btn-primary btn-lg btn-block" name="submit">
+            </div>
+	    <div class="col-md-6">
+		<input type="submit" value="Apply Now" class="btn btn-primary btn-lg btn-block" name="apply">
+		</div>
 <?php
   if (empty($_SESSION['id'])) {
     echo '<br><br><p class="text-danger">' . $error_msg . '</p>';
