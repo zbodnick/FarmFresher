@@ -2,20 +2,20 @@
 <html lang="en">
 
 <head>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 
     $id = $_SESSION["id"];
-    
+
     if (empty($id)) {
         header("Location: login.php");
     }
-    
-    include ('php/connectvars.php');		
-    
+
+    include ('php/connectvars.php');
+
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    
+    $dbc->query('SET foreign_key_checks = 0');
     $c_no = $_GET["cno"];
     $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no=$c_no AND s.course_id=c.c_id";
     $cid = mysqli_fetch_array(mysqli_query($dbc, $cid_query));
@@ -36,7 +36,7 @@
     $lname = $instructor_data['lname'];
 
     ?>
-    
+
   <title>Course Info</title>
 
 </head>
@@ -72,7 +72,7 @@
                     echo "<div class='alert alert-danger' role='alert'>No prerequisites satisfied and time conflict present</div>";
                 }
             }
-            
+
             ?>
             </div>
         </div>
@@ -81,11 +81,11 @@
                         <h2 class="section-title-underline mb-5">
                             <span><?php echo $dept ?> <?php echo $c_no ?>: <?php echo $title ?></span>
                         </h2>
-                        
-                        <p><strong class="text-black d-block">Instructor:</strong><?php echo $fname ?> <?php echo $lname ?></p><br>   
+
+                        <p><strong class="text-black d-block">Instructor:</strong><?php echo $fname ?> <?php echo $lname ?></p><br>
 
                         <?php
-                        
+
                         $course_query = "SELECT * FROM schedule WHERE crn=$crn";
 
                         $query_results = mysqli_query($dbc, $course_query);
@@ -110,7 +110,7 @@
                             while ($query_results && $row = mysqli_fetch_assoc($query_results)) {
                             ?>
                                 <tr class="text-center">
-                                <?php 
+                                <?php
 
                                 $crn = $row["crn"];
                                 $section = $row["section_no"];
@@ -129,13 +129,13 @@
                                 <td> <?php echo $start?> </td>
                                 <td> <?php echo $end?> </td>
 
-                            <?php 
+                            <?php
 
                             $uid =  $_SESSION['id'];
                             $enrollment_query = "SELECT * FROM courses_taken WHERE u_id=$uid AND crn=$crn";
                             $enrollement_results = mysqli_query($dbc, $enrollment_query);
-                           
-							// Only show an enroll/drop button if this is a student 
+
+							// Only show an enroll/drop button if this is a student
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
 									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>

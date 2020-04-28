@@ -4,7 +4,7 @@
 <head>
     <title>Edit Users - Farm Fresh Regs</title>
     <?php
-      require_once ('header.php'); 
+      require_once ('header.php');
 		  session_start();
 	  ?>
 
@@ -68,10 +68,10 @@
 		<h1 class="text-primary"> Edit User </h1>
 
         <?php
-              include ('php/connectvars.php');		
+              include ('php/connectvars.php');
 
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+      $dbc->query('SET foreign_key_checks = 0');
             // If current user is not a student, show a dropdown menu to select a student
             if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Admin') == 0) {
                 echo '

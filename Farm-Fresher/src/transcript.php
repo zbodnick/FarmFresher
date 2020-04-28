@@ -4,7 +4,7 @@
 <head>
     <title>Transcript - Farm Fresh Regs</title>
     <?php
-      require_once ('header.php'); 
+      require_once ('header.php');
 		  session_start();
 	  ?>
 
@@ -61,10 +61,10 @@
 		<h1 class="text-primary"> Transcript </h1>
 
         <?php
-              include ('php/connectvars.php');		
+              include ('php/connectvars.php');
 
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+      $dbc->query('SET foreign_key_checks = 0');
             // If current user is not a student, show a dropdown menu to select a student
             if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Student') != 0) {
                 echo '
@@ -86,7 +86,7 @@
 						<a href="transcript.php?student='. $s["u_id"] .'">'. $s["fname"] . ' ' . $s["lname"] .'</a>
 					';
 				}
-                                
+
 				echo '
 							</div>
                         </div>
@@ -96,30 +96,30 @@
 						<h4>
 							<span class="font-weight-bold"> Current Student: </span>
 				';
-				
-				// If user selected a specific student, display the name		
+
+				// If user selected a specific student, display the name
 				if (isset ($_GET['student'])) {
-					$query = "SELECT fname, lname FROM student WHERE u_id='" . $_GET['student'] . "';";	
+					$query = "SELECT fname, lname FROM student WHERE u_id='" . $_GET['student'] . "';";
 					$name = mysqli_fetch_array (mysqli_query ($dbc, $query));
 					echo ' ' . $name['fname'] . ' ' . $name['lname'];
 				} else { // User has not selected a student yet
-					echo ' ---';	
+					echo ' ---';
 				}
-	
+
 				echo '
 						</h4>
 					</div>
                 ';
             }
-          
-			$id = ""; 
+
+			$id = "";
 			if (isset ($_GET['student']) && strcmp ($_SESSION['p_level'], 'Student') != 0) {
 				$id = $_GET['student'];
 			}
-			else if (isset ($_SESSION['id'])) { 
+			else if (isset ($_SESSION['id'])) {
 				$id = $_SESSION['id'];
 			}
-			
+
             // Find all semesters this student took classes in
             $query = 'SELECT semester, year ' .
                      'FROM courses_taken, schedule ' .

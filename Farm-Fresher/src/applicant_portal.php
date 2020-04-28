@@ -3,8 +3,8 @@
 
 <head>
     <title>Applicant Portal</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 	?>
 </head>
@@ -15,10 +15,10 @@ if (empty($_SESSION['id'])) {
     header("Location: login.php");
 }
 
-include ('php/connectvars.php');		
+include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+$dbc->query('SET foreign_key_checks = 0');
 ?>
 
 	<body>
@@ -34,7 +34,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		//   echo '<hr />';
 
 		?>
-			
+
 		<div class="row mt-3">
 			<table class="table table-bordered">
 
@@ -48,7 +48,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		          $query = "SELECT * FROM application JOIN reviewer_application ON application.username=reviewer_application.applicantID WHERE application.username='".$_SESSION['id']."'";
 		          $data = mysqli_query($dbc, $query);
 
-		          // If The log-in is OK 
+		          // If The log-in is OK
 		          if (mysqli_num_rows($data) == 1) {
 		            while ($row = mysqli_fetch_array($data))
 		            {
@@ -76,14 +76,14 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               {
                 echo '<td>'.$row['final_decision'].'</td>';
               }
-              
+
             }
         ?>
 				</tbody>
 
 			</table>
-		</div>		
+		</div>
 
-	</div>	
-  </body>    
+	</div>
+  </body>
 </html>

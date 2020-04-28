@@ -6,12 +6,12 @@ if (!isset ($_SESSION["id"]) || strcmp ($_SESSION["p_level"], "Admin") != 0) {
     header("Location: login.php");
 }
 
-include ('php/connectvars.php');		
+include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+$dbc->query('SET foreign_key_checks = 0');
 // Check if a faculty member needs to be deleted
-if (isset ($_GET['id'])) { 
+if (isset ($_GET['id'])) {
 
 	// Query to delete from each relation
 	$query = 'DELETE FROM courses_taught WHERE f_id="'. $_GET['id'] .'";';
@@ -38,7 +38,7 @@ if (isset ($_GET['id'])) {
         <h1 class="text-primary"> Faculty </h1> <br>
 		<input class="form-control" id="search_filter" type="text" placeholder="Search...">
 
-			
+
 		<div class="row mt-3">
 			<table class="table table-bordered">
 
@@ -64,7 +64,7 @@ if (isset ($_GET['id'])) {
 				// Print each field of each faculty
 				while ($f = mysqli_fetch_assoc ($faculty)) {
 					echo '<tr class="text-center">';
-				
+
 					foreach ($f as $data) {
 						echo '<td class="align-middle">' . $data . '</td>';
 					}
@@ -78,9 +78,9 @@ if (isset ($_GET['id'])) {
 				</tbody>
 
 			</table>
-		</div>		
+		</div>
 
-	</div>	
+	</div>
 
 </body>
 

@@ -12,7 +12,7 @@
 
   //Load DBC
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+  $dbc->query('SET foreign_key_checks = 0');
 
   //These are the checks we run at the start of the page. Depending on user status,
   //we can accept their form 1 data, accept their thesis, or graduate them and move them into alumni.

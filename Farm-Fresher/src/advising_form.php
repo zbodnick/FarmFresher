@@ -3,8 +3,8 @@
 
 <head>
     <title>First Semester Advising Form</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 	?>
 </head>
@@ -17,10 +17,10 @@ if (empty($id)) {
     header("Location: login.php");
 }
 
-include ('php/connectvars.php');		
+include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+$dbc->query('SET foreign_key_checks = 0');
 ?>
 
 
@@ -31,7 +31,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div class="card-header">
         <h1 class="text-primary">First Semester Advising Form</h1>
-        <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking</small></h4>  
+        <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking</small></h4>
     </div>
         <?php
 
@@ -41,7 +41,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $course_query = 'SELECT * from catalog';
 
         $result = mysqli_query($dbc, $course_query);
-        
+
         if (mysqli_num_rows($result) > 0) {
             ?>
             <table class="table ">
@@ -61,7 +61,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             ?>
                 <tr class="text-center">
                 <td>
-                <?php 
+                <?php
 
                 $cid = $row["c_id"];
 
@@ -86,11 +86,11 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 <?php if (empty($data['prereq1']) && !empty($data['prereq2'])) { ?>
                     <td>None</td>
 
-                    <td>  
+                    <td>
                     <?php echo $pre2[0] ?> <?php echo $pre2[1] ?>
                     </td>
                 <?php } else if (!empty($data['prereq1']) &&  empty($data['prereq2'])) { ?>
-                    <td> 
+                    <td>
                     <?php echo $pre1[0] ?> <?php echo $pre1[1] ?>
                     </td>
                     <td>None</td>
@@ -98,7 +98,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                     <td>
                     <?php echo $pre1[0] ?> <?php echo $pre1[1] ?>
                     </td>
-                    
+
                     <td>
                     <?php echo $pre2[0] ?> <?php echo $pre2[1] ?>
                     </td>
@@ -107,7 +107,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                     <td>None</td>
                  <?php } ?>
 
-                <td> 
+                <td>
                     <label class="btn btn-primary">
                     <input type="checkbox" autocomplete="off">
                     <span class="glyphicon glyphicon-ok"></span>

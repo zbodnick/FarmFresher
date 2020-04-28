@@ -50,7 +50,7 @@
     $idFormat = "";
 
     switch ($permLevel) {
-        
+
         case 'Student':
         $userTable = 'student';
         $idFormat = 'u_id';
@@ -85,7 +85,7 @@
     }
 
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+    $dbc->query('SET foreign_key_checks = 0');
     $user_userTable = mysqli_real_escape_string($dbc, trim($userTable));
     $user_idFormat = mysqli_real_escape_string($dbc, trim($idFormat));
     $account_info_query;
@@ -169,22 +169,22 @@
         if ($fnameValid && $lnameValid && $emailValid && $addrValid) {
             $submissionValid = true;
         }
-        
+
         if ($submissionValid) {
-            
+
             $showSuccessMsg = true;
 
             $infoUpdatedMsg = "Account Information Updated Succesfully";
-            
+
             $fname = mysqli_real_escape_string($dbc, trim($_POST['fname']));
             $lname = mysqli_real_escape_string($dbc, trim($_POST['lname']));
             $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
             $address = mysqli_real_escape_string($dbc, trim($_POST['address']));
-            
+
             $query = "UPDATE $user_userTable SET fname='$fname', lname='$lname', addr='$address', email='$email' WHERE $user_idFormat=$id";
 
             mysqli_query($dbc, $query);
-            
+
             if (!mysqli_query($dbc, $query)) {
                 echo "Error: " .$query . "<br/>" . mysqli_error($dbc);
                 $showSuccessMsg = false;

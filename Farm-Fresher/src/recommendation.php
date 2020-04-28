@@ -3,17 +3,17 @@
 
 <head>
     <title>Recommendation</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 	?>
 </head>
 
 <?php
-	include ('php/connectvars.php');		
-	
-	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	include ('php/connectvars.php');
 
+	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $dbc->query('SET foreign_key_checks = 0');
 	if (isset($_POST['submit'])) {
 		$query = "SELECT * FROM verification_codes where verification=".$_POST['verification'];
 		$res = mysqli_query($dbc,$query);
