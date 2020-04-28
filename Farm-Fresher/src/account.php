@@ -195,26 +195,26 @@
     mysqli_close($dbc);
 ?>
 
+<br><br><br>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
     <div class="site-wrap">
 
         <div class="">
             <div class="container not-nav">
+            <div class="row align-center">
+                <div class="col-lg mx-auto">
+                        <?php
+                $empty_string = "";
 
-                <?php
-        $empty_string = "";
-
-        if ($submissionValid && $showSuccessMsg) {
-           echo "<div class='alert alert-success' role='alert'>
-                    $infoUpdatedMsg
-                </div>";
-        } else if ($submissionValid && !$showSuccessMsg) {
-            echo "<div class='alert alert-danger' role='alert'>
-                    $infoUpdatedMsg
-                 </div>";
-        }
-        ?>
+                if ($submissionValid && $showSuccessMsg) {
+                echo "<div class='alert alert-success' role='alert'>$infoUpdatedMsg</div>";
+                } else if ($submissionValid && !$showSuccessMsg) {
+                echo "<div class='alert alert-danger' role='alert'>$infoUpdatedMsg</div>";
+                }
+                ?>
+                </div>
+            </div>
 
                 <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="row">
