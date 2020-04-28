@@ -3,9 +3,10 @@
 
 <head>
     <title>Application</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
+    $dbc->query('SET foreign_key_checks = 0');
 	?>
 
 	<script type = "text/javascript">
@@ -38,21 +39,21 @@
 		}
 
 		<?php $error_msg=""; ?>
-		return retVal; 
+		return retVal;
 		}
 		</script>
 </head>
 
 <?php
 
-/*if (isset($_SESSION['id'])) 
+/*if (isset($_SESSION['id']))
 	$id = $_SESSION['id'];
 
 if (!empty($id)) {
     header("Location: home.php");
 }*/
 
-include ('php/connectvars.php');		
+include ('php/connectvars.php');
 
 
 function randNum () {
@@ -61,7 +62,7 @@ function randNum () {
 	return $new;
 }
 
-function check($new) {	
+function check($new) {
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	$query = "SELECT * FROM users where id=".$new;
 	$data = mysqli_query($dbc, $query);
@@ -77,7 +78,7 @@ if (isset($_POST['submit'])) {
 
 	$user = "INSERT INTO users VALUES (".$username.",'Applicant','".$_POST['password']."')";
 	$userdata = mysqli_query($dbc, $user);
-	
+
 	$applicant = "INSERT INTO applicant VALUES (".$username.",'".$_POST['fname']."','".$_POST['lname']."','".$_POST['email']."',".$_POST['ssn'].",'".$_POST['address']."')";
 	$applicantdata = mysqli_query($dbc, $applicant);
 
@@ -119,7 +120,7 @@ if (isset($_POST['submit'])) {
 
 	$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";
 	$reviewerQ = mysqli_query($dbc, $reviewerIDS);
-	
+
 	if(mysqli_num_rows($reviewerQ) != 0) {
 		$row = mysqli_fetch_array($reviewerQ);
 
@@ -162,7 +163,7 @@ if (isset($_POST['submit'])) {
 
 	header("Location: login.php");
 }
-
+$dbc->query('SET foreign_key_checks = 1');
 ?>
 
 		<!-- <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>"> -->
@@ -367,7 +368,7 @@ if (isset($_POST['submit'])) {
 					<input class="form-control form-control-lg text-muted" name="recommender" value="" required></textarea>
 				</div>
 			</div>
-					
+
 			<div class="row mb-3 mt-2">
                 <div class="col text-center">
                     <input type="submit" id="btn" value="Submit Application" name="submit" class="btn btn-primary btn-lg px-5">
