@@ -88,16 +88,16 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                     </td>
                 <?php } else if (!empty($data['prereq1']) &&  empty($data['prereq2'])) { ?>
                     <td> 
-                    <a href="course.php?cno=<?php echo $pre1[1] ?>"> <?php echo $pre1[0] ?> <?php echo $pre1[1] ?> </a>
+                    <a href="course.php?cno=<?php echo $pre1[1] ?>&dept=<?php echo $pre1[0] ?>"> <?php echo $pre1[0] ?> <?php echo $pre1[1] ?> </a>
                     </td>
                     <td>None</td>
                  <?php } else if (!empty($data['prereq1']) && !empty($data['prereq2'])) { ?>
                     <td>
-                    <a href="course.php?cno=<?php echo $pre1[1] ?>"> <?php echo $pre1[0] ?> <?php echo $pre1[1] ?> </a>
+                    <a href="course.php?cno=<?php echo $pre1[1] ?>&dept=<?php echo $pre1[0] ?>"> <?php echo $pre1[0] ?> <?php echo $pre1[1] ?> </a>
                     </td>
                     
                     <td>
-                    <a href="course.php?cno=<?php echo $pre2[1] ?>"> <?php echo $pre2[0] ?> <?php echo $pre2[1] ?> </a>
+                    <a href="course.php?cno=<?php echo $pre2[1] ?>&dept=<?php echo $pre2[0] ?>"> <?php echo $pre2[0] ?> <?php echo $pre2[1] ?> </a>
                     </td>
                 <?php  } else { ?>
                     <td>None</td>
