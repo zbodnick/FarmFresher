@@ -203,7 +203,7 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
 drop table if exists applicant cascade;
 drop table if exists application cascade;
 drop table if exists reviewer_application cascade;
-drop table if exists reccomender cascade;
+drop table if exists recommender cascade;
 drop table if exists verification_codes cascade;
 
 CREATE TABLE `applicant` (
@@ -217,7 +217,7 @@ CREATE TABLE `applicant` (
 
 CREATE TABLE `application` (
   `applicationID` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `username` int(8),
+  `username` int(8) UNIQUE,
   `transID` int,
   `recommenderEmail` varchar(255),
   `GRE_ScoreVerbal` varchar(10),
@@ -244,7 +244,7 @@ CREATE TABLE `application` (
   `recommendation` int, /*0=under review 1=reject, 2=borderline, 3=admit without aid, 4=admit with aid*/
   `reviewer_comment` varchar(255),
   `degree_type` varchar(255),
-  `final_decision` varchar(255) /*accept/reject/accept with aid*/
+  `final_decision` int /*reject/accept/accept with aid*/
 );
 
 CREATE TABLE `reviewer_application` (
@@ -253,12 +253,11 @@ CREATE TABLE `reviewer_application` (
   `status` int
 );
 
-CREATE TABLE `reccomender` (
+CREATE TABLE `recommender` (
   `fname` varchar(255),
   `lname` varchar(255),
-  `applicationID` int PRIMARY KEY,
-  `email` varchar(255),
-  `reccomendation` VARCHAR(10000)
+  `applicationID` int(8) PRIMARY KEY,
+  `recommendation` VARCHAR(10000)
 );
 
 CREATE TABLE `verification_codes` (
@@ -266,22 +265,23 @@ CREATE TABLE `verification_codes` (
   `verification`  int(5) PRIMARY KEY
 );
 
-ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `application` (`username`);
-ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-ALTER TABLE `reccomender` ADD FOREIGN KEY (`applicationID`) REFERENCES `application` (`applicationID`);
+ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
+ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
+ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `applicant` (`username`);
+ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
+ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`);
+ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
 
 INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
 INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 'rstarr@gwu.edu', 222111111, '321 Penny Lane');
 INSERT INTO applicant VALUES(33333333, 'Paul', 'McCartney', 'pmccartney@gwu.edu', 333333333, '542 Abbey Road');
 
 INSERT INTO `application` VALUES(1,66666666, 0,'lovesYoko@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
-                               '100', '2014', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', '');
+                               '100', '2014', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
 INSERT INTO `application` VALUES(2,55555555, 0,'bestBeatle@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
-                               '100', '2014', '', '', '', '', '', 'BA', '2.0', 'Drums', '1971', 'Oxford', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', '');
+                               '100', '2014', '', '', '', '', '', 'BA', '2.0', 'Drums', '1971', 'Oxford', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
 INSERT INTO `application` VALUES(3,33333333, 0,'paulM@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
-                               '100', '2014', '', '', '', '', '', 'BA', '4.0', 'Sound Engin.', '1972', 'Abbey Rd Uni', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', '');
+                               '100', '2014', '', '', '', '', '', 'BA', '4.0', 'Sound Engin.', '1972', 'Abbey Rd Uni', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
 
 INSERT INTO reviewer_application VALUES(10000002,66666666,0);
 INSERT INTO reviewer_application VALUES(10000003,55555555,0);
@@ -291,9 +291,9 @@ INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'passwo
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
 
-INSERT INTO reccomender VALUES('Eric','Clapton',1,'wdaughtridge@gwu.edu','looks like a great applicant');
-INSERT INTO reccomender VALUES('Eric','Clapton',2,'wdaughtridge@gwu.edu','not so sure - gpa is very low from bachelor degree');
-INSERT INTO reccomender VALUES('Eric','Clapton',3,'wdaughtridge@gwu.edu','absolutely');
+INSERT INTO recommender VALUES('Eric','Clapton',66666666,'looks like a great applicant');
+INSERT INTO recommender VALUES('Eric','Clapton',55555555,'not so sure - gpa is very low from bachelor degree');
+INSERT INTO recommender VALUES('Eric','Clapton',33333333,'absolutely');
 
 SET FOREIGN_KEY_CHECKS = 1;
 /*
