@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Update Password</title>
+    <title>Change Password</title>
     <?php require_once ('header.php'); ?>
 </head>
 
@@ -153,9 +153,22 @@
                 ?>
 
                 <div class="row justify-content-center">
-                    <div class="col-lg">
+                    <div class="card ml-5 mr-5 mb-5">
                         <div class="white-box">
-                            <h3 class="h3 text-primary">Update Password</h3>
+                        <div class="card-header">
+                            <ul class="nav nav-pills card-header-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" href="account.php">Account Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Change Password</a>
+                            </li>
+                            </ul>
+                        
+                        </div>
+                        <div class="card-body">
+
+                            <h3 class="h3 text-primary">Change Password</h3>
                             <p>Enter your current password and follow the proceeding instructions in order to change
                                 your
                                 password. Make it a good one!</p>
@@ -166,6 +179,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
                                         <div class="form-group">
                                             <label for="PasswordCurrent">
                                                 <span class="fas fa-asterisk text-danger"></span> Current Password<span
@@ -248,7 +262,7 @@
 
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="submit" value="Update Account Info" name="submit"
+                                                <input type="submit" value="Change Password" name="submit"
                                                     class="btn btn-primary btn-lg px-5">
                                             </div>
                                         </div>
@@ -259,6 +273,7 @@
                           ?>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
