@@ -11,12 +11,12 @@
 
 		if (strcmp ($_SESSION['p_level'], "Student") == 0) {
 			header("Location: home.php");
-		}	
+		}
 
 		if (empty($_GET['cno'])) {
 			header("Location: schedule.php");
 		}
-		
+		$dbc->query('SET foreign_key_checks = 0');
 		$query = 'SELECT department, c_no, title FROM catalog WHERE c_no="'. $_GET['cno'] .'"';
 		$course = mysqli_query ($dbc, $query);
 		$course = mysqli_fetch_array ($course);
@@ -26,7 +26,7 @@
 		$query = 'SELECT student.u_id, fname, lname, email, grade, courses_taken.crn
 						  FROM student, courses_taken, schedule, catalog
 						  WHERE student.u_id=courses_taken.u_id
-							and courses_taken.crn=schedule.crn 
+							and courses_taken.crn=schedule.crn
 							and schedule.course_id=catalog.c_id
 							and catalog.c_no="'. $_GET['cno'] .'"';
 
@@ -40,19 +40,19 @@
 			if (isset ($_POST['U'. $s['u_id']])) {
 				$grade = $_POST['U'. $s['u_id']];
 
-				// If this is not a faculty, then grades can be editied infinitely	
+				// If this is not a faculty, then grades can be editied infinitely
 				if (strcmp ($_SESSION['p_level'], "Faculty") != 0) {
-					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'" 
+					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'"
 									 WHERE u_id="'. $s['u_id'] .'" and crn="'. $s['crn'] .'"';
 					mysqli_query ($dbc, $update_query);
 
-					// Set the last update so the select menu for the grade can be made 
+					// Set the last update so the select menu for the grade can be made
 					// green to show user that the changes have been made
 					$last_update = $s['u_id'];
-				} 
+				}
 				// For faculty, only update if the grade hasn't been set
-				else if (strcmp ($grade, "IP") != 0) { 
-					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'" 
+				else if (strcmp ($grade, "IP") != 0) {
+					$update_query = 'UPDATE courses_taken SET grade="'. $grade .'"
 									 WHERE u_id="'. $s['u_id'] .'" and crn="'. $s['crn'] .'"';
 					mysqli_query ($dbc, $update_query);
 				}
@@ -67,10 +67,10 @@
             <div class="row mt-5">
 				<h2 class="text-primary"> <?php echo $course; ?> </h2>
 			</div>
-			
+
             <div class="row">
-				<p><strong class="text-black d-block"> 
-					To change a student's grade, use the dropdown menu and click the submit button for each student. 
+				<p><strong class="text-black d-block">
+					To change a student's grade, use the dropdown menu and click the submit button for each student.
 				</strong></p>
 			</div>
 
@@ -100,12 +100,12 @@
 						echo '<td class="align-middle">' . $s[$i] . '</td>';
 					}
 
-					// Check if grade has been set OR this is not a faculty	
+					// Check if grade has been set OR this is not a faculty
 					if (strcmp ($s['grade'], "IP") == 0 || strcmp ($_SESSION['p_level'], "Faculty") != 0) {
-						// Add a dropdown to enter grade 
-						echo '<td class="align-middle"> 
+						// Add a dropdown to enter grade
+						echo '<td class="align-middle">
 								<form action="grades.php?cno='. $_GET['cno'] .'" method="post">';
-						
+
 						// If this was the last grade changed, make the select green
 						if (strcmp ($s["u_id"], $last_update) == 0) {
 							echo '<select class="btn btn-primary" name="U'. $s['u_id'] .'">';
@@ -124,7 +124,7 @@
 								echo '<option value="'. $g .'"> '. $g .'</option>';
 							}
 						}
-						
+
 						echo '</td> </select>';
 						echo '<td> <input type="submit" value="Submit Grade" class="btn btn-danger"> </td>';
 						echo '</form>';
@@ -137,12 +137,10 @@
 			?>
 				</tbody>
 
-			</table>	
-			</div>	
+			</table>
+			</div>
 	</div>
 
 </body>
 
 </html>
-
-

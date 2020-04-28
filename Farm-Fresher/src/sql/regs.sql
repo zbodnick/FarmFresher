@@ -136,10 +136,10 @@ CREATE TABLE formone (
   primary key(universityid, cid)
 );
 
-ALTER TABLE users
-ADD foreign key (id) references alumni(univid);
-ALTER TABLE users
-ADD foreign key (id) references personalinfo(universid);
+ALTER TABLE alumni
+ADD foreign key (univid) references users(id);
+ALTER TABLE personalinfo
+ADD foreign key (universid) references users(id);
 ALTER TABLE alumni
 ADD foreign key (univid) references personalinfo(universid);
 ALTER TABLE student
@@ -416,11 +416,11 @@ INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 'jlennon@gwu.edu', 1111
 INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 'rstarr@gwu.edu', 222111111, '321 Penny Lane');
 INSERT INTO applicant VALUES(33333333, 'Paul', 'McCartney', 'pmccartney@gwu.edu', 333333333, '542 Abbey Road');
 
-INSERT INTO `application` VALUES(1,66666666, 0,'lovesYoko@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
+INSERT INTO `application` VALUES(1,66666666, 0,'lovesYoko@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '100', '2014', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-INSERT INTO `application` VALUES(2,55555555, 0,'bestBeatle@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
+INSERT INTO `application` VALUES(2,55555555, 0,'bestBeatle@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '100', '2014', '', '', '', '', '', 'BA', '2.0', 'Drums', '1971', 'Oxford', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-INSERT INTO `application` VALUES(3,33333333, 0,'paulM@gwu.edu', '100', '600', '2018', '100', 'English', '2019', 
+INSERT INTO `application` VALUES(3,33333333, 0,'paulM@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '100', '2014', '', '', '', '', '', 'BA', '4.0', 'Sound Engin.', '1972', 'Abbey Rd Uni', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
 
 INSERT INTO reviewer_application VALUES(10000002,66666666,0);

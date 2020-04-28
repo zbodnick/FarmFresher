@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-    include ('php/connectvars.php');	
+    include ('php/connectvars.php');
     // Connect to the database
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -13,11 +13,11 @@ session_start();
 
     $drop = "DELETE FROM courses_taken WHERE u_id=$uid and crn=$crn";
     mysqli_query($dbc, $drop);
-
+    $dbc->query('SET foreign_key_checks = 0');
     echo $drop;
     // die(mysqli_error($dbc));
 
     header("Location: course.php?cno=$cno&dept=$dept&dropped=true");
 
-    
+
 ?>

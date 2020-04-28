@@ -3,8 +3,8 @@
 
 <head>
     <title>Applicant Review Form</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 	?>
 
@@ -14,18 +14,18 @@
 	if (empty($_SESSION['id'])) {
 		header("Location: login.php");
   }
-  
+
   $first = '';
   $last = '';
   $id = '';
 
   $permLevel = $_SESSION['p_level'];
-	
+
 	include ('php/connectvars.php');
-  
+
   if (isset($_POST['review'])) {
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    
+    $dbc->query('SET foreign_key_checks = 0');
     $id = $_POST['id'];
 
     $query = 'SELECT fname, lname FROM applicant WHERE username='.$_POST['id'];
@@ -33,7 +33,7 @@
 
     if(mysqli_num_rows($res)) {
       $row = mysqli_fetch_array($res);
-      
+
       $first = $row['fname'];
       $last = $row['lname'];
     }
@@ -64,7 +64,7 @@
         $msg = wordwrap($msg,70);
         $header = "From: farmfresh@gmail.edu";
         $retval = mail($row['email'],"Application Updated",$msg, $header);
-      } 
+      }
       if (!empty($_POST['received'])) {
         $sql = "UPDATE application SET transID =".$_POST['received']." WHERE username=".$_POST['id'];
         $res = mysqli_query($dbc,$sql);
@@ -82,11 +82,11 @@ if (strcmp($permLevel, "Faculty") == 0) {
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
           <div class="col-md-6 form-group">
-              <label for="fname">Name: </label>                            
+              <label for="fname">Name: </label>
               <?php echo $first?> <?php echo $last?>
           </div>
           <div class="col-md-6 form-group">
-              <label for="fname">Applicant ID: </label>                            
+              <label for="fname">Applicant ID: </label>
               <?php echo $id?>
           </div>
       </div>
@@ -154,11 +154,11 @@ if (strcmp($permLevel, "Faculty") == 0) {
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
           <div class="col-md-6 form-group">
-              <label for="fname">Name: </label>                            
+              <label for="fname">Name: </label>
               <?php echo $first?> <?php echo $last?>
           </div>
           <div class="col-md-6 form-group">
-              <label for="fname">Applicant ID: </label>                            
+              <label for="fname">Applicant ID: </label>
               <?php echo $id?>
           </div>
       </div>

@@ -3,8 +3,8 @@
 
 <head>
     <title>Applicant Review Form</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 	?>
 </head>
@@ -15,10 +15,10 @@ if (empty($_SESSION['id'])) {
     header("Location: login.php");
 }
 
-include ('php/connectvars.php');		
+include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+$dbc->query('SET foreign_key_checks = 0');
 //   echo '<hr />';
 //   echo '<div class="nav"><button id="btn" onclick="window.location.href = \'gscac_portal.php\';">Back</button></div>';
 //   echo '<hr />';
@@ -76,33 +76,33 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="fname">Name</label>                            
+                    <label for="fname">Name</label>
                     <?php echo $first?> <?php echo $last?>
                      </div>
                 <div class="col-md-6 form-group">
-                    <label for="appid">Application ID</label>                            
+                    <label for="appid">Application ID</label>
                     <?php echo $appid?>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="fname">GRE Score - Quantitative</label>                            
+                    <label for="fname">GRE Score - Quantitative</label>
                     <?php echo $greMath?>
                      </div>
                 <div class="col-md-6 form-group">
-                    <label for="appid">GRE Score - Verbal</label>                            
+                    <label for="appid">GRE Score - Verbal</label>
                     <?php echo $greEnglish?>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="fname">Reviewer Recommendation</label>                            
+                    <label for="fname">Reviewer Recommendation</label>
                     <?php echo $recommendation?>
                      </div>
                 <div class="col-md-6 form-group">
-                    <label for="appid">Reviewer Comment</label>                            
+                    <label for="appid">Reviewer Comment</label>
                     <?php echo $comment?>
                 </div>
             </div>
@@ -127,11 +127,11 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 <div class="col form-group text-danger text-center">
                     Reject <input id="decision" class="" name="decision" type="radio" value="reject" /><br/>
                 </div>
-                
+
                 <span class="error"> <?php echo $myDecisionErr;?></span>
 
             </div>
-                                
+
             <div class="row mb-3 mt-2">
                 <div class="col text-center">
                     <input type="submit" id="btn" value="Submit" name="submit" class="btn btn-primary btn-lg px-5">
@@ -143,29 +143,29 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     </body>
 
 <?php
-  
-  
+
+
   if(!empty($myDecision)){
-    
+
     $sql1 = "";
       if($myDecision == "withaid"){
-        
+
         $sql1 = "UPDATE application SET final_decision = 'Accept with Aid' WHERE applicationID = $appid";
       }
       elseif($myDecision == "accept"){
-        
+
         $sql1 = "UPDATE application SET final_decision = 'Accept' WHERE applicationID = $appid";
       }
       else{
-       
+
         $sql1 = "UPDATE application SET final_decision = 'Reject' WHERE applicationID = $appid";
       }
-  
+
       if($dbc->query($sql1) == true){
       echo '<br/> Thank you, you decision has been recorded <br/>';
       }
   }
 
-?>  
+?>
 
 </html>

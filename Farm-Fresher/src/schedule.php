@@ -3,10 +3,10 @@
 
 <head>
     <title>Schedule - Farm Fresh Regs</title>
-    <?php 
-		require_once ('header.php'); 
+    <?php
+		require_once ('header.php');
 		session_start ();
-		
+
 		if (empty ($_SESSION['id'])) {
 			header ('Location: home.php');
 		}
@@ -24,7 +24,7 @@
 		table-layout: fixed;
 		width: 100%;
 		}
-		
+
 		td {
 		width: 25%;
 		}
@@ -71,7 +71,7 @@
 
 		.show {display: block;}
 	</style>
-	
+
 </head>
 
 <body  data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -79,17 +79,17 @@
 
 <div class="site-section">
 <div class="container">
-	
+
 	<div class="row">
 		<h1 class="text-primary"> Schedule </h1>
 	</div>
-	
+
 	<div class="row">
-		<h4 class="pl-1 font-weight-lighter"><small> 
+		<h4 class="pl-1 font-weight-lighter"><small>
 			Use the dropdown menu to select a specific semester.
 			<?php echo $descrip; ?>
-		</small></h4>  
-	</div>	
+		</small></h4>
+	</div>
 
 	<div class="row mt-1 pt-2">
 		<div class="dropdown">
@@ -98,23 +98,23 @@
 			</button>
 			<div id="myDropdown" class="dropdown-content">
 				<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-			
+
 <?php
 
 	// Check which type of user this is
 	if (strcmp ($_SESSION['p_level'], 'Student') == 0) {
 		$id_type = "u_id";
 		$courses_type = "taken";
-	} else if (strcmp ($_SESSION['p_level'], 'Faculty') == 0){ 
+	} else if (strcmp ($_SESSION['p_level'], 'Faculty') == 0){
 		$id_type = "f_id";
 		$courses_type = "taught";
 	} else {
 		header ('Location: home.php');
 	}
 
-	include ('php/connectvars.php');		
+	include ('php/connectvars.php');
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+  $dbc->query('SET foreign_key_checks = 0');
 	// Find all unique semesters for this student
 	$query = 'SELECT semester, year
 			  FROM schedule, courses_' . $courses_type .
@@ -128,17 +128,17 @@
 			$s['semester'] . ' ' . $s['year'] .
 			'</a>';
 	}
-	
+
 	echo  '	</div>
 		</div>
 	</div>';
 ?>
 
 	<div class="row mt-5">
-		<h4> <span class="font-weight-bold"> Current Semester: </span> 
+		<h4> <span class="font-weight-bold"> Current Semester: </span>
 
 <?php
-		
+
 	// If a specific semester is set, add clause to filter it
 	if (isset ($_GET['semester'])) {
 
@@ -153,12 +153,12 @@
 
 	} else { // Default to the current one
 		$today = new DateTime();
-	
-		// Find which season it is	
+
+		// Find which season it is
 		if ($today < new DateTime ('June 1')) {
 			$s = "Spring";
 		} else if ($today > new DateTime ('August 15')){
-			$s = "Fall";	
+			$s = "Fall";
 		} else {
 			$s = "Summer";
 		}
@@ -168,18 +168,18 @@
 
 	// Find all classes this student is taking
 	if (strcmp ($_SESSION['p_level'], "Student") == 0) {
-		$query = 'SELECT semester, year, day, start_time, c_no, fname, lname, title, department 
+		$query = 'SELECT semester, year, day, start_time, c_no, fname, lname, title, department
 				  FROM faculty, schedule, courses_taken, catalog, courses_taught
-				  WHERE u_id="'. $_SESSION['id'] .'" and courses_taken.crn=schedule.crn 
+				  WHERE u_id="'. $_SESSION['id'] .'" and courses_taken.crn=schedule.crn
 					and schedule.course_id=catalog.c_id and faculty.f_id=courses_taught.f_id
 					and courses_taught.crn=courses_taken.crn';
 
 		$link = "course.php?cno=";
 
 	} else if (strcmp ($_SESSION['p_level'], "Faculty") == 0) {
-		$query = 'SELECT semester, year, day, start_time, c_no, title, department, lname, fname 
+		$query = 'SELECT semester, year, day, start_time, c_no, title, department, lname, fname
 				  FROM faculty, schedule, catalog, courses_taught
-				  WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 
+				  WHERE courses_taught.f_id="'. $_SESSION['id'] .'"
 					and courses_taught.crn=schedule.crn and schedule.course_id=catalog.c_id
 					and faculty.f_id=courses_taught.f_id';
 		$link = "grades.php?cno=";
@@ -188,7 +188,7 @@
 	// Finish printing the current semester
 	echo $s . ' ' , $y . '</h4>
 	</div>';
-	
+
 	$query = $query . ' and semester="' . $s . '" and year="' . $y . '"';
 
 	// Append a where clause that specifies the start time
@@ -199,17 +199,17 @@
 	$t1 = mysqli_query ($dbc, $t1);
 	$t2 = mysqli_query ($dbc, $t2);
 	$t3 = mysqli_query ($dbc, $t3);
-	
+
 	$days = array("M", "T", "W", "R", "F");
 ?>
 
 		<div class="row">
 			<table class="table mt-3 mb-5 table-bordered">
-				
+
 				<thead>
 					<tr class="text-center table-primary">
 						<th style="width: 13%"> </th>
-						<th class=""> Monday </th>	
+						<th class=""> Monday </th>
 						<th class=""> Tuesday </th>
 						<th class=""> Wednesday </th>
 						<th class=""> Thursday </th>
@@ -220,7 +220,7 @@
 				<tbody>
 					<tr class="text-center">
 						<th class="table-secondary align-middle"> 3:00-5:30 pm </th>
-						
+
 						<?php
 							$row = mysqli_fetch_array ($t1);
 
@@ -230,20 +230,20 @@
 								echo '<td class="">';
 
 								// If this class meets on this day, print it in the correct spot on schedule
-								if ($row != false and strcmp ($row['day'], $d) == 0) { 
+								if ($row != false and strcmp ($row['day'], $d) == 0) {
 									$cno = $row['c_no']; ?>
-									<b><a href="<?php echo $link . $cno; ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
-										$row['title'] . ' ' . '<br>' . 
+									<b><a href="<?php echo $link . $cno; ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' .
+										$row['title'] . ' ' . '<br>' .
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									$row = mysqli_fetch_array ($t1);
 								} else { // Keep spacing consistent even if there is no data to print
 									echo '<br><br><br>';
-								} 
+								}
 
 								echo '</td>';
 							}
 						?>
-	
+
 					</tr>
 					<tr class="text-center">
 						<th class="table-secondary align-middle"> 4:00-6:30 pm </td>
@@ -256,10 +256,10 @@
 								echo '<td class="">';
 
 								// If this class meets on this day, print it in the correct spot on schedule
-								if ($row != false and strcmp ($row['day'], $d) == 0) { 
+								if ($row != false and strcmp ($row['day'], $d) == 0) {
 									$cno = $row['c_no']; ?>
-									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
-										$row['title'] . ' ' . '<br>' . 
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' .
+										$row['title'] . ' ' . '<br>' .
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									$row = mysqli_fetch_array ($t2);
 								} else { // Keep spacing consistent even if there is no data to print
@@ -279,12 +279,12 @@
 							foreach ($days as $d) {
 
 								echo '<td class="">';
-								
+
 								// If this class meets on this day, print it in the correct spot on schedule
-								if ($row != false and strcmp ($row['day'], $d) == 0) { 
+								if ($row != false and strcmp ($row['day'], $d) == 0) {
 									$cno = $row['c_no']; ?>
-									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
-										$row['title'] . ' ' . '<br>' . 
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' .
+										$row['title'] . ' ' . '<br>' .
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									$row = mysqli_fetch_array ($t3);
 								} else { // Keep spacing consistent even if there is no data to print
@@ -296,12 +296,12 @@
 						?>
 					</tr>
 				</tbody>
-	
+
 			</table>
 		</div>
 	</div>
 	</div>
-	
+
 	<script>
       /* When the user clicks on the button,
       toggle between hiding and showing the dropdown content */

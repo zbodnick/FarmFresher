@@ -35,13 +35,13 @@
     $permLevel = $_SESSION['p_level'];
 
     switch ($permLevel) {
-        
+
         case 'Student':
         break;
 
         case 'Faculty':
         break;
-        
+
         case 'Admin':
         header("Location: home.php");
         break;
@@ -55,7 +55,7 @@
     }
 
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+    $dbc->query('SET foreign_key_checks = 0');
     $requiredField = " * Required Field ";
     $invalidEntry = " * Invalid Entry ";
 
@@ -139,7 +139,7 @@
             if (preg_match("/^[a-zA-Z ]*$/", $_POST['program'])) {
                 $progValid = true;
             }else if(empty($_POST['program'])){
-                $progValid = true;    
+                $progValid = true;
             } else {
                 $progError = $invalidEntry;
             }
@@ -165,13 +165,13 @@
             $submissionValid = true;
           }
         }
-        
+
         if ($submissionValid) {
-            
+
             $showSuccessMsg = true;
 
             $infoUpdatedMsg = "Account Information Updated Succesfully";
-            
+
             $fname = mysqli_real_escape_string($dbc, trim($_POST['fname']));
             $lname = mysqli_real_escape_string($dbc, trim($_POST['lname']));
             $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
@@ -185,7 +185,7 @@
             }else if($_SESSION['p_level'] == "Faculty"){
               $dept = mysqli_real_escape_string($dbc, trim($_POST['dept']));
             }
-            
+
             if($_SESSION['p_level'] == "Student"){
               if($programNull == false){
                 $query = "INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES ('$id', '$fname', '$lname', '$address', '$email', '$major', '$program');";
@@ -195,7 +195,7 @@
             }else if($_SESSION['p_level'] == "Faculty"){
               $query = "INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES ('$id', '$fname', '$lname', '$address', '$email', '$dept');";
             }
-            
+
             if (!mysqli_query($dbc, $query)) {
                 echo "Error: " .$query . "<br/>" . mysqli_error($dbc);
                 $showSuccessMsg = false;

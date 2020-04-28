@@ -3,8 +3,8 @@
 
 <head>
     <title>Application</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
     session_start();
 	?>
 </head>
@@ -15,15 +15,16 @@ if (empty($_SESSION['id'])) {
     header("Location: login.php");
 }
 
-include ('php/connectvars.php');	
+include ('php/connectvars.php');
 
 if (isset($_POST['accept'])) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $dbc->query('SET foreign_key_checks = 0');
   $query = "SELECT * FROM applicant WHERE username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
   $applicantData = mysqli_fetch_array($data);
 
-  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','CSCI')";
+  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', NULL, NULL, NULL, NULL, NULL)";
   $data = mysqli_query($dbc, $query);
 
   $query = "UPDATE users SET p_level='Student' WHERE id=".$_SESSION['id'];
@@ -45,7 +46,7 @@ if (isset($_POST['accept'])) {
 }
 else if (isset($_POST['reject'])) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  
+
   $query = "DELETE FROM reviewer_application WHERE applicantid=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
 
@@ -59,7 +60,7 @@ else if (isset($_POST['reject'])) {
   $data = mysqli_query($dbc, $query);
 
   header("Location: logout.php");
-}	
+}
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -70,12 +71,12 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     <div class="container pt-3">
     <h1 class="text-primary">View Application</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-      <?php 
+      <?php
         if (isset($_POST['id']))
           $id = $_POST['id'];
         else
           $id = $_SESSION['id'];
-        
+
         $query = "SELECT * FROM application WHERE username = ".$id;
         $data = mysqli_query($dbc, $query);
         if (mysqli_num_rows($data) == 1) {

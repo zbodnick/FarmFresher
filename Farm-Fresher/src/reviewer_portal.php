@@ -3,8 +3,8 @@
 
 <head>
     <title>Application Review</title>
-    <?php 
-    require_once ('header.php'); 
+    <?php
+    require_once ('header.php');
 	?>
 </head>
 
@@ -19,12 +19,13 @@
 
   $permLevel = $_SESSION['p_level'];
 
-  include ('php/connectvars.php');		
+  include ('php/connectvars.php');
 
 if (strcmp($permLevel, "Faculty") == 0) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  $appQ = "SELECT reviewer_application.username,reviewer_application.applicantid from reviewer_application JOIN application on 
-           reviewer_application.applicantid=application.username where recommendation=0 and 
+  $dbc->query('SET foreign_key_checks = 0');
+  $appQ = "SELECT reviewer_application.username,reviewer_application.applicantid from reviewer_application JOIN application on
+           reviewer_application.applicantid=application.username where recommendation=0 and
            reviewer_application.username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $appQ);
   echo "<div class='col-md-6 form-group'><h1 class='text-primary'>Admissions Portal</h1></div>";

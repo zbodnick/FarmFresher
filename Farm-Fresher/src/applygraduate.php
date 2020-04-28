@@ -8,6 +8,7 @@
 	require_once('header.php');
   require_once('navmenu.php');
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $dbc->query('SET foreign_key_checks = 0');
   $id = $_SESSION['id'];
   $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM courses_taken WHERE u_id = $id;";
   $numberOfAs = mysqli_query($dbc, $queryA);

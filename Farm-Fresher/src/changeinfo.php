@@ -17,6 +17,7 @@
     echo '<body>Change info below<br/></body>';
 
      $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+     $dbc->query('SET foreign_key_checks = 0');
      $id = $_SESSION['id'];
 
           if (empty($_SESSION['id']))

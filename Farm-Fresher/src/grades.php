@@ -51,9 +51,9 @@
   </style>
 
 	<?php
-		require_once ('header.php'); 
+		require_once ('header.php');
 		session_start();
-	
+
 		$id = $_SESSION['id'];
 
 		if (empty ($id)) {
@@ -66,20 +66,20 @@
 			header ('Location: home.php');
 		}
 
-		include ('php/connectvars.php');    
+		include ('php/connectvars.php');
         $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-		// Find all classes 
+		$dbc->query('SET foreign_key_checks = 0');
+		// Find all classes
 		$query = 'SELECT department, c_no, title FROM catalog';
 
-		// If this is a faculty, need to add WHERE clause to specify only the 
+		// If this is a faculty, need to add WHERE clause to specify only the
 		// classes they are teaching
 		if (strcmp ($plevel, "Faculty") == 0) {
-			$query = $query . ' , schedule, courses_taught WHERE courses_taught.f_id="'. $_SESSION['id'] .'" 
-								and courses_taught.crn=schedule.crn 
+			$query = $query . ' , schedule, courses_taught WHERE courses_taught.f_id="'. $_SESSION['id'] .'"
+								and courses_taught.crn=schedule.crn
 								and schedule.course_id=catalog.c_id';
 		}
-	
+
 		$classes = mysqli_query ($dbc, $query);
     ?>
 
@@ -95,10 +95,10 @@
 		</div>
 
 		<div class="row">
-			<h4 class="pl-1 font-weight-lighter"><small> 
+			<h4 class="pl-1 font-weight-lighter"><small>
 				Use the dropdown menu to select a specific class.
-			</small></h4>  
-		</div>	
+			</small></h4>
+		</div>
 
 		<div class="row mt-1 pt-2">
 			<div class="dropdown">
@@ -112,8 +112,8 @@
 		while ($c = mysqli_fetch_array ($classes)) {
 			$course = '<b>'. $c['department'] . " " . $c['c_no'] . "</b>: " . $c['title'];
 			echo '<a href="grades.php?cno='. $c['c_no'] .'">'. $course .'</a>';
-			
-		} 
+
+		}
 	?>
 				</div>
 			</div>
@@ -125,7 +125,7 @@
 		if (isset ($_GET['cno'])) {
 			require_once ('enrollment.php');
 		}
-	?> 
+	?>
 
 		</div>
 	</div>

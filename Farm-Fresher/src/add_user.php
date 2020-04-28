@@ -3,12 +3,12 @@
 
 <style>
     .not-nav {
-        margin-top: 3%; 
+        margin-top: 3%;
     }
 </style>
 
 <head>
-  <?php require_once ('header.php'); ?>  
+  <?php require_once ('header.php'); ?>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -28,6 +28,7 @@
     if (isset($_POST['submit'])) {
       // Connect to the database
       $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+      $dbc->query('SET foreign_key_checks = 0');
       // Grab the user-entered log-in data
       $user_username = mysqli_real_escape_string($dbc, trim($_POST['username']));
       $user_privilege = mysqli_real_escape_string($dbc, trim($_POST['plevel']));

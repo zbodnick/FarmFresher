@@ -22,7 +22,7 @@
     $permLevel = $_SESSION['p_level'];
 
     switch ($permLevel) {
-        
+
         case 'Student':
         $userTable = 'student';
         $idFormat = 'u_id';
@@ -51,7 +51,7 @@
     }
 
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+    $dbc->query('SET foreign_key_checks = 0');
     $requiredField = " * Required Field ";
     $invalidEntry = " * Invalid Entry ";
 
@@ -75,7 +75,7 @@
           $passSubmissionValid = false;
           $currentPassError = "You're current password does not match the password you've submitted. Please try again.";
         }
-      } 
+      }
 
       if (empty($_POST['newPassword'])) {
         $passSubmissionValid = false;
@@ -112,11 +112,11 @@
           $showSuccessMsg = true;
 
           $newPass = mysqli_real_escape_string($dbc, trim($_POST['newPassword']));
-          
+
           $query = "UPDATE users SET password='$newPass' WHERE id = $id";
 
           mysqli_query($dbc, $query);
-          
+
           if (!mysqli_query($dbc, $query)) {
               echo "Error: " .$query . "<br/>" . mysqli_error($dbc);
               $showSuccessMsg = true;
@@ -140,7 +140,7 @@
 
                 <?php
                 $empty_string = "";
-                
+
                 if ($passSubmissionValid && $showSuccessMsg) {
                 echo "<div class='alert alert-success' role='alert'>
                             $infoUpdatedMsg
@@ -164,7 +164,7 @@
                                 <a class="nav-link active" href="#">Change Password</a>
                             </li>
                             </ul>
-                        
+
                         </div>
                         <div class="card-body">
 

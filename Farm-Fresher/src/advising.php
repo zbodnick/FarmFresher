@@ -21,6 +21,7 @@
 
 
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $dbc->query('SET foreign_key_checks = 0');
   require_once('footer.php');
 
 ?>
