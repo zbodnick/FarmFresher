@@ -232,7 +232,7 @@
 								// If this class meets on this day, print it in the correct spot on schedule
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
 									$cno = $row['c_no']; ?>
-									<b><a href="<?php echo $link . $cno; ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									<b><a href="<?php echo $link . $cno; ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									$row = mysqli_fetch_array ($t1);
@@ -258,7 +258,7 @@
 								// If this class meets on this day, print it in the correct spot on schedule
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
 									$cno = $row['c_no']; ?>
-									<b><a href="course.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									$row = mysqli_fetch_array ($t2);
@@ -283,7 +283,7 @@
 								// If this class meets on this day, print it in the correct spot on schedule
 								if ($row != false and strcmp ($row['day'], $d) == 0) { 
 									$cno = $row['c_no']; ?>
-									<b><a href="course.php?cno=<?php echo $cno ?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
+									<b><a href="course.php?cno=<?php echo $cno ?>&dept=<?php echo $row['department']?>"><?php echo $row['department'] . ' ' . $row['c_no'] . '</b></a>: <br>' . 
 										$row['title'] . ' ' . '<br>' . 
 										'<i> Instructor: ' . $row['fname'] . ' ' . $row['lname'] , '</i>';
 									$row = mysqli_fetch_array ($t3);
