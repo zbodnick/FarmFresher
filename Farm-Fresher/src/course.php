@@ -45,6 +45,37 @@
     <br><br><br>
     <div class="site-section">
         <div class="container">
+        <div class="row align-center">
+            <div class="col-lg mx-auto">
+            <?php
+
+            // Conflict Error Codes:
+            // pre1false
+            // pre2false
+            // noprereqs
+            // timeconflict
+            // noprereqstimeconflict
+
+            if (isset($_GET['dropped']) && $_GET['dropped']) {
+                echo "<div class='alert alert-danger' role='alert'>Successfully Dropped Course</div>";
+            } else if (isset($_GET['registered']) && $_GET['registered']) {
+                echo "<div class='alert alert-success' role='alert'>Successfully Registered for Course</div>";
+            } else if (isset($_GET['conflict'])) {
+                $reg_error = $_GET["conflict"];
+                if ( strcmp($reg_error, "pre1false") == 0 || strcmp($reg_error, "pre2false") == 0 ) {
+                    echo "<div class='alert alert-danger' role='alert'>You have not satisfied one of the required prerequisites for this course</div>";
+                } else if ( strcmp($reg_error, "noprereqs") == 0) {
+                    echo "<div class='alert alert-danger' role='alert'>You have not satisfied any of the required prerequisites for this course</div>";
+                } else if ( strcmp($reg_error, "timeconflict") == 0) {
+                    echo "<div class='alert alert-danger' role='alert'>One of your other courses conflicts with the timing of this course</div>";
+                } else if ( strcmp($reg_error, "noprereqstimeconflict") == 0) {
+                    echo "<div class='alert alert-danger' role='alert'>No prerequisites satisfied and time conflict present</div>";
+                }
+            }
+            
+            ?>
+            </div>
+        </div>
             <div class="row">
                 <div class="col-lg mx-auto align-self-center">
                         <h2 class="section-title-underline mb-5">

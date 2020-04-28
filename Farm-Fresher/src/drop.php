@@ -16,7 +16,7 @@ session_start();
     echo $drop;
     // die(mysqli_error($dbc));
 
-    header("Location: course.php?cno=$cno");
+    header("Location: course.php?cno=$cno&dropped=true");
 
     
 ?>
