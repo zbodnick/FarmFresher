@@ -253,11 +253,10 @@ CREATE TABLE `reviewer_application` (
   `status` int
 );
 
-CREATE TABLE `reccomender` (
+CREATE TABLE `recommender` (
   `fname` varchar(255),
   `lname` varchar(255),
-  `applicationID` int PRIMARY KEY,
-  `email` varchar(255),
+  `applicationID` int(8) PRIMARY KEY,
   `reccomendation` VARCHAR(10000)
 );
 

@@ -15,7 +15,7 @@
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
 	if (isset($_POST['submit'])) {
-		$query = "SELECT * FROM verification_code where verification=".$_POST['verification'];
+		$query = "SELECT * FROM verification_codes where verification=".$_POST['verification'];
 		$res = mysqli_query($dbc,$query);
 		if (mysqli_num_rows($res) == 1) {
 			$row = mysqli_fetch_array($res);
@@ -24,7 +24,7 @@
 			$query = "SELECT * FROM applicant where fname='".$_POST['fname']."' AND lname='".$_POST['lname']."' AND username=".$username;
 			$res = mysqli_query($dbc,$query);
 			if (mysqli_num_rows($res) == 1) {
-				$query = "INSERT INTO application ";
+				$query = "INSERT INTO recommender VALUES('".$_POST['fname_r']."','".$_POST['lname_r']."',".$username.",'".$_POST['recommendation']."')";
 				$res = mysqli_query($dbc,$query);
 			}
 			else {
@@ -56,6 +56,17 @@
 
 			<div class="row">
 				<div class="col-md-6 form-group">
+					<label for="fname_r">YOUR First Name <b>OF RECOMMENDER</b></label>
+					<input type="text" class="form-control form-control-lg text-muted" name="fname_r" value="" required/>
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="lname_r">YOUR Last Name <b>OF RECOMMENDER</b></label>
+					<input type="text" class="form-control form-control-lg text-muted" name="lname_r" value="" required/>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 form-group">
 					<label for="verification">Verification Code (see email)</label>
             		<input type="text" class="form-control form-control-lg text-muted" name="verification" value="" required/>
 				</div>
@@ -67,7 +78,7 @@
 			<div class="row">
 				<div class="col-md">
 					<label for="experience">Recommendation</label>
-					<textarea class="form-control form-control-lg text-muted" name="reccomendation" rows="12" cols="100"></textarea>
+					<textarea class="form-control form-control-lg text-muted" maxlength="10000" name="recommendation" rows="12" cols="100"></textarea>
 				</div>
 			</div>
 
