@@ -23,6 +23,8 @@
   session_start();
   // Clear the error message
   $error_msg = "";
+  if (isset($_SESSION['id']))
+    header('Location: home.php');
   // TODO: If the user isn't logged in, try to log them in
   if (!empty($_POST)) {
     if (isset($_POST['submit'])) {

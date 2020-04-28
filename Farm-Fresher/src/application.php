@@ -45,12 +45,12 @@
 
 <?php
 
-if (isset($_SESSION['id'])) 
+/*if (isset($_SESSION['id'])) 
 	$id = $_SESSION['id'];
 
 if (!empty($id)) {
     header("Location: home.php");
-}
+}*/
 
 include ('php/connectvars.php');		
 
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 		0,
 		'n/a',
 		'".$_POST['dgr']."',
-		'n/a')";
+		0)";
 	$applicationdata = mysqli_query($dbc, $application);
 
 	$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";

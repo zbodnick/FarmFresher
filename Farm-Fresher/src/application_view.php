@@ -44,23 +44,25 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         if (mysqli_num_rows($data) == 1) {
           $row = mysqli_fetch_array($data);
           $i = 0;
-          if ($row[25] == 3 || $row[25] == 4) {
-            echo '<div class="container pt-3"><h2 class="text-primary">CONGRATULATIONS! You have been accepted!</h2>';
+          if ($row[28] == 3) {
+            echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">CONGRATULATIONS! You have been accepted with aid!</h2>';
             echo '<form action="application_view.php" method="post">
                     <input type="submit" id="btn" value="Accept Offer" name="accept" value="accept" class="btn btn-primary btn-lg px-5"/>
                     <input type="submit" id="btn" value="Reject Offer" name="reject" value="reject" class="btn btn-primary btn-lg px-5"/>
-                  </form>';
-            echo '</br></div>';
+                  </form></div></div>';
           }
-          else if ($row[25] == 2) {
-            echo '
-            <div class="container pt-3"><h2 class="text-primary">Your application has been deferred. We will notify you when we have reached a final decision</h2></br></div>
-            ';
+          else if ($row[28] == 2) {
+            echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">CONGRATULATIONS! You have been accepted!</h2>';
+            echo '<form action="application_view.php" method="post">
+                    <input type="submit" id="btn" value="Accept Offer" name="accept" value="accept" class="btn btn-primary btn-lg px-5"/>
+                    <input type="submit" id="btn" value="Reject Offer" name="reject" value="reject" class="btn btn-primary btn-lg px-5"/>
+                  </form>/div></div>';
           }
           else if ($row[25] == 1) {
-            echo '
-            <div class="container pt-3"><h2 class="text-primary">We are sorry to inform you that your application has been rejected.</h2></br></div>
-            ';
+            echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">We regret to inform you that your application has been rejected.</h2></div></div>';
+          }
+          else {
+            echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">Application Is In Review.</h2></div></div>';
           }
           $cats = array("Application ID","Username","Transcript","Recommender Email","GRE Verbal",
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
