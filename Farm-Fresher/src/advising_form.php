@@ -28,9 +28,11 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 <br><br>
 
     <div class="container pt-3">
-        <h1 class="text-primary">First Semester Adviding Form</h1>
+    <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <div class="card-header">
+        <h1 class="text-primary">First Semester Advising Form</h1>
         <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking</small></h4>  
-        <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    </div>
         <?php
 
         // Schedule links to faculty on crn
@@ -113,11 +115,6 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 			    </label>
                 </tr>
 
-                <div class="row mx-auto">
-                    <div class="col-lg">
-                        <input type="submit" value="Change Password" name="submit" class="btn btn-primary btn-lg px-5">
-                    </div>
-                </div>
         <?php
             }
             echo "</tbody>
@@ -126,6 +123,11 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             echo "We're sorry, course enrollment is under maintenance";
         }
         ?>
+         <div class="row mx-auto">
+            <div class="col-lg p-2">
+            <input type="submit" value="Submit Advising Form" name="submit" class="btn btn-primary btn-lg px-5">
+            </div>
+        </div>
         </form>
     </div>
 
