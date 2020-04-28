@@ -62,27 +62,58 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             <div class="container pt-3"><h2 class="text-primary">We are sorry to inform you that your application has been rejected.</h2></br></div>
             ';
           }
-          $cats = array("Application ID","Username","Transcript ID","Recommender Email","GRE Verbal",
+          $cats = array("Application ID","Username","Transcript","Recommender Email","GRE Verbal",
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
                   "TOEFL Score","TOEFL Date","MS Prior","MS GPA","MS Major","MS Year","MS University",
                   "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
                   "Completion","Recommendation","Reviewer Comment","Degree Type","Final Decision");
-          $accepted = array("Rejected","Deferred","Accepted, No Aid","Accepted, Aid");
+          $accepted = array("Review In Progress","Rejected","Deferred","Accepted, No Aid","Accepted, Aid");
           for ($i; $i < (sizeof($row)/2); $i++) {
-            if (strcmp($cats[$i],"Reviewer Comment") && strcmp($cats[$i],"Recommendation")) {
+            if (!strcmp($cats[$i],"Transcript")) {
+              if ($row[$i] == 0) {
+              echo '
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    '.$cats[$i].': Not Received
+                  </div>
+                </div>
+              ';
+              }
+              else {
+                echo '
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      '.$cats[$i].': Received
+                    </div>
+                  </div>
+                ';
+                }
+            }
+            else if (!strcmp($cats[$i],"Completion")) {
+              if ($row[$i] == 0) {
+              echo '
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    Status: Not Complete
+                  </div>
+                </div>
+              ';
+              }
+              else {
+                echo '
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      Status: Complete
+                    </div>
+                  </div>
+                ';
+                }
+            }
+            else if (strcmp($cats[$i],"Reviewer Comment") && strcmp($cats[$i],"Recommendation") && strcmp($cats[$i],"Final Decision")) {
               echo '
                 <div class="row">
                   <div class="col-md-6 form-group">
                   '. $cats[$i] .': '. $row[$i] .'
-                  </div>
-                </div>
-              ';
-            }
-            else if (!strcmp($cats[$i],"Recommendation")) {
-              echo '
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                  '. $cats[$i] .': '. $accepted[$row[$i]-1] .'
                   </div>
                 </div>
               ';

@@ -26,6 +26,9 @@
 			if (mysqli_num_rows($res) == 1) {
 				$query = "INSERT INTO recommender VALUES('".$_POST['fname_r']."','".$_POST['lname_r']."',".$username.",'".$_POST['recommendation']."')";
 				$res = mysqli_query($dbc,$query);
+
+				$query = "DELETE FROM verification_codes WHERE verification=".$_POST['verification'];
+				$res = mysqli_query($dbc,$query);
 			}
 			else {
 				//ERROR!
