@@ -75,7 +75,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
                 ?>
 
-                <a href="course.php?cno=<?php echo $crn ?>"> <?php echo $dept ?> <?php echo $crn ?> </a>
+                <a href="course.php?cno=<?php echo $crn ?>&dept=<?php echo $dept ?>"> <?php echo $dept ?> <?php echo $crn ?> </a>
                 </td>
                 <td> <?php echo $title?> </td>
                 <td> <?php echo $credits?> </td>

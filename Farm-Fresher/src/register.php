@@ -10,7 +10,8 @@ session_start();
     $crn = mysqli_real_escape_string($dbc, trim($_GET['crn']));
     $grade = 'IP';
 
-    $cno =  $_GET['cno'];
+    $cno = $_GET['cno'];
+    $dept = $_GET['dept'];
 
     // TO DO: TIME CONFLICTS AND PRE_REQS
 	// $enroll_course_t = "SELECT start_time FROM schedule WHERE crn='".$_GET['crn']."'";
@@ -41,12 +42,11 @@ session_start();
     // $class_registering_for_data = mysqli_fetch_array($class_registering_for_result);
     if ($class_registering_for_result && mysqli_num_rows($class_registering_for_result) > 0) {
         while ($class_data = mysqli_fetch_assoc($class_registering_for_result)) {
-        // Get crn, day, semester, start_time, and end_time for each course the student is currently enrolled in
-        $course_id = $class_data["course_id"];
-        $day = $class_data["day"];
-        $term = $class_data["semester"];
-        // $start_time = strtotime($class_data["start_time"]);
-        // $end_time = strtotime($class_data["end_time"]);
+            $course_id = $class_data["course_id"];
+            $day = $class_data["day"];
+            $term = $class_data["semester"];
+            $start_time = strtotime($class_data["start_time"]);
+            $end_time = strtotime($class_data["end_time"]);
         }
         // die($course_id . " " . $day . " " . $term . " " . $crn_course_registering_for);
     }
@@ -134,32 +134,32 @@ session_start();
 
         $enroll = "INSERT courses_taken (u_id, crn, grade) VALUES ($uid, $crn, '$grade')";
         mysqli_query($dbc, $enroll);
-        header("Location: course.php?cno=$cno&registered=true");
+        header("Location: course.php?cno=$cno&registered=true&dept=$dept");
 
     } else {
         if ( $prereq1_conflict == 1) {
             $error="pre1false";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&conflict=$error&dept=$dept");
         }
 
         if ( $prereq2_conflict == 1) {
             $error="pre2false";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&conflict=$error&dept=$dept");
         }
 
         if ( $prereq1_conflict == 1 && $prereq2_conflict == 1) {
             $error="noprereqs";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&conflict=$error&dept=$dept");
         }
 
         if ( $time_conflict == 1) {
             $error="timeconflict";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&conflict=$error&dept=$dept");
         }
 
         if ( $time_conflict && ($prereq1_conflict == 1 || $prereq2_conflict == 1)) {
             $error="noprereqstimeconflict";
-            header("Location: course.php?cno=$cno&conflict=$error");
+            header("Location: course.php?cno=$cno&conflict=$error&dept=$dept");
         }
     }
 

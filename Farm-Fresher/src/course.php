@@ -21,13 +21,13 @@
     $cid = mysqli_fetch_array(mysqli_query($dbc, $cid_query));
     $crn  = $cid['crn'];
 
-    $query = "SELECT * from catalog WHERE c_no=$c_no";
+    $dept = $_GET["dept"];
+    $query = "SELECT * from catalog WHERE c_no=$c_no and department='$dept'";
 
     $results = mysqli_query($dbc, $query);
     $data = mysqli_fetch_array($results);
 
     $title = $data["title"];
-    $dept = $data["department"];
 
     $instructor_query = "SELECT fname, lname FROM faculty a, courses_taught b WHERE a.f_id=b.f_id AND crn=$crn";
     $instructor_data = mysqli_fetch_array(mysqli_query($dbc, $instructor_query));
@@ -57,7 +57,7 @@
             // noprereqstimeconflict
 
             if (isset($_GET['dropped']) && $_GET['dropped']) {
-                echo "<div class='alert alert-danger' role='alert'>Successfully Dropped Course</div>";
+                echo "<div class='alert alert-success' role='alert'>Successfully Dropped Course</div>";
             } else if (isset($_GET['registered']) && $_GET['registered']) {
                 echo "<div class='alert alert-success' role='alert'>Successfully Registered for Course</div>";
             } else if (isset($_GET['conflict'])) {
@@ -138,9 +138,9 @@
 							// Only show an enroll/drop button if this is a student 
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
-									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
+									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
 								<?php } else { ?>
-									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
+									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
 								<?php } ?>
 									</tr>
 							<?php
