@@ -203,7 +203,7 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
 drop table if exists applicant cascade;
 drop table if exists application cascade;
 drop table if exists reviewer_application cascade;
-drop table if exists reccomender cascade;
+drop table if exists recommender cascade;
 drop table if exists verification_codes cascade;
 
 CREATE TABLE `applicant` (
@@ -269,7 +269,7 @@ ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`
 ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `application` (`username`);
 ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-ALTER TABLE `reccomender` ADD FOREIGN KEY (`applicationID`) REFERENCES `application` (`applicationID`);
+ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `application` (`username`);
 
 INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
 INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 'rstarr@gwu.edu', 222111111, '321 Penny Lane');
