@@ -6,7 +6,6 @@
     <?php
     require_once ('header.php');
     session_start();
-    $dbc->query('SET foreign_key_checks = 0');
 	?>
 
 	<script type = "text/javascript">
@@ -73,7 +72,7 @@ function check($new) {
 
 if (isset($_POST['submit'])) {
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+  $dbc->query('SET foreign_key_checks = 0');
 	$username = randNum();
 
 	$user = "INSERT INTO users VALUES (".$username.",'Applicant','".$_POST['password']."')";
@@ -162,8 +161,8 @@ if (isset($_POST['submit'])) {
 	$verQ = mysqli_query($dbc, $verCode);
 
 	header("Location: login.php");
+  $dbc->query('SET foreign_key_checks = 1');
 }
-$dbc->query('SET foreign_key_checks = 1');
 ?>
 
 		<!-- <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>"> -->
