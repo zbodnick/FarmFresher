@@ -216,7 +216,18 @@
                 </div>
             </div>
 
-                <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Account Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="change_password.php">Change Password</a>
+                    </li>
+                    </ul>
+                </div>
+                <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="fname">First Name</label><span
@@ -246,6 +257,7 @@
                             <input type="submit" value="Update Account Info" name="submit"
                                 class="btn btn-primary btn-lg px-5">
                         </div>
+                    </div>
                     </div>
                 </form>
 
