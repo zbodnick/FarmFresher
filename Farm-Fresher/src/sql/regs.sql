@@ -10,15 +10,19 @@ primary key (id)
 
 DROP TABLE IF EXISTS student CASCADE;
 create table student(
-u_id int NOT NULL,
-fname varchar(20) NOT NULL,
-lname varchar(20) NOT NULL,
-addr varchar(50) NOT NULL,
-email varchar(30) NOT NULL,
-major varchar(20) NOT NULL,
-program varchar(3),
-primary key (u_id),
-foreign key (u_id) references users(id)
+  u_id int NOT NULL,
+  fname varchar(20) NOT NULL,
+  lname varchar(20) NOT NULL,
+  addr varchar(50) NOT NULL,
+  email varchar(30) NOT NULL,
+  major varchar(20) NOT NULL,
+  program varchar(3),
+  gpa         double(2,1),
+  formid      int,
+  advisorid   int,
+  applied_to_grad  int,
+  primary key (u_id),
+  foreign key (u_id) references users(id)
 );
 
 DROP TABLE IF EXISTS faculty CASCADE;
@@ -84,6 +88,66 @@ prereq2 varchar(20) DEFAULT NULL,
 primary key (course_Id, prereq1),
 foreign key (course_Id) references catalog(c_id)
 );
+
+
+DROP TABLE IF EXISTS course CASCADE;
+CREATE TABLE course (
+ courseid      varchar(8),
+ title         varchar(30),
+ credits       int,
+ prereqone     int,
+ prereqtwo     int,
+ primary key (courseid)
+);
+
+
+DROP TABLE IF EXISTS alumni CASCADE;
+CREATE TABLE alumni (
+  univid     int primary key,
+  yeargrad   int
+);
+
+
+DROP TABLE IF EXISTS transcript CASCADE;
+CREATE TABLE transcript (
+  univerid   int,
+  crseid     varchar(8),
+  semester   varchar(10),
+  yeartaken  int,
+  grade      varchar(2),
+  chours     int,
+  primary key (univerid, crseid)
+);
+
+DROP TABLE IF EXISTS personalinfo CASCADE;
+CREATE TABLE personalinfo (
+  universid int primary key,
+  ftname  varchar(20),
+  ltname  varchar(20),
+  dob     date,
+  address varchar(50),
+  cell    bigint
+);
+
+DROP TABLE IF EXISTS formone CASCADE;
+CREATE TABLE formone (
+  universityid   int,
+  cid            varchar(8),
+  primary key(universityid, cid)
+);
+
+ALTER TABLE users
+ADD foreign key (id) references alumni(univid);
+ALTER TABLE users
+ADD foreign key (id) references personalinfo(universid);
+ALTER TABLE alumni
+ADD foreign key (univid) references personalinfo(universid);
+ALTER TABLE student
+ADD foreign key (u_id) references transcript(univerid);
+ALTER TABLE student
+ADD foreign key (u_id) references formone(universityid);
+ALTER TABLE transcript
+ADD foreign key (crseid) references course(courseid);
 
 INSERT INTO users (id, p_level, password) VALUES (10000000, 'Admin', 'admin');
 INSERT INTO users (id, p_level, password) VALUES (10000001, 'GS', 'gs123');
@@ -190,6 +254,82 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
 
+
+INSERT INTO course VALUES ( 'CSCI6221', 'SW Paradigms', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6461', 'Computer Architecture', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6212', 'Algorithms', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6220', 'Machine Learning', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6232', 'Networks 1', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6233', 'Networks 2', 3, 6232, null);
+INSERT INTO course VALUES ( 'CSCI6241', 'Database 1', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6242', 'Database 2', 3, 6241, null);
+INSERT INTO course VALUES ( 'CSCI6246', 'Compilers', 3, 6461, 6212);
+INSERT INTO course VALUES ( 'CSCI6260', 'Multimedia', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6251', 'Cloud Computing', 3, 6461, null);
+INSERT INTO course VALUES ( 'CSCI6254', 'SW Engineering', 3, 6221, null);
+INSERT INTO course VALUES ( 'CSCI6262', 'Graphics 1', 3, null, null);
+INSERT INTO course VALUES ( 'CSCI6283', 'Security 1', 3, 6212, null);
+INSERT INTO course VALUES ( 'CSCI6284', 'Cryptography', 3, 6212, null);
+INSERT INTO course VALUES ( 'CSCI6286', 'Network Security', 3, 6283, 6232);
+INSERT INTO course VALUES ( 'CSCI6325', 'Algorithms 2', 3, 6212, null);
+INSERT INTO course VALUES ( 'CSCI6339', 'Embedded Systems', 3, 6461, 6212);
+INSERT INTO course VALUES ( 'CSCI6384', 'Cryptography 2', 3, 6284, null);
+INSERT INTO course VALUES ( 'ECE6241',  'Communication Theory', 3, null, null);
+INSERT INTO course VALUES ( 'ECE6242',  'Information Theory', 2, null, null);
+INSERT INTO course VALUES ( 'MATH6210', 'Logic', 2, null, null);
+
+INSERT INTO alumni VALUES ( 77777777, 2014);
+
+INSERT INTO transcript VALUES (1, 'CSCI6221', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6461', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6212', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6220', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6232', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6233', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6241', 'Fall', 2014, 'B', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6242', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6251', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6254', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'CSCI6262', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (1, 'ECE6241',  'Fall', 2019, 'A', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6221', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6212', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6461', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6232', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6223', 'Fall', 2014, 'A', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6241', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6246', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6262', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6283', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (55555555, 'CSCI6242', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'ECE6242',  'Fall', 2014, 'C', 2);
+INSERT INTO transcript VALUES (66666666, 'CSCI6221', 'Fall', 2014, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6461', 'Fall', 2014, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6212', 'Fall', 2014, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6232', 'Fall', 2014, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6233', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6241', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6242', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6283', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (66666666, 'CSCI6284', 'Spring', 2015, 'B', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6221', 'Fall', 2013, 'B', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6212', 'Fall', 2013, 'B', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6461', 'Fall', 2013, 'B', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6232', 'Fall', 2013, 'B', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6233', 'Fall', 2013, 'B', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6241', 'Spring', 2014, 'A', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6242', 'Spring', 2014, 'A', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6283', 'Spring', 2014, 'A', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6284', 'Spring', 2014, 'A', 3);
+INSERT INTO transcript VALUES (77777777, 'CSCI6286', 'Spring', 2014, 'A', 3);
+
+INSERT INTO personalinfo VALUES (1, 'Stanislav', 'Lukashevich', '1998-12-12', 'Arlington, VA, 22206', 7036094317);
+INSERT INTO personalinfo VALUES (55555555, 'Paul', 'McCartney', '1999-04-04', 'Atlanta, GA, 22666', 2024892713);
+INSERT INTO personalinfo VALUES (66666666, 'George', 'Harrison', '1999-02-02', 'Boston, MA, 22777', 2024892714);
+INSERT INTO personalinfo VALUES (77777777, 'Eric', 'Clapton', '1996-02-02', 'Washington, DC, 22236', 2024892715);
+INSERT INTO personalinfo VALUES (88888888, 'Bhagirath', 'Narahari', '1966-12-12', 'Washington, DC, 22236', 2024892716);
+INSERT INTO personalinfo VALUES (99999999, 'Eric', 'Clapton', '1981-02-02', 'Washington, DC, 22236', 2024892717);
+INSERT INTO personalinfo VALUES (2, 'Jake', 'Harris', '1999-01-01', 'Atlanta, GA, 44436', 2024892718);
 
 /* -----------------------------------------------------------------------------
 
