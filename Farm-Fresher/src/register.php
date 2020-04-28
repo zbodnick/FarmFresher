@@ -2,10 +2,10 @@
 session_start();
 
     include ('php/connectvars.php');
-    
+
     // Connect to the database
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
+    $dbc->query('SET foreign_key_checks = 0');
     $uid = mysqli_real_escape_string($dbc, trim($_SESSION['id']));
     $crn = mysqli_real_escape_string($dbc, trim($_GET['crn']));
     $grade = 'IP';
@@ -17,8 +17,8 @@ session_start();
 	// $enroll_course_t = "SELECT start_time FROM schedule WHERE crn='".$_GET['crn']."'";
 	// $enroll_course_t = mysqli_fetch_array (mysqli_query ($dbc, $enroll_course_t));
 	// $enroll_course_t = $enroll_course_t['start_time'];
-	
-	// $courses = "SELECT start_time FROM schedule, courses_taken 
+
+	// $courses = "SELECT start_time FROM schedule, courses_taken
 	// 			WHERE start_time='". $enroll_course_t ."' and u_id='". $uid ."'";
 	// echo $courses;
 	// $courses = mysqli_query ($dbc, $courses);
@@ -96,7 +96,7 @@ session_start();
                 if ($day == $row['day'] && $term == $row['semester'] && $year == $row['year'] && $start_time <= $row['start_time'] && $end_time >= $row['start_time']) {
                     $time_conflict = 1;
                 }
-                
+
             }
         }
 
