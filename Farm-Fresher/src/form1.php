@@ -28,8 +28,8 @@
      'window.alert("Form1 has already been submitted");',
      '</script>'
      ;
-     header("refresh:1; url=advising.php");
-    }
+     header("refresh:1; url=home.php");
+	 }else{
 
 		$page_title = 'GWU Advising System';
 
@@ -186,7 +186,7 @@
     	</form>
 
 	<?php
-
+	}
     //error checking... if theres form1 data already in there it resets it.
     /*
     $query = "SELECT * from formone where universityid = $id";
