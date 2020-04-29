@@ -214,7 +214,7 @@
               echo  '<button type="submit" name="acceptform1" value="'.$_POST["univID"].'">Accept Form 1</button>';
               echo	'</form>';
             }
-            $query = "select program, applied_to_grad from student where unid = '$_POST[univID]'";
+            $query = "select program, applied_to_grad from student where u_id = '$_POST[univID]'";
             $result = mysqli_query($dbc, $query);
             if($result->num_rows > 0){
               //IF IT HAS BEEN APPROVED, CHECK TO SEE IF USER IS A PHD STUDENT AND NEEDS THEIR THESIS APPROVED
