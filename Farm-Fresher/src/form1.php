@@ -203,15 +203,15 @@ function populateCookies()
 						$count = $count + 1;
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
 					}
-					if($count > 12 || $count < 10){
-						$dbc->query("delete from formone where universityid = $id")
-						?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
-						header("refresh:1; url=home.php");
-					}else{
-						//SUCCESS
-						?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
-						header("refresh:1; url=home.php");
-					}
+				}
+				if($count > 12 || $count < 10){
+					$dbc->query("delete from formone where universityid = $id")
+					?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
+					header("refresh:1; url=home.php");
+				}else{
+					//SUCCESS
+					?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
+					header("refresh:1; url=home.php");
 				}
 			}
 		}
