@@ -28,13 +28,36 @@
 ?>
     <div class="site-section">
       <div class="container">
-        <div class="row mb-4 justify-content-center text-center">
-          <div class="col-lg-4 mb-4">
-            <h2 class="section-title-underline mb-4">
+        <div class="row align-center text-center">
+            <div class="col-lg">
+              <?php
+              include ('php/connectvars.php');
+              $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+              $uid = $_SESSION['id'];
+              $advising_hold_query = "SELECT has_hold FROM student WHERE u_id=$uid";
+              $advising_hold_results = mysqli_query($dbc, $advising_hold_query);
+
+              $row = mysqli_fetch_array($advising_hold_results);
+              $has_hold = $row['has_hold'];
+
+              if ($has_hold == 1) {
+                echo '
+                      <div class="alert alert-warning" role="alert">
+                      <strong class="text-danger">You have a registration hold. </strong>Fill out the first semester <a href="advising_form_new.php">advising form!</a>
+                      </div>';
+              }
+              ?>
+            </div>
+        </div>
+
+        <div class="row align-center text-center p-5">
+          <div class="col-lg">
+            <h2 class="section-title-underline mb-8">
               <span>Home</span>
             </h2>
-          </div>
+          </div>        
         </div>
+
 		<div class="row">
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
@@ -231,6 +254,20 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="feature-1 border">
+                  <div class="icon-wrapper bg-primary">
+                    <span class="flaticon-mortarboard text-white"></span>
+                  </div>
+                  <div class="feature-1-content">
+                    <h2>Advising Holds</h2>
+                    <p>View and Approve Your Advisee's First Semester Advising Forms.</p>
+                    <p><a href="approve_advising_form.php" class="btn btn-primary px-4 rounded-0">Approve Forms</a></p>
+                  </div>
+                </div>
+              </div>
+
           </div>
     </div>    
 <?php
@@ -448,4 +485,11 @@
 	</div>
 
 </body>
+
+<script>
+  $(document).ready(function(){
+    $('.toast').toast('show');
+  });
+</script>
+
 </html>

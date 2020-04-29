@@ -135,14 +135,24 @@
                             $enrollment_query = "SELECT * FROM courses_taken WHERE u_id=$uid AND crn=$crn";
                             $enrollement_results = mysqli_query($dbc, $enrollment_query);
 
+                            $advising_hold_query = "SELECT has_hold FROM student WHERE u_id=$uid";
+                            $advising_hold_results = mysqli_query($dbc, $advising_hold_query);
+                
+                            $row = mysqli_fetch_array($advising_hold_results);
+                            $has_hold = $row['has_hold'];
+
 							// Only show an enroll/drop button if this is a student
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
+                                if ($has_hold == 1) { ?>
+                                    <td> <a href="advising_form_new.php" class="btn btn-danger btn-sm rounded-2 px-3"><span class="glyphicon glyphicon-exclamation-sign pr-2"></span>Lift Advising Hold</a> </td>
+                                <?php } else {
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
 									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
 								<?php } else { ?>
 									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
-								<?php } ?>
-									</tr>
+                                <?php } 
+                                } ?>
+								</tr>
 							<?php
 								}
 							}

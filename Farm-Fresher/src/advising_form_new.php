@@ -23,6 +23,36 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 $dbc->query('SET foreign_key_checks = 0');
 ?>
 
+<script type="text/javascript">
+
+function populateCookies()
+{
+	var expires;
+	var date = new Date();
+	date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
+	expires = "; expires=" + date.toGMTString();
+
+	var tot=0;
+
+	var array = [];
+
+	var input = document.getElementsByTagName('input');
+	// window.alert(input[0].value);
+	// //if(chkcontroll() != false){
+	// 	for(var i = 0; i < input.length; i++) {
+	// 		if(input[i].checked == true){
+	// 			document.cookie = input[i].value + "=" + "True" + expires + "; path=/";
+	// 		}else{
+	// 			document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
+	// 		}
+	// 	}
+	/*}else{
+		for(var i = 0; i < input.length; i++) {
+				document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
+		}
+	}*/
+}
+</script>
 
 <body>
 <br><br>
@@ -69,6 +99,7 @@ $dbc->query('SET foreign_key_checks = 0');
                 $dept = $row["department"];
                 $title = $row["title"];
                 $credits = $row["credits"];
+                $val = $dept . $crn;
 
                 $prereq_query = "SELECT prereq1, prereq2 FROM prereqs WHERE course_Id=$cid";
                 $query_result = mysqli_query($dbc, $prereq_query);
@@ -85,6 +116,7 @@ $dbc->query('SET foreign_key_checks = 0');
 
                 <?php if (empty($data['prereq1']) && !empty($data['prereq2'])) { ?>
                     <td>None</td>
+
                     <td>
                     <?php echo $pre2[0] ?> <?php echo $pre2[1] ?>
                     </td>
@@ -108,9 +140,10 @@ $dbc->query('SET foreign_key_checks = 0');
 
                 <td>
                     <label class="btn btn-primary">
-                    <input type="checkbox" autocomplete="off">
+                    <input type="checkbox" value = <?php echo "$val" ?> autocomplete="off">
                     <span class="glyphicon glyphicon-ok"></span>
                 </td>
+
 			    </label>
                 </tr>
 
@@ -119,12 +152,12 @@ $dbc->query('SET foreign_key_checks = 0');
             echo "</tbody>
             </table>";
         } else {
-            echo "We're sorry, course enrollment is under maintenance";
+            echo "Error: cannot find any classes";
         }
         ?>
          <div class="row mx-auto">
             <div class="col-lg p-2">
-            <input type="submit" value="Submit Advising Form" name="submit" class="btn btn-primary btn-lg px-5">
+            <input type="submit" value="Submit Form" name="submit" onclick='populateCookies();' class="btn btn-primary btn-lg px-5">
             </div>
         </div>
         </form>
@@ -141,6 +174,26 @@ $dbc->query('SET foreign_key_checks = 0');
     });
     });
     </script>
+
+		<?php
+		$course_query = 'SELECT * from catalog';
+
+		$result = mysqli_query($dbc, $course_query);
+		if(!$result){
+			echo("Error description: " . $mysqli -> error);
+		}
+		if(isset($_POST['submit']))
+		{
+			if (mysqli_num_rows($result) > 0) {
+				while ($row = mysqli_fetch_assoc($result)) {
+					$crn = $row["c_no"];
+					if($_COOKIE[$crn] == "True"){
+						$dbc->query("INSERT INTO advisingform VALUES ($id, '$crn')");
+					}
+				}
+			}
+		}
+		?>
 
 </body>
 
