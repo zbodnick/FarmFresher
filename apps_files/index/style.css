@@ -1,0 +1,67 @@
+h3 {
+	color:red;
+	text-align:center;
+	text-shadow:1px 1px blue;
+	font-size:35px;
+}
+
+.nav {
+	background-color:navy;
+}
+
+.bld {
+	font-weight:bold;
+	font-size:120%
+}
+
+#top {
+	background-color:lightgrey;
+}
+
+fieldset {
+	background-color:lightgrey;
+	text-align:center;
+	margin-left:33%;
+	margin-right:33%;
+}
+
+#btn {
+	padding:10px 20px;
+	font-size:15px;
+	font-family:times;
+	display:inline-block;
+}
+
+input {
+	margin:5px;
+}
+
+legend {
+	font-size:20px;
+}
+
+table, tr, td {
+	padding:5px 5px;
+	border:1px solid black;
+}
+
+table {
+	width:100%;
+	background-color:white;
+}
+
+#btnSq {
+	width:30px;
+}
+
+#view {
+	padding:5px 5px;
+	font-size:12px;
+	font-family:times;
+	display:inline-block;
+}
+
+.appList {
+	margin-left:20%;
+	margin-right:20%;
+}
