@@ -27,11 +27,8 @@ $result = mysqli_query($dbc, $query);
 
 if(mysqli_num_rows($result) > 0){
 	header("Location: home.php");
-	?><script type="text/javascript">window.alert("Form One has already been submitted.");</script><?php
-}
-?>
-<script type="text/javascript">
-
+	?><script type="text/javascript">window.alert("Form One has already been submitted.");</script>
+<?php}?><script type="text/javascript">
 function populateCookies()
 {
 	var expires;
@@ -190,11 +187,11 @@ function populateCookies()
 		if(isset($_POST['submit']))
 		{
 			if (mysqli_num_rows($result) > 0) {
+				$count = 0;
 				while ($row = mysqli_fetch_assoc($result)) {
 					$crn = $row["c_no"];
 					$dep = $row["department"];
 					$val = $dep . $crn;
-					$count = 0;
 					if($_COOKIE[$crn] == "True"){
 						$count = $count + 1;
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
