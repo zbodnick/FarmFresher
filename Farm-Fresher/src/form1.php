@@ -193,6 +193,7 @@ function populateCookies()
 					$dep = $row["department"];
 					$val = $dep . $crn;
 					if($_COOKIE[$crn] == "True"){
+						echo $val;
 						$count = $count + 1;
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
 					}
