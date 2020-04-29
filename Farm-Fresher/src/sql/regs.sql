@@ -430,6 +430,7 @@ INSERT INTO reviewer_application VALUES(10000004,33333333,0);
 INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
+INSERT INTO users (id, p_level, password) VALUES (98765432, 'CAC', 'cac123');
 
 INSERT INTO recommender VALUES('Eric','Clapton',66666666,'looks like a great applicant');
 INSERT INTO recommender VALUES('Eric','Clapton',55555555,'not so sure - gpa is very low from bachelor degree');

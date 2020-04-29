@@ -79,6 +79,29 @@ if (strcmp($permLevel, "Faculty") == 0) {
             </div>";
     }
   }
+} else if (strcmp($permLevel, "CAC") == 0) {
+  $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $appQ = "SELECT applicantid from reviewer_application";
+  $data = mysqli_query($dbc, $appQ);
+  echo "<h1 class='text-primary'>Admissions Portal</h1><div class='card p-5 mt-4'>";
+  if (mysqli_num_rows($data)) {
+    while ($row = mysqli_fetch_array($data)) {
+      echo "<div class='row'>
+              <div class='col-md-6 form-group'>
+                  <h3 class='text-primary'>Applicant ID: ".$row['applicantid']."</h3>
+                  <form action='application_view.php' style='display:inline-block' method='POST'>
+                    <input type='hidden' name='id' value='".$row['applicantid']."' />
+                    <input type='submit' id='btn' value='View Application' name='view' class='btn btn-primary btn-lg px-5' />
+                  </form>
+                  <form action='review_form.php' style='display:inline-block' method='POST'>
+                    <input type='hidden' name='id' value='".$row['applicantid']."' />
+                    <input type='submit' id='btn' value='Submit Review' name='review' class='btn btn-primary btn-lg px-5' />
+                  </form>
+                </table>
+              </div>
+            </div>";
+    }
+  }
 }
 ?>
   </div>

@@ -19,6 +19,8 @@
   $last = '';
   $id = '';
 
+  $error = 0;
+
   $permLevel = $_SESSION['p_level'];
 
 	include ('php/connectvars.php');
@@ -47,8 +49,6 @@
 
       $sql = "UPDATE application SET recommendation =".$_POST['recommendation']." WHERE username=".$_POST['id'];
       $res = mysqli_query($dbc,$sql);
-
-      header("Location: home.php");
     }
     else if (strcmp($permLevel, "GS") == 0) {
       $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -69,8 +69,6 @@
         $sql = "UPDATE application SET transID =".$_POST['received']." WHERE username=".$_POST['id'];
         $res = mysqli_query($dbc,$sql);
       }
-
-      header("Location: home.php");
     }
   }
 
@@ -78,6 +76,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
 ?>
     <br><br>
     <div class="container pt-3">
+    <?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Changes Submitted Successfully</div>"; } ?>
     <h1 class="text-primary">Review Form</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
@@ -134,7 +133,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
   </form>
   </div>
 <?php
-} else if (strcmp($permLevel, "GS") == 0) {
+} else if (strcmp($permLevel, "GS") == 0 || strcmp($permLevel, "CAC") == 0) {
 
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $sql = "SELECT final_decision FROM application WHERE username=".$_POST['id'];
@@ -142,14 +141,15 @@ if (strcmp($permLevel, "Faculty") == 0) {
   $row = mysqli_fetch_array($res);
 
   if ($row['final_decision'] != 0) {
-    echo '
-      <br><br><h1 class="text-primary text-center text-danger">APPLICATION ALREADY HAS A FINAL DECISION. IF ANOTHER IS SUBMITTED, THE CURRENT DECISION WILL BE CHANGED</h1>
-    ';
+    echo "
+      <br><br><div class='alert alert-danger text-center' role='alert'>APPLICATION ALREADY HAS A FINAL DECISION. IF ANOTHER IS SUBMITTED, THE CURRENT DECISION WILL BE CHANGED</div>
+    ";
   }
 
 ?>
 <br><br>
     <div class="container pt-3">
+    <?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Changes Submitted Successfully</div>"; } ?>
     <h1 class="text-primary">Update Application</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
@@ -162,7 +162,10 @@ if (strcmp($permLevel, "Faculty") == 0) {
               <?php echo $id?>
           </div>
       </div>
-
+<?php
+} 
+if (strcmp($permLevel, "GS") == 0) {
+?>
       <div class="row border-top pt-4 text-center">
 				<div class="text-primary col-lg form-group">
 					<h4>Application Info<h4>
@@ -175,14 +178,15 @@ if (strcmp($permLevel, "Faculty") == 0) {
           <input class="form-control form-control-lg text-muted" id="received" name="received" type="checkbox" value="1"/>
         </div>
       </div>
-
+<?php
+}
+if (strcmp($permLevel, "GS") == 0 || strcmp($permLevel, "CAC") == 0) {
+?>
       <div class="row border-top pt-4 text-center">
 				<div class="text-primary col-lg form-group">
 					<h4>FINAL DECISION<h4>
 				</div>
 			</div>
-
-
       <div class="row">
 
           <div class="col form-group text-danger text-center">

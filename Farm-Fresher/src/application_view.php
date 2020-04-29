@@ -24,7 +24,7 @@ if (isset($_POST['accept'])) {
   $data = mysqli_query($dbc, $query);
   $applicantData = mysqli_fetch_array($data);
 
-  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', NULL, NULL, NULL, NULL, NULL)";
+  $query = "INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science')";
   $data = mysqli_query($dbc, $query);
 
   $query = "UPDATE users SET p_level='Student' WHERE id=".$_SESSION['id'];
@@ -103,8 +103,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
           }
           else if (!strcmp($_SESSION['p_level'],"Applicant")) {
             echo '<div class="row"><div class="col-md-6 form-group">
-                  <h2 class="text-primary">Application Is In Review.</h2></div></div>
-                  <div class="card p-5 mt-4">';
+                  <h2 class="text-primary">Application Is In Review.</h2></div></div>';
           }
           $cats = array("Application ID","Username","Transcript","Recommender Email","GRE Verbal",
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
@@ -166,6 +165,8 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               ';
             }
           }
+          
+
         }
       ?>
     </form>
