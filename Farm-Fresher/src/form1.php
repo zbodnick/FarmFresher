@@ -21,6 +21,16 @@ include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 $dbc->query('SET foreign_key_checks = 0');
+
+$query = "SELECT * from formone where universityid = $id";
+$result = mysqli_query($dbc, $query);
+
+if(mysqli_num_rows($result) > 0){
+	echo '<script type="text/javascript">',
+ 'window.alert("Form1 has already been submitted");',
+ '</script>'
+ ;
+ header("refresh:1; url=home.php");
 ?>
 
 <script type="text/javascript">
@@ -37,7 +47,6 @@ function populateCookies()
 	var array = [];
 
 	var input = document.getElementsByTagName('input');
-	window.alert(input[0].value);
 	//if(chkcontroll() != false){
 		for(var i = 0; i < input.length; i++) {
 			if(input[i].checked == true){
@@ -188,8 +197,19 @@ function populateCookies()
 					$crn = $row["c_no"];
 					$dep = $row["department"];
 					$val = $dep . $crn;
+					$count = 0;
 					if($_COOKIE[$crn] == "True"){
+						$count = $count + 1;
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
+						?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
+						header("refresh:1; url=home.php");
+					}
+					if($count > 12 || $count < 10){
+						$dbc->query("delete from formone where universityid = $id")
+						?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
+					}else{
+						//SUCCESS
+
 					}
 				}
 			}
