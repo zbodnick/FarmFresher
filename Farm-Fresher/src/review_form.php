@@ -61,7 +61,6 @@
         $row = mysqli_fetch_array($res);
 
         $msg = "Hello! Your application status has been updated. Login to your applicant portal to view.";
-        $msg = wordwrap($msg,70);
         $header = "From: farmfresh@gmail.edu";
         $retval = mail($row['email'],"Application Updated",$msg, $header);
       }
