@@ -87,17 +87,23 @@
 
 				$query = 'SELECT u_id, fname, lname FROM student;';
 				$students = mysqli_query ($dbc, $query);
-                $query1 = 'SELECT f_id, fname, lname FROM faculty;';
-                $faculty = mysqli_query ($dbc, $query1);
+        $query1 = 'SELECT f_id, fname, lname FROM faculty;';
+        $faculty = mysqli_query ($dbc, $query1);
+        $query2 = 'SELECT username, fname, lname FROM applicant;';
+        $applicant = mysqli_query ($dbc, $query2);
 
 				while ($s = mysqli_fetch_array($students)) {
 					echo '<a href="account.php?student='. $s["u_id"] .'">'. $s["fname"] . ' ' . $s["lname"] .'</a>';
 				}
 
-                while ($f = mysqli_fetch_array($faculty)){
-                    echo '<a href="account.php?faculty='. $f["f_id"] .'">'. $f["fname"] . ' ' . $f["lname"] . '</a>';
-                }
-            }
+        while ($f = mysqli_fetch_array($faculty)){
+            echo '<a href="account.php?faculty='. $f["f_id"] .'">'. $f["fname"] . ' ' . $f["lname"] . '</a>';
+        }
+
+        while ($a = mysqli_fetch_array($applicant)){
+          echo '<a href="account.php?applicant='. $a["username"] .'">'. $a["fname"] . ' ' . $a["lname"] . '</a>';
+      }
+      }
         ?>
 
     </div>

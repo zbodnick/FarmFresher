@@ -32,6 +32,9 @@
     }else if(!empty($_GET['faculty'])){
         $_SESSION['id1'] = $_GET['faculty'];
         $_SESSION['p_level1'] = "Faculty";
+    }else if(!empty($_GET['applicant'])){
+        $_SESSION['id1'] = $_GET['applicant'];
+        $_SESSION['p_level1'] = "Applicant";
     }
 
     if($_SESSION['p_level1'] == "Student"){
@@ -39,6 +42,9 @@
         $id = $_SESSION['id1'];
     }else if($_SESSION['p_level1'] == "Faculty"){
         $permLevel = "Faculty";
+        $id = $_SESSION['id1'];
+    }else if($_SESSION['p_level1'] == "Applicant"){
+        $permLevel = "Applicant";
         $id = $_SESSION['id1'];
     }
 

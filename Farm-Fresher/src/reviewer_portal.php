@@ -21,6 +21,22 @@
 
   include ('php/connectvars.php');
 
+  if (isset($_POST['delete'])) {
+    $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $query = "DELETE FROM reviewer_application WHERE applicantid=".$_POST['id'];
+    $data = mysqli_query($dbc, $query);
+
+    $query = "DELETE FROM recommender WHERE applicationID=".$_POST['id'];
+    $data = mysqli_query($dbc, $query);
+
+    $query = "DELETE FROM application WHERE username=".$_POST['id'];
+    $data = mysqli_query($dbc, $query);
+
+    $query = "DELETE FROM applicant WHERE username=".$_POST['id'];
+    $data = mysqli_query($dbc, $query);
+  }
+
 if (strcmp($permLevel, "Faculty") == 0) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $dbc->query('SET foreign_key_checks = 0');
@@ -42,7 +58,6 @@ if (strcmp($permLevel, "Faculty") == 0) {
                     <input type='hidden' name='id' value='".$row['applicantid']."' />
                     <input type='submit' id='btn' value='Submit Review' name='review' class='btn btn-primary btn-lg px-5' />
                   </form>
-                </table>
               </div>
             </div>";
     }
@@ -74,7 +89,6 @@ if (strcmp($permLevel, "Faculty") == 0) {
                     <input type='hidden' name='id' value='".$row['applicantid']."' />
                     <input type='submit' id='btn' value='Submit Review' name='review' class='btn btn-primary btn-lg px-5' />
                   </form>
-                </table>
               </div>
             </div>";
     }
@@ -83,7 +97,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $appQ = "SELECT applicantid from reviewer_application";
   $data = mysqli_query($dbc, $appQ);
-  echo "<h1 class='text-primary'>Admissions Portal</h1><div class='card p-5 mt-4'>";
+  echo "<div class='col-md-6 form-group'><h1 class='text-primary'>Admissions Portal</h1></div>";
   if (mysqli_num_rows($data)) {
     while ($row = mysqli_fetch_array($data)) {
       echo "<div class='row'>
@@ -97,7 +111,28 @@ if (strcmp($permLevel, "Faculty") == 0) {
                     <input type='hidden' name='id' value='".$row['applicantid']."' />
                     <input type='submit' id='btn' value='Submit Review' name='review' class='btn btn-primary btn-lg px-5' />
                   </form>
-                </table>
+              </div>
+            </div>";
+    }
+  }
+} else if (strcmp($permLevel, "Admin") == 0) {
+  $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $appQ = "SELECT username from applicant";
+  $data = mysqli_query($dbc, $appQ);
+  echo "<div class='col-md-6 form-group'><h1 class='text-primary'>Admissions Portal</h1></div>";
+  if (mysqli_num_rows($data)) {
+    while ($row = mysqli_fetch_array($data)) {
+      echo "<div class='row'>
+              <div class='col-md-6 form-group'>
+                  <h3 class='text-primary'>Applicant ID: ".$row['username']."</h3>
+                  <form action='application_view.php' style='display:inline-block' method='POST'>
+                    <input type='hidden' name='id' value='".$row['username']."' />
+                    <input type='submit' id='btn' value='View Application' name='view' class='btn btn-primary btn-lg px-5' />
+                  </form>
+                  <form action='review_form.php' style='display:inline-block' method='POST'>
+                    <input type='hidden' name='id' value='".$row['username']."' />
+                    <input type='submit' id='btn' value='Delete' name='delete' class='btn btn-primary btn-lg px-5' />
+                  </form>
               </div>
             </div>";
     }

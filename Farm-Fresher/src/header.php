@@ -95,11 +95,6 @@
 								<li>
 								  <a href="transcript.php" class="nav-link text-left">Transcript</a>
 								</li>	
-              ';
-              
-              
-							break;
-                </li>	
 							';
               break;
             case "Applicant":

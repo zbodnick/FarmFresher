@@ -122,7 +122,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               echo '
                 <div class="row">
                   <div class="col-md-6 form-group">
-                    '.$cats[$i].': Not Received
+                    <b>'.$cats[$i].'</b>: Not Received
                   </div>
                 </div>
               ';
@@ -131,7 +131,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 echo '
                   <div class="row">
                     <div class="col-md-6 form-group">
-                      '.$cats[$i].': Received
+                    <b>'.$cats[$i].'</b>: Received
                     </div>
                   </div>
                 ';
@@ -142,7 +142,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               echo '
                 <div class="row">
                   <div class="col-md-6 form-group">
-                    Status: Not Complete
+                    <b>Status</b>: Not Complete
                   </div>
                 </div>
               ';
@@ -151,7 +151,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 echo '
                   <div class="row">
                     <div class="col-md-6 form-group">
-                      Status: Complete
+                      <b>Status</b>: Complete
                     </div>
                   </div>
                 ';
@@ -164,7 +164,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               echo '
                 <div class="row">
                   <div class="col-md-6 form-group">
-                  '. $cats[$i] .': '. $row[$i] .'
+                  <b>'.$cats[$i].'</b>: '. $row[$i] .'
                   </div>
                 </div>
               ';
@@ -178,7 +178,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 echo '
                 <div class="row">
                   <div class="col-md-6 form-group">
-                    Recommendation from '.$row['fname'].' '.$row['lname'].': '.$row['recommendation'].'
+                    <b>Recommendation from '.$row['fname'].' '.$row['lname'].'</b>: '.$row['recommendation'].'
                   </div>
                 </div>';
               }
