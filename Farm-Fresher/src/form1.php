@@ -9,7 +9,7 @@
 
     session_start();
 
-    require_once('connectvars.php');
+    require_once('php/connectvars.php');
 	  require_once('appvars.php');
 
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
