@@ -84,7 +84,7 @@
               <div class="feature-1-content">
                 <h2>Account Information</h2>
                 <p>View and edit your personal account information.</p>
-                <p><a href="account.php" class="btn btn-primary px-4 rounded-0">View Accout</a></p>
+                <p><a href="account.php" class="btn btn-primary px-4 rounded-0">View Account</a></p>
               </div>
             </div>
           </div>
@@ -419,6 +419,45 @@
           </div>
         </div>
 <?php
+}else if (strcmp($permLevel, "Alumni") == 0 || strcmp($permLevel, "alumni") == 0) {
+  ?>
+    <div></div>
+    <br></br>
+      <div class="site-section">
+        <div class="container">
+          <div class="row mb-5 justify-content-center text-center">
+            <div class="col-lg-4 mb-5">
+              <h2 class="section-title-underline mb-5">
+                <span>Home</span>
+              </h2>
+            </div>
+          </div>
+      <div class="row mb-5 justify-content-center text-center">
+        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+          <div class="feature-1 border">
+            <div class="icon-wrapper bg-primary">
+              <span class="flaticon-school-material text-white"></span>
+            </div>
+            <div class="feature-1-content">
+              <h2>View Transcript</h2>
+              <p>View the most updated version of your transcript.</p>
+              <p><a href="transcript.php" class="btn btn-primary px-4 rounded-0">View Transcript</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+          <div class="feature-1 border">
+            <div class="icon-wrapper bg-primary">
+              <span class="flaticon-mortarboard text-white"></span>
+            </div>
+            <div class="feature-1-content">
+              <h2>Account Information</h2>
+              <p>View and edit your personal account information.</p>
+              <p><a href="account.php" class="btn btn-primary px-4 rounded-0">View Account</a></p>
+            </div>
+          </div>
+        </div>
+        <?php
 }
 ?>
       </div>
