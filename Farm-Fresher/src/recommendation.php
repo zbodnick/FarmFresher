@@ -12,9 +12,12 @@
 <?php
 	include ('php/connectvars.php');
 
+	$error = 0;
+
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  $dbc->query('SET foreign_key_checks = 0');
-	if (isset($_POST['submit'])) {
+  	$dbc->query('SET foreign_key_checks = 0');
+	
+	  if (isset($_POST['submit'])) {
 		$query = "SELECT * FROM verification_codes where verification=".$_POST['verification'];
 		$res = mysqli_query($dbc,$query);
 		if (mysqli_num_rows($res) == 1) {
@@ -31,11 +34,11 @@
 				$res = mysqli_query($dbc,$query);
 			}
 			else {
-				//ERROR!
+				$error = 1;
 			}
 		}
 		else {
-			//ERROR!
+			$error = 1;
 		}
 	}
 ?>
@@ -43,6 +46,10 @@
 	<body>
     	<br><br>
     	<div class="container pt-3">
+		<?php 
+			if ($error == 0 && isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Successfully Submitted Recommendation</div>"; }
+			else if ($error == 1 && isset($_POST['submit'])) { echo "<div class='alert alert-danger' role='alert'>Error In Submitting Recommendation</div>"; }
+		?>
     	<h1 class="text-primary">Recommendation</h1>
 		<form method="post" name="app" onsubmit="return validate();" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -60,22 +67,22 @@
 			<div class="row">
 				<div class="col-md-6 form-group">
 					<label for="fname_r">YOUR First Name <b>OF RECOMMENDER</b></label>
-					<input type="text" class="form-control form-control-lg text-muted" name="fname_r" value="" required/>
+					<input type="text" class="form-control form-control-lg text-muted" name="fname_r" maxlength="254" value="" required/>
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="lname_r">YOUR Last Name <b>OF RECOMMENDER</b></label>
-					<input type="text" class="form-control form-control-lg text-muted" name="lname_r" value="" required/>
+					<input type="text" class="form-control form-control-lg text-muted" name="lname_r" maxlength="254" value="" required/>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-6 form-group">
 					<label for="verification">Verification Code (see email)</label>
-            		<input type="text" class="form-control form-control-lg text-muted" name="verification" value="" required/>
+            		<input type="text" class="form-control form-control-lg text-muted" name="verification" maxlength="5" value="" required/>
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="email">Email <b>OF RECOMMENDER</b></label>
-					<input type="email" class="form-control form-control-lg text-muted" name="email" value="" required/>
+					<input type="email" class="form-control form-control-lg text-muted" name="email" maxlength="254" value="" required/>
 				</div>
 			</div>
 			<div class="row">

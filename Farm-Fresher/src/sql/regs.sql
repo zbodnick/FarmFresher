@@ -21,6 +21,7 @@ create table student(
   formid      int,
   advisorid   int,
   applied_to_grad  int,
+  has_hold BOOLEAN NOT NULL DEFAULT 0,
   primary key (u_id),
   foreign key (u_id) references users(id)
 );
@@ -136,6 +137,15 @@ CREATE TABLE formone (
   primary key(universityid, cid)
 );
 
+DROP TABLE IF EXISTS advisingform CASCADE;
+CREATE TABLE advisingform (
+  u_id int,
+  cid  varchar(8),
+  primary key (u_id, cid),
+  foreign key (u_id) references users(id),
+  foreign key (cid) references schedule(crn)
+);
+
 ALTER TABLE alumni
 ADD foreign key (univid) references users(id);
 ALTER TABLE personalinfo
@@ -162,6 +172,8 @@ INSERT INTO users (id, p_level, password) VALUES (10000009, 'Faculty', 'pass456'
 INSERT INTO users (id, p_level, password) VALUES (88888888, 'Student', 'password');
 INSERT INTO users (id, p_level, password) VALUES (99999999, 'Student', 'pword');
 INSERT INTO users (id, p_level, password) VALUES (45678901, 'Student', 'pass');
+INSERT INTO users (id, p_level, password) VALUES (10101010, 'Student', 'pword');
+
 
 INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science');
 INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jumina@gwu.edu', 'Computer Science');
@@ -443,6 +455,7 @@ INSERT INTO reviewer_application VALUES(10000004,33333333,0);
 INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
 INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
+INSERT INTO users (id, p_level, password) VALUES (98765432, 'CAC', 'cac123');
 
 INSERT INTO recommender VALUES('Eric','Clapton',66666666,'looks like a great applicant');
 INSERT INTO recommender VALUES('Eric','Clapton',55555555,'not so sure - gpa is very low from bachelor degree');
