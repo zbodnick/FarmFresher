@@ -234,6 +234,17 @@ INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, en
 
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 2, 'IP');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 3, 'IP');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 1, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 3, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 2, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 5, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 6, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 15, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 16, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 7, 'Spring', 2017, 'A', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 20, 'Spring', 2017, 'B', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 21, 'Spring', 2017, 'B', 3);
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 22, 'Spring', 2017, 'B', 3);
 
 INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 1);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 2);
