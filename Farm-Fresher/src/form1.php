@@ -205,7 +205,7 @@ function populateCookies()
 					}
 				}
 				if($count > 12 || $count < 10){
-					$dbc->query("delete from formone where universityid = $id")
+					$dbc->query("delete from formone where universityid = $id");
 					header("refresh:1; url=home.php");
 					?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
 				}else{
