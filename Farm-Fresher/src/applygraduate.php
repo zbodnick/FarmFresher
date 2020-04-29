@@ -80,7 +80,7 @@
 
   if($program == 'MS' && $avggpa >= 3.0 && $chours >= 30 && $numBadGrades <= 2 && $aprv == 1)
   {
-    $queryMS = "UPDATE student SET applied_to_grad = 1 WHERE unid = $id;";
+    $queryMS = "UPDATE student SET applied_to_grad = 1 WHERE u_id = $id;";
     if(mysqli_query($dbc, $queryMS) == TRUE)
     {
       echo "<br>";
@@ -90,7 +90,7 @@
   }
   else if($program == 'PHD' && $avggpa > 3.5 && $chours >= 36 && $numBadGrades <= 1 && $aprv == 1 && $choursCSCI >= 30 )
   {
-    $queryPHD = "UPDATE student SET applied_to_grad = 2 WHERE unid = $id;";
+    $queryPHD = "UPDATE student SET applied_to_grad = 2 WHERE u_id = $id;";
     if(mysqli_query($dbc, $queryPHD) == TRUE)
     {
       echo "<br>";
