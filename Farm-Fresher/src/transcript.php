@@ -259,7 +259,7 @@
                 return $avggpa;
           }
           $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
-          echo "<br><center><h4>Final GPA : ".$avggpa."</h4></center>";
+          echo "<br><center><h4>GPA : ".$avggpa."</h4></center>";
 
         }
       }
