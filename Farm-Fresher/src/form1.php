@@ -197,7 +197,7 @@ function populateCookies()
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
 					}
 				}
-				if(($count <= 12) && ($count >= 10)){
+				if(!(($count <= 12) && ($count >= 10))){
 					$dbc->query("delete from formone where universityid = $id");
 					?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
 				}else{
