@@ -28,7 +28,7 @@ if (isset($_POST['accept'])) {
   $data2 = mysqli_query($dbc, $query);
   $applicantData2 = mysqli_fetch_array($data);
 
-  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', '".$applicantData2['degree_type']."', NULL, NULL, NULL, 0)";
+  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', '".$applicantData2['degree_type']."', NULL, NULL, NULL, 0, 0)";
 
   $data = mysqli_query($dbc, $query);
 
@@ -170,6 +170,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
               ';
             }
           }
+
           if (strcmp($_SESSION['p_level'],"Applicant")) {
             $query = "SELECT * FROM recommender WHERE applicationID=".$id;
             $data = mysqli_query($dbc, $query);
