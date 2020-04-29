@@ -30,8 +30,6 @@ if(mysqli_num_rows($result) > 0){
 	?><script type="text/javascript">window.alert("Form One has already been submitted.");</script><?php
 }
 ?>
-
-
 <script type="text/javascript">
 
 function populateCookies()
