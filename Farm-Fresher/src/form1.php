@@ -1,284 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <title>Form One</title>
+    <?php
+    require_once ('header.php');
+    session_start();
+	?>
 </head>
 
-	<body>
-    <?php
+<?php
 
-    session_start();
+$id = $_SESSION["id"];
 
-    require_once('php/connectvars.php');
-	  require_once('appvars.php');
+if (empty($id)) {
+    header("Location: login.php");
+}
 
-    $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    if ($dbc->connect_error)
-    {
-      die("Connection failed: " . $dbc->connect_error);
-    }
-    $dbc->query('SET foreign_key_checks = 0');
-    $id = $_SESSION['id'];
+include ('php/connectvars.php');
 
-    $query = "SELECT * from formone where universityid = $id";
-    $result = mysqli_query($dbc, $query);
+$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+$dbc->query('SET foreign_key_checks = 0');
+?>
 
-    if(mysqli_num_rows($result) > 0){
-      echo '<script type="text/javascript">',
-     'window.alert("Form1 has already been submitted");',
-     '</script>'
-     ;
-     header("refresh:1; url=home.php");
-	 }else{
+<script type="text/javascript">
 
-		$page_title = 'GWU Advising System';
+function populateCookies()
+{
+	var expires;
+	var date = new Date();
+	date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
+	expires = "; expires=" + date.toGMTString();
 
-		//Load php tag into file once
-		require_once('header.php');
-	  require_once('navmenu.php');
+	var tot=0;
 
-    ?>
+	var array = [];
 
-    <script type="text/javascript">
-      function chkcontrol(j)
-      {
-        var total=0;
-        for(var i=0; i < document.form1.course.length; i++)
-        {
-          if(document.form1.course[i].checked)
-          {
-            total = total + 1;
-          }
-          if(total > 12)
-          {
-            alert("Minimum number of selected classes must be 10. Maximum number of selected classes must be 12.")
-                document.form1.course[j].checked = false ;
-            return false;
-          }
-        }
-      }
-      </script>
-      <script type="text/javascript">
-      function chkcontroll()
-      {
-        var tot=0;
-        for(var i=0; i < document.form1.course.length; i++)
-        {
-          if(document.form1.course[i].checked)
-          {
-            tot = tot + 1;
-          }
-        }
-          if(tot < 10)
-          {
-            alert("Minimum number of selected classes must be 10. Maximum number of selected classes must be 12.") ;
-            return false;
-          }
-          if(tot > 12)
-          {
-            alert("Minimum number of selected classes must be 10. Maximum number of selected classes must be 12.") ;
-            return false;
-          }
-      }
-      </script>
-      <script type="text/javascript">
-      function populateCookies()
-      {
-        var expires;
-        var date = new Date();
-        date.setTime(date.getTime() + (10 * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
+	var input = document.getElementsByTagName('input');
+	document.getElementsByTagName('input')[1].checked = true;
 
-        var tot=0;
+	//if(chkcontroll() != false){
+		for(var i = 0; i < input.length; i++) {
+			if(input[i].checked == true){
+				document.cookie = input[i].value + "=" + "True" + expires + "; path=/";
+			}else{
+				document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
+			}
+		}
+	/*}else{
+		for(var i = 0; i < input.length; i++) {
+				document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
+		}
+	}*/
+}
+</script>
 
-        var array = [];
+<body>
+<br><br>
 
-        var input = document.getElementsByTagName('input');
-        document.getElementsByTagName('input')[1].checked = true;
+    <div class="container pt-3">
+    <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <div class="card-header">
+        <h1 class="text-primary">First Semester Advising Form</h1>
+        <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking/have taken</small></h4>
+    </div>
+        <?php
 
-        if(chkcontroll() != false){
-          for(var i = 0; i < input.length; i++) {
-            if(input[i].checked == true){
-              document.cookie = input[i].value + "=" + "True" + expires + "; path=/";
-            }else{
-              document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
+        // Schedule links to faculty on crn
+        // Courses not being taught shouldnt have a proffesoror time alloted to them
+
+        $course_query = 'SELECT * from catalog';
+
+        $result = mysqli_query($dbc, $course_query);
+
+        if (mysqli_num_rows($result) > 0) {
+            ?>
+            <table class="table ">
+                <thead>
+                <tr class="text-center">
+                    <th scope="col">Course</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Credits</th>
+                    <th scope="col">Pre-requisite 1</th>
+                    <th scope="col">Pre-requisite 2</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+            <tbody id="course_table">
+            <?php
+            while ($row = mysqli_fetch_assoc($result)) {
+            ?>
+                <tr class="text-center">
+                <td>
+                <?php
+
+                $cid = $row["c_id"];
+
+                $crn = $row["c_no"];
+                $dept = $row["department"];
+                $title = $row["title"];
+                $credits = $row["credits"];
+
+                $prereq_query = "SELECT prereq1, prereq2 FROM prereqs WHERE course_Id=$cid";
+                $query_result = mysqli_query($dbc, $prereq_query);
+                $data = mysqli_fetch_assoc($query_result);
+                $pre1 = explode(' ', trim($data['prereq1']));
+                $pre2 = explode(' ', trim($data['prereq2']));
+
+                ?>
+
+                <a href="course.php?cno=<?php echo $crn ?>&dept=<?php echo $dept ?>"> <?php echo $dept ?> <?php echo $crn ?> </a>
+                </td>
+                <td> <?php echo $title?> </td>
+                <td> <?php echo $credits?> </td>
+
+                <?php if (empty($data['prereq1']) && !empty($data['prereq2'])) { ?>
+                    <td>None</td>
+
+                    <td>
+                    <?php echo $pre2[0] ?> <?php echo $pre2[1] ?>
+                    </td>
+                <?php } else if (!empty($data['prereq1']) &&  empty($data['prereq2'])) { ?>
+                    <td>
+                    <?php echo $pre1[0] ?> <?php echo $pre1[1] ?>
+                    </td>
+                    <td>None</td>
+                 <?php } else if (!empty($data['prereq1']) && !empty($data['prereq2'])) { ?>
+                    <td>
+                    <?php echo $pre1[0] ?> <?php echo $pre1[1] ?>
+                    </td>
+
+                    <td>
+                    <?php echo $pre2[0] ?> <?php echo $pre2[1] ?>
+                    </td>
+                <?php  } else { ?>
+                    <td>None</td>
+                    <td>None</td>
+                 <?php } ?>
+
+                <td>
+                    <label class="btn btn-primary">
+                    <input type="checkbox" value = <?php$cid?> autocomplete="off">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </td>
+			    </label>
+                </tr>
+
+        <?php
             }
-          }
-        }else{
-          for(var i = 0; i < input.length; i++) {
-              document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
-          }
+            echo "</tbody>
+            </table>";
+        } else {
+            echo "Error: form one cannot find any classes";
         }
-      }
-      </script>
-
-      <h1>Form One</h1>
-    	<form name=form1 action = "<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-    		<input type="checkbox" id="6221" name="course" value="CSCI6221" onclick='chkcontrol(1)'>
-    		<label for="6221">CSCI 6221 SW Paradigms</label><br>
-
-    		<input type="checkbox" id="6461" name="course" value="CSCI6461" onclick='chkcontrol(2)'>
-    		<label for="6461">CSCI 6461 Computer Architecture</label><br>
-
-    		<input type="checkbox" id="6212" name="course" value="CSCI6212" onclick='chkcontrol(3)'>
-    		<label for="6212">CSCI 6212 Algorithms </label><br>
-
-    		<input type="checkbox" id="6220" name="course" value="CSCI6220" onclick='chkcontrol(4)'>
-    		<label for="6220">CSCI 6220 Machine Learning </label><br>
-
-    		<input type="checkbox" id="6232" name="course" value="CSCI6232" onclick='chkcontrol(5)'>
-    		<label for="6232">CSCI 6232 Networks 1 </label><br>
-
-    		<input type="checkbox" id="6233" name="course" value="CSCI6233" onclick='chkcontrol(6)'>
-    		<label for="6233">CSCI 6233 Networks 2 </label><br>
-
-    		<input type="checkbox" id="6241" name="course" value="CSCI6241" onclick='chkcontrol(7)'>
-    		<label for="6241">CSCI 6241 Database 1 </label><br>
-
-    		<input type="checkbox" id="6242" name="course" value="CSCI6242" onclick='chkcontrol(8)'>
-    		<label for="6242">CSCI 6242 Database 2</label><br>
-
-    		<input type="checkbox" id="6246" name="course" value="CSCI6246" onclick='chkcontrol(9)'>
-    		<label for="6246">CSCI 6246 Compilers </label><br>
-
-    		<input type="checkbox" id="6260" name="course" value="CSCI6260" onclick='chkcontrol(10)'>
-    		<label for="6260">CSCI 6260 Multimedia </label><br>
-
-    		<input type="checkbox" id="6251" name="course" value="CSCI6251" onclick='chkcontrol(11)'>
-    		<label for="6251">CSCI 6251 Cloud Computing</label><br>
-
-    		<input type="checkbox" id="6254" name="course" value="CSCI6254" onclick='chkcontrol(12)'>
-    		<label for="6254">CSCI 6254 SW Engineering </label><br>
-
-    		<input type="checkbox" id="6262" name="course" value="CSCI6262" onclick='chkcontrol(13)'>
-    		<label for="6262">CSCI 6262 Graphics 1 </label><br>
-
-    		<input type="checkbox" id="6283" name="course" value="CSCI6283" onclick='chkcontrol(14)'>
-    		<label for="6283">CSCI 6283 Security 1 </label><br>
-
-    		<input type="checkbox" id="6284" name="course" value="CSCI6284" onclick='chkcontrol(15)'>
-    		<label for="6284">CSCI 6284 Cryptography</label><br>
-
-    		<input type="checkbox" id="6286" name="course" value="CSCI6286" onclick='chkcontrol(16)'>
-    		<label for="6286">CSCI 6286 Network Security</label><br>
-
-    		<input type="checkbox" id="6325" name="course" value="CSCI6325" onclick='chkcontrol(17)'>
-    		<label for="6325">CSCI 6325 Algorithms 2 </label><br>
-
-    		<input type="checkbox" id="6339" name="course" value="CSCI6339" onclick='chkcontrol(18)'>
-    		<label for="6339">CSCI 6339 Embedded Systems</label><br>
-
-    		<input type="checkbox" id="6384" name="course" value="CSCI6384" onclick='chkcontrol(19)'>
-    		<label for="6384">CSCI 6384 Cryptography 2 </label><br>
-
-    		<input type="checkbox" id="6241" name="course" value="ECE6241" onclick='chkcontrol(20)'>
-    		<label for="6241">ECE 6241 Communication Theory </label><br>
-
-    		<input type="checkbox" id="6242" name="course" value="ECE6242" onclick='chkcontrol(21)'>
-    		<label for="6242">ECE 6242 Information Theory</label><br>
-
-    		<input type="checkbox" id="6210" name="course" value="MATH6210" onclick='chkcontrol(22)'>
-    		<label for="6210">MATH 6210 Logic </label><br>
-
-    		<input type="submit" value="Submit" name="submit" onclick='populateCookies();'>
+        ?>
+         <div class="row mx-auto">
+            <div class="col-lg p-2">
+            <input type="submit" value="Submit Form" name="submit" onclick='populateCookies();' class="btn btn-primary btn-lg px-5">
+            </div>
+        </div>
+        </form>
+    </div>
 
 
-    	</form>
+    <script>
+    $(document).ready(function(){
+    $("#search_filter").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#course_table tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    });
+    </script>
 
-	<?php
-	}
-    //error checking... if theres form1 data already in there it resets it.
-    /*
-    $query = "SELECT * from formone where universityid = $id";
-    $result = mysqli_query($dbc, $query);
-    $results = mysqli_num_rows($result);
+		<?php
+		$course_query = 'SELECT * from catalog';
 
-    if($results > 0){
-      echo "Form One Data already found... reset</br>";
-      $query = "DELETE from formone where universityid = $id";
-      $result = mysqli_query($dbc, $query);
-    }*/
-    //
+		$result = mysqli_query($dbc, $course_query);
+		if(isset($_POST['submit']))
+		{
+			if (mysqli_num_rows($result) > 0) {
+					$cid = $row["c_id"];
+					if($_COOKIE["$cid"] == "True"){
+						$dbc->query("INSERT INTO formone VALUES ($id, '$cid')");
+					}
+			}
+		}
+		?>
 
-    if(isset($_POST['submit']))
-    {
-      if($_COOKIE["CSCI6221"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6221')");
-      }
-      if($_COOKIE["CSCI6212"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6212')");
-      }
-      if($_COOKIE["CSCI6220"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6220')");
-      }
-      if($_COOKIE["CSCI6232"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6232')");
-      }
-      if($_COOKIE["CSCI6233"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6233')");
-      }
-      if($_COOKIE["CSCI6241"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6241')");
-      }
-      if($_COOKIE["CSCI6242"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6242')");
-      }
-      if($_COOKIE["CSCI6246"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6246')");
-      }
-      if($_COOKIE["CSCI6251"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6251')");
-      }
-      if($_COOKIE["CSCI6254"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6254')");
-      }
-      if($_COOKIE["CSCI6260"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6260')");
-      }
-      if($_COOKIE["CSCI6262"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6262')");
-      }
-      if($_COOKIE["CSCI6283"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6283')");
-      }
-      if($_COOKIE["CSCI6284"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6284')");
-      }
-      if($_COOKIE["CSCI6286"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6286')");
-      }
-      if($_COOKIE["CSCI6325"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6325')");
-      }
-      if($_COOKIE["CSCI6339"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6339')");
-      }
-      if($_COOKIE["CSCI6384"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6384')");
-      }
-      if($_COOKIE["CSCI6461"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'CSCI6461')");
-      }
-      if($_COOKIE["ECE6241"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'ECE6241')");
-      }
-      if($_COOKIE["ECE6242"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'ECE6242')");
-      }
-      if($_COOKIE["MATH6210"] == "True"){
-        $dbc->query("INSERT INTO formone VALUES ($id, 'MATH6210')");
-      }
-
-
-    }
-
-    $dbc->query('SET foreign_key_checks = 1');
-    $dbc->close();
-
-    require_once('footer.php');
-  ?>
-
-	</body>
-
+</body>
 
 </html>
