@@ -161,9 +161,11 @@ INSERT INTO users (id, p_level, password) VALUES (10000008, 'Faculty', 'pass789'
 INSERT INTO users (id, p_level, password) VALUES (10000009, 'Faculty', 'pass456');
 INSERT INTO users (id, p_level, password) VALUES (88888888, 'Student', 'password');
 INSERT INTO users (id, p_level, password) VALUES (99999999, 'Student', 'pword');
+INSERT INTO users (id, p_level, password) VALUES (45678901, 'Student', 'pass');
 
 INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science');
 INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jumina@gwu.edu', 'Computer Science');
+INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES (45678901, 'Jimi', 'Hendrix', '123 THISADDRESS, ISREAL', 'jimi@gmail.com', 'Computer Science', 'MS')
 
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'zbodnick@gwu.edu', 'CSCI');
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000003, 'Hyeong-Ah', 'Choi', '77777 Place Pl. City, ST 88888', 'jacobpritchard9@gwu.edu', 'CSCI');
@@ -322,6 +324,17 @@ INSERT INTO transcript VALUES (77777777, 'CSCI6242', 'Spring', 2014, 'A', 3);
 INSERT INTO transcript VALUES (77777777, 'CSCI6283', 'Spring', 2014, 'A', 3);
 INSERT INTO transcript VALUES (77777777, 'CSCI6284', 'Spring', 2014, 'A', 3);
 INSERT INTO transcript VALUES (77777777, 'CSCI6286', 'Spring', 2014, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6221', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6212', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6461', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6232', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6233', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6284', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6286', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'CSCI6241', 'Spring', 2017, 'A', 3);
+INSERT INTO transcript VALUES (45678901, 'ECE6241', 'Spring', 2017, 'B', 3);
+INSERT INTO transcript VALUES (45678901, 'ECE6242', 'Spring', 2017, 'B', 3);
+INSERT INTO transcript VALUES (45678901, 'MATH6210', 'Spring', 2017, 'B', 3);
 
 INSERT INTO personalinfo VALUES (1, 'Stanislav', 'Lukashevich', '1998-12-12', 'Arlington, VA, 22206', 7036094317);
 INSERT INTO personalinfo VALUES (55555555, 'Paul', 'McCartney', '1999-04-04', 'Atlanta, GA, 22666', 2024892713);
