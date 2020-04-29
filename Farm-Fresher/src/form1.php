@@ -42,6 +42,7 @@ function populateCookies()
 	//if(chkcontroll() != false){
 		for(var i = 0; i < input.length; i++) {
 			if(input[i].checked == true){
+				<?php echo input[i].value?>
 				document.cookie = input[i].value + "=" + "True" + expires + "; path=/";
 			}else{
 				document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
