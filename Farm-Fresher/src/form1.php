@@ -186,8 +186,10 @@ function populateCookies()
 			if (mysqli_num_rows($result) > 0) {
 				while ($row = mysqli_fetch_assoc($result)) {
 					$crn = $row["c_no"];
+					$dep = $row["department"];
+					$val = $dep . $crn;
 					if($_COOKIE[$crn] == "True"){
-						$dbc->query("INSERT INTO formone VALUES ($id, '$crn')");
+						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
 					}
 				}
 			}
