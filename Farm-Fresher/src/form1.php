@@ -26,11 +26,10 @@ $query = "SELECT * from formone where universityid = $id";
 $result = mysqli_query($dbc, $query);
 
 if(mysqli_num_rows($result) > 0){
+	header("Location: home.php");
 	echo '<script type="text/javascript">',
  'window.alert("Form1 has already been submitted");',
  '</script>';
-
- header("Location: home.php");
 }
 ?>
 
