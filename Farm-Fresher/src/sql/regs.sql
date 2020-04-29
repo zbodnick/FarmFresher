@@ -177,7 +177,7 @@ INSERT INTO users (id, p_level, password) VALUES (10101010, 'Student', 'pword');
 
 INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science');
 INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jumina@gwu.edu', 'Computer Science');
-INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES (45678901, 'Jimi', 'Hendrix', '123 THISADDRESS, ISREAL', 'jimi@gmail.com', 'Computer Science', 'MS')
+INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES (45678901, 'Jimi', 'Hendrix', '123 THISADDRESS, ISREAL', 'jimi@gmail.com', 'Computer Science', 'MS');
 
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'zbodnick@gwu.edu', 'CSCI');
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000003, 'Hyeong-Ah', 'Choi', '77777 Place Pl. City, ST 88888', 'jacobpritchard9@gwu.edu', 'CSCI');
