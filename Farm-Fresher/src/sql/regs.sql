@@ -245,6 +245,8 @@ INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 7, 'A');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 20, 'B');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 21, 'B');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 22, 'B');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 4, 'B');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 8, 'B');
 
 INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 1);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 2);
