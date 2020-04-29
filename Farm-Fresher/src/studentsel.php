@@ -61,7 +61,7 @@
   if(isset($_POST["Search"])){
 
     //THIS ONLY ALLOWS FOR AN ADVISOR TO LOOK UP THEIR STUDENTS AND ONLY THEIR STUDENTS
-    if((strcmp($_SESSION['uType'], 'Advisor') == 0)){
+    if((strcmp($_SESSION['p_level'], 'Advisor') == 0)){
       echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';
       $input = $_POST['univID'];
 
@@ -246,7 +246,7 @@
   //SHOW ALL STUDENTS : THIS IS ONLY SHOWN IF A STUDENT HAS NOT YET BEEN SEARCHED
   else{
     //DISPLAY ALL USERS FOR GS AND ADMIN
-    if((strcmp($_SESSION['uType'], 'GS') == 0 || strcmp($_SESSION['uType'], 'Admin') == 0)){
+    if((strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="stuData">';
    	  $query = "select * from student";
       $result= mysqli_query($dbc, $query);
@@ -267,7 +267,7 @@
 
 
     //DISPLAY ONLY USERS FOR THE SELECTED ADVISOR
-    else if((strcmp($_SESSION['uType'], 'Advisor') == 0)){
+    else if((strcmp($_SESSION['p_level'], 'Advisor') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="advstuData">';
    	  $query = "select * from student where advisorid = '$_SESSION[uID]'";
       $result= mysqli_query($dbc, $query);
