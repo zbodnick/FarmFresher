@@ -26,8 +26,8 @@ $query = "SELECT * from formone where universityid = $id";
 $result = mysqli_query($dbc, $query);
 
 if(mysqli_num_rows($result) > 0){
-	header("Location: home.php");
 	?><script type="text/javascript">window.alert("Form One has already been submitted.");</script><?php
+	header("Location: home.php");
 	}?>
 	<script type="text/javascript">
 function populateCookies()
