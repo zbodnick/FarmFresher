@@ -30,7 +30,7 @@ if(mysqli_num_rows($result) > 0){
  'window.alert("Form1 has already been submitted");',
  '</script>';
 
- header("refresh:1; url=home.php");
+ header("Location: home.php");
 }
 ?>
 
