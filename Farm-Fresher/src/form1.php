@@ -178,6 +178,9 @@ function populateCookies()
 		$course_query = 'SELECT * from catalog';
 
 		$result = mysqli_query($dbc, $course_query);
+		if(!$result){
+			echo("Error description: " . $mysqli -> error);
+		}
 		if(isset($_POST['submit']))
 		{
 			if (mysqli_num_rows($result) > 0) {
