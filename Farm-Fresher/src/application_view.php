@@ -24,7 +24,11 @@ if (isset($_POST['accept'])) {
   $data = mysqli_query($dbc, $query);
   $applicantData = mysqli_fetch_array($data);
 
-  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', NULL, NULL, NULL, NULL, NULL)";
+  $query2 = "SELECT * FROM application WHERE username=".$_SESSION['id'];
+  $data2 = mysqli_query($dbc, $query);
+  $applicantData2 = mysqli_fetch_array($data);
+
+  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', '".$applicantData2['degree_type']."', NULL, NULL, NULL, 0)";
   $data = mysqli_query($dbc, $query);
 
   $query = "UPDATE users SET p_level='Student' WHERE id=".$_SESSION['id'];
