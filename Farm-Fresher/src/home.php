@@ -3,25 +3,25 @@
 
 <style>
     .not-nav {
-        margin-top: 3%; 
+        margin-top: 3%;
     }
 </style>
 
 <head>
-  <?php require_once ('header.php'); ?>  
+  <?php require_once ('header.php'); ?>
 
   <title> Home - Farm Fresh Regs </title>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-	
+
 <?php
 	  session_start();
 
       if (!isset($_SESSION['id'])){ // If user is not logged in redirect to login
           header("Location: login.php");
       }
-  
+
       $permLevel = $_SESSION['p_level'];
 
       if (strcmp($permLevel, "Student") == 0) {
@@ -58,7 +58,7 @@
                 <p>View the most updated version of your unofficial transcript.</p>
                 <p><a href="transcript.php" class="btn btn-primary px-4 rounded-0">View Transcript</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
@@ -70,7 +70,7 @@
                 <p>View avaiable courses and enroll.<br></br></p>
                 <p><a href="courses.php" class="btn btn-primary px-4 rounded-0">Register</a></p>
               </div>
-            </div> 
+            </div>
           </div>
     </div>
     <br></br>
@@ -100,7 +100,7 @@
               </div>
             </div>
           </div>
-    </div>  
+    </div>
 <?php
 } else if (strcmp($permLevel, "Applicant") == 0) {
   ?>
@@ -126,7 +126,7 @@
                   <p>View your currently submitted application.</p>
                   <p><a href="application_view.php" class="btn btn-primary px-4 rounded-0">View Application</a></p>
                 </div>
-              </div> 
+              </div>
             </div>
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
@@ -152,8 +152,20 @@
                 </div>
               </div>
             </div>
-      </div>    
-  <?php 
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div class="feature-1 border">
+              <div class="icon-wrapper bg-primary">
+                <span class="flaticon-mortarboard text-white"></span>
+              </div>
+              <div class="feature-1-content">
+                  <h2>Form One</h2>
+                  <p>Submit your form one.<br><br/></p>
+                  <p><a href="change_password.php" class="btn btn-primary px-4 rounded-0">Change Password</a></p>
+                </div>
+              </div>
+            </div>
+      </div>
+  <?php
 } else if (strcmp($permLevel, "Faculty") == 0) {
 ?>
 	<div></div>
@@ -178,7 +190,7 @@
                 <p>View all courses you are currently teaching.<br></br></p>
                 <p><a href="schedule.php" class="btn btn-primary px-4 rounded-0">View Courses</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
@@ -190,7 +202,7 @@
                 <p>Enter grades for the students taking your courses.</p>
                 <p><a href="grades.php" class="btn btn-primary px-4 rounded-0">Input Grades</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <div class="feature-1 border">
@@ -232,7 +244,7 @@
                 </div>
               </div>
           </div>
-    </div>    
+    </div>
 <?php
 } else if (strcmp($permLevel, "Admin") == 0) {
 ?>
@@ -270,7 +282,7 @@
                 <p>View the full list of courses offered by the university.</p>
                 <p><a href="courses.php" class="btn btn-primary px-4 rounded-0">View Courses</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-2">
             <div class="feature-1 border">
@@ -282,7 +294,7 @@
                 <p>View the current list of students at the university.</p>
                 <p><a href="students.php" class="btn btn-primary px-4 rounded-0">View Students</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-2">
             <div class="feature-1 border">
@@ -322,7 +334,7 @@
                 <p>View Any Student's Transcript.</p>
                 <p><a href="transcript.php" class="btn btn-primary px-4 rounded-0">Transcripts</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-2">
             <div class="feature-1 border">
@@ -334,7 +346,7 @@
                 <p>Edit a Users's Personal Information.</p>
                 <p><a href="edit_user.php" class="btn btn-primary px-4 rounded-0">Edit Users</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-2">
             <div class="feature-1 border">
@@ -346,7 +358,7 @@
                 <p>View and Delete all Users in the Database.</p>
                 <p><a href="users.php" class="btn btn-primary px-4 rounded-0">View Users</a></p>
               </div>
-            </div> 
+            </div>
           </div>
 
         </div>
@@ -387,7 +399,7 @@
                 <p>View courses and alter student's grades.</p>
                 <p><a href="grades.php" class="btn btn-primary px-4 rounded-0">Change Grades</a></p>
               </div>
-            </div> 
+            </div>
           </div>
           </div>
           <br></br>
@@ -411,7 +423,7 @@
 ?>
       </div>
     </div>
-	
+
 	<div class="container">
 		<div class="row justify-content-center mt-3 mb-3">
 			<a href="reset.php" class="btn btn-primary"> RESET DATABASE </a>
