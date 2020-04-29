@@ -108,7 +108,7 @@
           <div class="feature-1-content">
               <h2>Form One</h2>
               <p>Submit your form one.<br><br/></p>
-              <p><a href="change_password.php" class="btn btn-primary px-4 rounded-0">Change Password</a></p>
+              <p><a href="form1.php" class="btn btn-primary px-4 rounded-0">Submit</a></p>
             </div>
           </div>
         </div>
