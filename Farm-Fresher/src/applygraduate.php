@@ -3,9 +3,8 @@
 	$page_title = 'GWU Advising System';
 
 	//Load php tag into file once
-  require_once('connectvars.php');
+  require_once('php/connectvars.php');
   require_once('appvars.php');
-	require_once('header.php');
   require_once('navmenu.php');
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $dbc->query('SET foreign_key_checks = 0');
@@ -81,7 +80,7 @@
 
   if($program == 'MS' && $avggpa >= 3.0 && $chours >= 30 && $numBadGrades <= 2 && $aprv == 1)
   {
-    $queryMS = "UPDATE student SET applied_to_grad = 1 WHERE unid = $id;";
+    $queryMS = "UPDATE student SET applied_to_grad = 1 WHERE u_id = $id;";
     if(mysqli_query($dbc, $queryMS) == TRUE)
     {
       echo "<br>";
@@ -91,7 +90,7 @@
   }
   else if($program == 'PHD' && $avggpa > 3.5 && $chours >= 36 && $numBadGrades <= 1 && $aprv == 1 && $choursCSCI >= 30 )
   {
-    $queryPHD = "UPDATE student SET applied_to_grad = 2 WHERE unid = $id;";
+    $queryPHD = "UPDATE student SET applied_to_grad = 2 WHERE u_id = $id;";
     if(mysqli_query($dbc, $queryPHD) == TRUE)
     {
       echo "<br>";

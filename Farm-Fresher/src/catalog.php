@@ -5,7 +5,7 @@
 	$page_title = 'GWU Advising System Catalog';
 
 	//Load php tag into file once
-  require_once('connectvars.php');
+  require_once('php/connectvars.php');
   require_once('appvars.php');
 	require_once('header.php');
   require_once('navmenu.php');
