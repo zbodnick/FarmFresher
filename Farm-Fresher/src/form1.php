@@ -27,11 +27,10 @@ $result = mysqli_query($dbc, $query);
 
 if(mysqli_num_rows($result) > 0){
 	header("Location: home.php");
-	echo '<script type="text/javascript">',
- 'window.alert("Form1 has already been submitted");',
- '</script>';
+	?><script type="text/javascript">window.alert("Form One has already been submitted.");</script><?php
 }
 ?>
+
 
 <script type="text/javascript">
 
