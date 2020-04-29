@@ -139,7 +139,7 @@ function populateCookies()
 
                 <td>
                     <label class="btn btn-primary">
-                    <input type="checkbox" value = <?php echo "$cid" ?> autocomplete="off">
+                    <input type="checkbox" value = <?php echo "$crn" ?> autocomplete="off">
                     <span class="glyphicon glyphicon-ok"></span>
                 </td>
 
@@ -184,8 +184,8 @@ function populateCookies()
 		if(isset($_POST['submit']))
 		{
 			if (mysqli_num_rows($result) > 0) {
-					$cid = $row["c_id"];
-					if($_COOKIE[$cid] == "True"){
+					$crn = $row["c_no"];
+					if($_COOKIE[$crn] == "True"){
 						$dbc->query("INSERT INTO formone VALUES ($id, '$cid')");
 					}
 			}
