@@ -114,7 +114,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
                   "TOEFL Score","TOEFL Date","MS Prior","MS GPA","MS Major","MS Year","MS University",
                   "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
-                  "Completion","Recommendation","Reviewer Comment","Degree Type","Final Decision");
+                  "Completion","Average Review","Reviewer Comment","Degree Type","Final Decision");
           $accepted = array("Review In Progress","Rejected","Deferred","Accepted, No Aid","Accepted, Aid");
           for ($i; $i < (sizeof($row)/2); $i++) {
             if (!strcmp($cats[$i],"Transcript")) {
@@ -157,7 +157,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 ';
                 }
             }
-            else if ((!strcmp($cats[$i],"Reviewer Comment") || !strcmp($cats[$i],"Recommendation") || !strcmp($cats[$i],"Final Decision")) && !strcmp($_SESSION['p_level'],"Applicant")) {
+            else if ((!strcmp($cats[$i],"Reviewer Comment") || !strcmp($cats[$i],"Average Review") || !strcmp($cats[$i],"Final Decision")) && !strcmp($_SESSION['p_level'],"Applicant")) {
               // do nothing
             }
             else {
@@ -171,7 +171,21 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
             }
           }
 
+          if (strcmp($_SESSION['p_level'],"Applicant")) {
+            $query = "SELECT * FROM recommender WHERE applicationID=".$id;
+            $data = mysqli_query($dbc, $query);
+            if (mysqli_num_rows($data)) {
+              while ($row = mysqli_fetch_array($data)) {
+                echo '
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    Recommendation from '.$row['fname'].' '.$row['lname'].': '.$row['recommendation'].'
+                  </div>
+                </div>';
+              }
+            }
 
+          }
         }
       ?>
     </form>
