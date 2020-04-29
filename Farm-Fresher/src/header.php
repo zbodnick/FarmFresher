@@ -95,9 +95,6 @@
 								<li>
 								  <a href="transcript.php" class="nav-link text-left">Transcript</a>
 								</li>
-
-
-
 							';
               break;
             case "Applicant":
@@ -137,6 +134,9 @@
 								</li>
                 <li>
                   <a href="edit_user.php" class="nav-link text-left">Edit Users</a>
+                </li>
+                <li>
+                  <a href="reviewer_portal.php" class="nav-link text-left">View Applications</a>
                 </li>
 							';
 							break;
