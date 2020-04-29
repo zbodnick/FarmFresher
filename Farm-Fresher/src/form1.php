@@ -102,6 +102,7 @@ function populateCookies()
                 $dept = $row["department"];
                 $title = $row["title"];
                 $credits = $row["credits"];
+								$val = $dept . $crn;
 
                 $prereq_query = "SELECT prereq1, prereq2 FROM prereqs WHERE course_Id=$cid";
                 $query_result = mysqli_query($dbc, $prereq_query);
@@ -142,7 +143,7 @@ function populateCookies()
 
                 <td>
                     <label class="btn btn-primary">
-                    <input type="checkbox" value = <?php echo "$crn" ?> autocomplete="off">
+                    <input type="checkbox" value = <?php echo "$val" ?> autocomplete="off">
                     <span class="glyphicon glyphicon-ok"></span>
                 </td>
 
@@ -192,7 +193,7 @@ function populateCookies()
 					$crn = $row["c_no"];
 					$dep = $row["department"];
 					$val = $dep . $crn;
-					if($_COOKIE[$crn] == "True"){
+					if($_COOKIE[$val] == "True"){
 						echo $val;
 						$count = $count + 1;
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
