@@ -215,12 +215,12 @@
       if ($result->num_rows > 0)
         {
         //IF USER IS AN ALUMNI, SHOW FINAL GPA
-        if(strcmp($_SESSION['uType'], 'alumni') == 0){
+        if(strcmp($_SESSION['p_level'], 'alumni') == 0){
           $query = "select gpa from student where u_id = " . $_SESSION['id'];
           $result = mysqli_query($dbc, $query);
           $row = $result->fetch_assoc();
 
-          echo "<br><center><h4>Final GPA : ".$row["gpa"]."</h4></center>";
+          echo "<br><center><h4>GPA : ".$row["gpa"]."</h4></center>";
         }else{
           $id = $_SESSION['id'];
           $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM courses_taken WHERE u_id = $id;";
@@ -248,7 +248,7 @@
           $numberOfFs = $numberOfFs->fetch_assoc();
           $resultF= $numberOfFs['totalF'];
 
-          $query2 = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and department = 'CSCI') as A;";
+          $query2 = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and grade != 'IP') as A;";
           $chours = mysqli_query($dbc, $query2);
           $chours = $chours->fetch_assoc();
           $totalhours= $chours['credits'] + 0.00;
