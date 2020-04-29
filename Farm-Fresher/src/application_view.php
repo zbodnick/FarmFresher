@@ -25,6 +25,7 @@ if (isset($_POST['accept'])) {
   $applicantData = mysqli_fetch_array($data);
 
   $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', NULL, NULL, NULL, NULL, NULL, 1)";
+    
   $data = mysqli_query($dbc, $query);
 
   $query = "UPDATE users SET p_level='Student' WHERE id=".$_SESSION['id'];

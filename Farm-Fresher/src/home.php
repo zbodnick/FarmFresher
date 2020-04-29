@@ -36,7 +36,11 @@
               $uid = $_SESSION['id'];
               $advising_hold_query = "SELECT has_hold FROM student WHERE u_id=$uid";
               $advising_hold_results = mysqli_query($dbc, $advising_hold_query);
-              if ($advising_hold_results == 1) {
+
+              $row = mysqli_fetch_array($advising_hold_results);
+              $has_hold = $row['has_hold'];
+
+              if ($has_hold == 1) {
                 echo '
                       <div class="alert alert-warning" role="alert">
                       <strong class="text-danger">You have a registration hold. </strong>Fill out the first semester <a href="advising_form.php">advising form!</a>
