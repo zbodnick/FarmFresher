@@ -195,6 +195,7 @@ function populateCookies()
 					$val = $dep . $crn;
 					if($_COOKIE[$crn] == "True"){
 						$count = $count + 1;
+						?><script type="text/javascript">window.alert("C+");</script><?php
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
 					}
 				}
