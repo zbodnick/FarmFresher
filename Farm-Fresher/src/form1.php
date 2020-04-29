@@ -61,7 +61,7 @@ function populateCookies()
     <div class="container pt-3">
     <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div class="card-header">
-        <h1 class="text-primary">First Semester Advising Form</h1>
+        <h1 class="text-primary">Form One</h1>
         <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking/have taken</small></h4>
     </div>
         <?php
@@ -140,7 +140,7 @@ function populateCookies()
 
                 <td>
                     <label class="btn btn-primary">
-                    <input type="checkbox" value = <?php$cid?> autocomplete="off">
+                    <input type="checkbox" value = "<?php$cid?>" autocomplete="off">
                     <span class="glyphicon glyphicon-ok"></span>
                 </td>
 			    </label>
