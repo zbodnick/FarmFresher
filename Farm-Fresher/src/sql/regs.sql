@@ -234,9 +234,22 @@ INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, en
 
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 2, 'IP');
 INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 3, 'IP');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 1, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 3, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 2, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 5, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 6, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 15, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 16, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 7, 'A');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 20, 'B');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 21, 'B');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 22, 'B');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 4, 'B');
+INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 8, 'B');
 
 INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 1);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 2);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 2);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 3);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 4);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 5);
@@ -244,17 +257,19 @@ INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 6);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 7);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 8);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 9);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 10);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 11);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 12);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000006, 13);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 10);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 11);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 12);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 13);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 14);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 15);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 16);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 17);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 18);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 19);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 20);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 20);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 21);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 22);
 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (6, 'CSCI 6232', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (8, 'CSCI 6241', NULL);
