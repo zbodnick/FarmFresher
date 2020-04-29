@@ -188,14 +188,13 @@ function populateCookies()
 		if(isset($_POST['submit']))
 		{
 			if (mysqli_num_rows($result) > 0) {
-				$count = 0;
+				$count = 1;
 				while ($row = mysqli_fetch_assoc($result)) {
 					$crn = $row["c_no"];
 					$dep = $row["department"];
 					$val = $dep . $crn;
 					if($_COOKIE[$crn] == "True"){
 						$count = $count + 1;
-						?><script type="text/javascript">window.alert(<?php"$count"?>);</script><?php
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
 					}
 				}
