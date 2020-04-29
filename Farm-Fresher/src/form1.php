@@ -139,9 +139,10 @@ function populateCookies()
 
                 <td>
                     <label class="btn btn-primary">
-                    <input type="checkbox" value = "<?php$cid?>" autocomplete="off">
+                    <input type="checkbox" value = <?php echo "$cid" ?> autocomplete="off">
                     <span class="glyphicon glyphicon-ok"></span>
                 </td>
+
 			    </label>
                 </tr>
 
