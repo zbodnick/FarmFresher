@@ -28,9 +28,10 @@ $result = mysqli_query($dbc, $query);
 if(mysqli_num_rows($result) > 0){
 	echo '<script type="text/javascript">',
  'window.alert("Form1 has already been submitted");',
- '</script>'
- ;
+ '</script>';
+
  header("refresh:1; url=home.php");
+}
 ?>
 
 <script type="text/javascript">
@@ -201,15 +202,14 @@ function populateCookies()
 					if($_COOKIE[$crn] == "True"){
 						$count = $count + 1;
 						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
-						?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
-						header("refresh:1; url=home.php");
 					}
 					if($count > 12 || $count < 10){
 						$dbc->query("delete from formone where universityid = $id")
 						?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
 					}else{
 						//SUCCESS
-
+						?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
+						header("refresh:1; url=home.php");
 					}
 				}
 			}
