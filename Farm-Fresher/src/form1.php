@@ -37,7 +37,7 @@ function populateCookies()
 	var array = [];
 
 	var input = document.getElementsByTagName('input');
-	<?php echo input[0].value?>
+	window.alert(input[0].value);
 	//if(chkcontroll() != false){
 		for(var i = 0; i < input.length; i++) {
 			if(input[i].checked == true){
