@@ -59,10 +59,10 @@
                 <li>
                   <a href="home.php" class="nav-link text-left">Home</a>
                 </li>
-      <?php	
+      <?php
       session_start ();
 
-				// Switch over perm level to figure out what to display in header	
+				// Switch over perm level to figure out what to display in header
 				if (isset ($_SESSION['p_level'])) {
 					switch ($_SESSION['p_level']) {
 						case "Faculty":
@@ -78,11 +78,11 @@
                 </li>
                 <li>
 								  <a href="reviewer_portal.php" class="nav-link text-left">Application Review</a>
-								</li>	
+								</li>
 							';
 							break;
 						case "Student":
-							echo '	
+							echo '
 								<li>
 								  <a href="account.php" class="nav-link text-left">Account Info</a>
 								</li>
@@ -94,12 +94,10 @@
 								</li>
 								<li>
 								  <a href="transcript.php" class="nav-link text-left">Transcript</a>
-								</li>	
-              ';
-              
-              
-							break;
-                </li>	
+								</li>
+
+
+
 							';
               break;
             case "Applicant":
@@ -117,7 +115,7 @@
               ';
               break;
 						case "GS":
-							echo '	
+							echo '
 								<li>
 								  <a href="grades.php" class="nav-link text-left">Grades</a>
 								</li>
@@ -129,8 +127,8 @@
 								</li>
 							';
 							break;
-						case "Admin":	
-							echo '	
+						case "Admin":
+							echo '
 								<li>
 								  <a href="add_user.php">Add User</a>
 								</li>
