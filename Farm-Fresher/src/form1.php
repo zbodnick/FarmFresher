@@ -187,7 +187,7 @@ function populateCookies()
 				while ($row = mysqli_fetch_assoc($result)) {
 					$crn = $row["c_no"];
 					if($_COOKIE[$crn] == "True"){
-						$dbc->query("INSERT INTO formone VALUES ($id, '$cid')");
+						$dbc->query("INSERT INTO formone VALUES ($id, '$crn')");
 					}
 				}
 			}
