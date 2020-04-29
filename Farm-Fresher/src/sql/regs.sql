@@ -21,6 +21,7 @@ create table student(
   formid      int,
   advisorid   int,
   applied_to_grad  int,
+  has_hold BOOLEAN NOT NULL DEFAULT 1,
   primary key (u_id),
   foreign key (u_id) references users(id)
 );
