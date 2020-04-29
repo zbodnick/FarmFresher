@@ -32,12 +32,10 @@
 			retVal= false;
 		}
 
-		if ((document.app.password.value).localeCompare(document.app.password2.value) != 0) {
-			alert('Passwords do not match');
+		if (document.app.password.value != document.app.password2.value) {
 			retVal= false;
 		}
 
-		<?php $error_msg=""; ?>
 		return retVal;
 		}
 		</script>
@@ -72,7 +70,7 @@ function check($new) {
 
 if (isset($_POST['submit'])) {
 	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-  $dbc->query('SET foreign_key_checks = 0');
+  	$dbc->query('SET foreign_key_checks = 0');
 	$username = randNum();
 
 	$user = "INSERT INTO users VALUES (".$username.",'Applicant','".$_POST['password']."')";
@@ -160,44 +158,41 @@ if (isset($_POST['submit'])) {
 	$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
 	$verQ = mysqli_query($dbc, $verCode);
 
-	header("Location: login.php");
-  $dbc->query('SET foreign_key_checks = 1');
+  	$dbc->query('SET foreign_key_checks = 1');
 }
 ?>
-
-		<!-- <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['PHP_SELF']; ?>"> -->
 	<body>
     	<br><br>
     	<div class="container pt-3">
-    	<h1 class="text-primary">Application</h1>
+		<?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Successfully Submitted Application</div>"; } ?>
+    	<h1 class="text-primary">Application</h1><div class='card p-5 mt-4'>
 		<form method="post" name="app" onsubmit="return validate();" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label for="fname">First Name</label>
-					<input type="text" id="fname" name="fname" class="form-control form-control-lg text-muted" value="" required>
+					<input type="text" id="fname" name="fname" maxlength="254" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="mname">Middle Name</label>
-					<input type="text" id="mname" name="mname" class="form-control form-control-lg text-muted" value="" required>
+					<input type="text" id="mname" name="mname" maxlength="254" class="form-control form-control-lg text-muted" value="">
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="lname">Last Name</label>
-					<input type="text" id="lname" name="lname" class="form-control form-control-lg text-muted" value="" required>
+					<input type="text" id="lname" name="lname" maxlength="254" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label for="email">Email Address</label>
-					<input type="text" id="email" name="email" class="form-control form-control-lg text-muted" value="">
+					<input type="text" id="email" name="email" maxlength="254" class="form-control form-control-lg text-muted" value="">
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="address">Address</label>
-					<input type="text" id="address" name="address" class="form-control form-control-lg text-muted" value="">
+					<input type="text" id="address" name="address" maxlength="254" class="form-control form-control-lg text-muted" value="">
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="ssn">SSN</label>
-					<input type="text" id="ssn" name="ssn" class="form-control form-control-lg text-muted" value="" required>
+					<input type="text" id="ssn" name="ssn" maxlength="9" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 			</div>
 
@@ -210,11 +205,11 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-md-6 form-group">
 					<label for="password">New Password</label>
-					<input type="password" id="password" name="password" class="form-control form-control-lg text-muted" value="" required>
+					<input type="password" id="password" name="password" maxlength="20" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="password2">Confirm Password</label>
-					<input type="password" id="password2" name="password2" class="form-control form-control-lg text-muted" value="" required>
+					<input type="password" id="password2" name="password2" maxlength="20" class="form-control form-control-lg text-muted" value="" required>
 				</div>
 			</div>
 			<div class="row pt-4 border-top text-center">
@@ -226,13 +221,13 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-lg form-group">
 					<label for="verbalgre">GRE Verbal:</label>
-					<input class="form-control form-control-lg text-muted" type="number" name="verbalgre" value="">
+					<input class="form-control form-control-lg text-muted" type="number" maxlength="10" name="verbalgre" value="">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6 form-group">
 					<label for="quantgre">GRE Quantitative:</label>
-					<input class="form-control form-control-lg text-muted" type="number" name="quantgre" value="">
+					<input class="form-control form-control-lg text-muted" type="number" maxlength="10" name="quantgre" value="">
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="gre_date">GRE Year Taken:</label>
@@ -243,11 +238,11 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-md-6 form-group">
 					<label for="advgre">Adv. GRE Score:</label>
-					<input class="form-control form-control-lg text-muted" type="number" name="advgre" value="">
+					<input class="form-control form-control-lg text-muted" type="number" maxlength="10" name="advgre" value="">
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="advgre_sub">Adv. GRE Subject:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="advgre_sub" value="">
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="254" name="advgre_sub" value="">
 				</div>
 			</div>
 
@@ -261,7 +256,7 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-md-6 form-group">
 					<label for="toefl">TOEFL Score:</label>
-					<input class="form-control form-control-lg text-muted" type="number" name="toefl" value="">
+					<input class="form-control form-control-lg text-muted" type="number" maxlength="10" name="toefl" value="">
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="toefl_date">TOEFL Year Taken:</label>
@@ -285,11 +280,11 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="ms_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="ms_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="4" name="ms_gpa" value="" />
 				</div>
 				<div class="col form-group">
 					<label for="ms_major">Major:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="ms_major" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="254" name="ms_major" value="" />
 				</div>
 				<div class="col form-group">
 					<label for="ms_year">Year:</label>
@@ -297,7 +292,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col form-group">
 					<label for="ms_uni">University:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="ms_uni" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="254" name="ms_uni" value="" />
 				</div>
 			</div>
 
@@ -311,12 +306,12 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="b_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="4" name="b_gpa" value="" />
 				</div>
 
 				<div class="col form-group">
 					<label for="b_major">Major:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="b_major" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="254" name="b_major" value="" />
 				</div>
 
 				<div class="col form-group">
@@ -326,7 +321,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_uni">University:</label>
-					<input class="form-control form-control-lg text-muted" type="text" name="b_uni" value="" />
+					<input class="form-control form-control-lg text-muted" type="text" maxlength="254" name="b_uni" value="" />
 				</div>
 
 			</div>
@@ -350,21 +345,21 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-md">
 					<label for="experience">Experience</label>
-					<textarea class="form-control form-control-lg text-muted" name="experience" rows="4" cols="50"></textarea>
+					<textarea class="form-control form-control-lg text-muted" maxlength="1000" name="experience" rows="4" cols="50"></textarea>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md">
 					<label for="interests">Interests</label>
-					<textarea class="form-control form-control-lg text-muted" name="interests" rows="4" cols="50"></textarea>
+					<textarea class="form-control form-control-lg text-muted" maxlength="1000" name="interests" rows="4" cols="50"></textarea>
 				</div>
 			</div>
 
 			<div class="row pt-3 mb-2">
 				<div class="col-lg">
 					<label for="recommender">Recommender's Email</label>
-					<input class="form-control form-control-lg text-muted" name="recommender" value="" required></textarea>
+					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender" value="" required></textarea>
 				</div>
 			</div>
 
@@ -374,6 +369,6 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
 		</form>
-	</div>
+	</div></div>
 	</body>
 </html>

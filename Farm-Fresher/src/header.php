@@ -75,7 +75,10 @@
 								</li>
 								<li>
 								  <a href="grades.php" class="nav-link text-left">Grades</a>
-								</li>
+                </li>
+                <li>
+								  <a href="reviewer_portal.php" class="nav-link text-left">Application Review</a>
+								</li>	
 							';
 							break;
 						case "Student":
@@ -96,6 +99,23 @@
               
               
 							break;
+                </li>	
+							';
+              break;
+            case "Applicant":
+              echo '
+                <li>
+								  <a href="application_view.php" class="nav-link text-left">View Application</a>
+							  </li>
+              ';
+              break;
+            case "CAC":
+              echo '
+                <li>
+                  <a href="reviewer_portal.php" class="nav-link text-left">Update Applications</a>
+                </li>
+              ';
+              break;
 						case "GS":
 							echo '	
 								<li>
@@ -103,6 +123,9 @@
 								</li>
 								<li>
 								  <a href="transcript.php" class="nav-link text-left">Transcripts</a>
+                </li>
+                <li>
+								  <a href="reviewer_portal.php" class="nav-link text-left">Update Applications</a>
 								</li>
 							';
 							break;
