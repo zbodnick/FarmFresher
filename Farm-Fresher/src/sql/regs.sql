@@ -265,9 +265,9 @@ INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 16);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 17);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 18);
 INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 19);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 20);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 21);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 22);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 20);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 21);
+INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 22);
 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (6, 'CSCI 6232', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (8, 'CSCI 6241', NULL);
