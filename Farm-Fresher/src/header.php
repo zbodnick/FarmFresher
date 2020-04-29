@@ -59,10 +59,9 @@
                 <li>
                   <a href="home.php" class="nav-link text-left">Home</a>
                 </li>
-			<?php
+      <?php	
+      session_start ();
 
-				session_start ();
-	
 				// Switch over perm level to figure out what to display in header	
 				if (isset ($_SESSION['p_level'])) {
 					switch ($_SESSION['p_level']) {
@@ -92,8 +91,10 @@
 								</li>
 								<li>
 								  <a href="transcript.php" class="nav-link text-left">Transcript</a>
-								</li>			
-							';
+								</li>	
+              ';
+              
+              
 							break;
 						case "GS":
 							echo '	
@@ -157,6 +158,12 @@
   <script src="js/jquery.sticky.js"></script>
   <script src="js/jquery.mb.YTPlayer.min.js"></script>
   <script src="js/main.js"></script>
+
+  <script>
+  $(document).ready(function(){
+    $('.toast').toast('show');
+  });
+</script>
 
 </body>
 
