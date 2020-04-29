@@ -43,7 +43,7 @@
               if ($has_hold == 1) {
                 echo '
                       <div class="alert alert-warning" role="alert">
-                      <strong class="text-danger">You have a registration hold. </strong>Fill out the first semester <a href="advising_form.php">advising form!</a>
+                      <strong class="text-danger">You have a registration hold. </strong>Fill out the first semester <a href="advising_form_new.php">advising form!</a>
                       </div>';
               }
               ?>

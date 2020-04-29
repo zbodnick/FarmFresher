@@ -144,7 +144,7 @@
 							// Only show an enroll/drop button if this is a student
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
                                 if ($has_hold == 1) { ?>
-                                    <td> <a href="advising_form.php" class="btn btn-danger btn-sm rounded-2 px-3"><span class="glyphicon glyphicon-exclamation-sign pr-2"></span>Lift Advising Hold</a> </td>
+                                    <td> <a href="advising_form_new.php" class="btn btn-danger btn-sm rounded-2 px-3"><span class="glyphicon glyphicon-exclamation-sign pr-2"></span>Lift Advising Hold</a> </td>
                                 <?php } else {
 								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
 									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
