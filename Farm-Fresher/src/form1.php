@@ -184,12 +184,12 @@ function populateCookies()
 		if(isset($_POST['submit']))
 		{
 			if (mysqli_num_rows($result) > 0) {
+				while ($row = mysqli_fetch_assoc($result)) {
 					$crn = $row["c_no"];
-					echo $_COOKIE['$crn'];
-					echo $_COOKIE[$crn];
 					if($_COOKIE[$crn] == "True"){
 						$dbc->query("INSERT INTO formone VALUES ($id, '$cid')");
 					}
+				}
 			}
 		}
 		?>
