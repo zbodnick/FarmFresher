@@ -28,8 +28,9 @@ $result = mysqli_query($dbc, $query);
 if(mysqli_num_rows($result) > 0){
 	header("Location: home.php");
 	?><script type="text/javascript">window.alert("Form One has already been submitted.");</script><?php
-}
-?><script type="text/javascript">function populateCookies()
+	}?>
+	<script type="text/javascript">
+function populateCookies()
 {
 	var expires;
 	var date = new Date();
@@ -199,11 +200,9 @@ if(mysqli_num_rows($result) > 0){
 				}
 				if($count > 12 || $count < 10){
 					$dbc->query("delete from formone where universityid = $id");
-					//header("Location: home.php");
 					?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
 				}else{
 					//SUCCESS
-					//header("Location: home.php");
 					?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
 				}
 			}
