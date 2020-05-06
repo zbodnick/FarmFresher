@@ -83,11 +83,22 @@ if (isset($_POST['submit'])) {
 	$data = mysqli_query($dbc, $maxID);
 	$row = mysqli_fetch_array($data);
 	$appID = $row['ID']+1;
+
+	$recommenderEmails = '';
+
+	$recommenderEmails = $recommenderEmails . $_POST['recommender1'];
+	if (!empty($_POST['recommender2'])) {
+		$recommenderEmails = $recommenderEmails . ', ' . $_POST['recommender2'];
+	}
+	if (!empty($_POST['recommender3'])) {
+		$recommenderEmails = $recommenderEmails . ', ' . $_POST['recommender3'];
+	}
+
 	$application = "INSERT INTO application VALUES (
 		".$appID.",
 		".$username.",
 		0,
-		'".$_POST['recommender']."',
+		'".$recommenderEmails."',
 		'".$_POST['verbalgre']."',
 		'".$_POST['quantgre']."',
 		'".$_POST['gre_date']."',
@@ -142,15 +153,43 @@ if (isset($_POST['submit'])) {
 
 	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! You will recieve a second email shortly with a verification code to verify your recommendation. Once you have the verification code, you may follow the link below to complete the recommendation. In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. These steps are for security purposes only. We appreciate your cooperation. Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php\nThank you!";
 	$header = "From: farmfresh@gmail.edu";
-	$retval = mail($_POST['recommender'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+	$retval = mail($_POST['recommender1'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
 
 	$verification = rand(10001,99999);
 	$msg = "YOUR VERICATION CODE IS: ".$verification." for the Farm Fresher University system. Please see previous email for instructions.";
 	$header = "From: farmfresh@gmail.edu";
-	$retval = mail($_POST['recommender'],"Verification Code",$msg, $header);
+	$retval = mail($_POST['recommender1'],"Verification Code",$msg, $header);
 
 	$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
 	$verQ = mysqli_query($dbc, $verCode);
+
+	if (!empty($_POST['recommender2'])) {
+		$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! You will recieve a second email shortly with a verification code to verify your recommendation. Once you have the verification code, you may follow the link below to complete the recommendation. In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. These steps are for security purposes only. We appreciate your cooperation. Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php\nThank you!";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender2'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+	
+		$verification = rand(10001,99999);
+		$msg = "YOUR VERICATION CODE IS: ".$verification." for the Farm Fresher University system. Please see previous email for instructions.";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender2'],"Verification Code",$msg, $header);
+
+		$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
+		$verQ = mysqli_query($dbc, $verCode);
+	}
+
+	if (!empty($_POST['recommender3'])) {
+		$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! You will recieve a second email shortly with a verification code to verify your recommendation. Once you have the verification code, you may follow the link below to complete the recommendation. In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. These steps are for security purposes only. We appreciate your cooperation. Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php\nThank you!";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender3'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+	
+		$verification = rand(10001,99999);
+		$msg = "YOUR VERICATION CODE IS: ".$verification." for the Farm Fresher University system. Please see previous email for instructions.";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender3'],"Verification Code",$msg, $header);
+
+		$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
+		$verQ = mysqli_query($dbc, $verCode);
+	}
 
   	$dbc->query('SET foreign_key_checks = 1');
 }
@@ -352,8 +391,22 @@ if (isset($_POST['submit'])) {
 
 			<div class="row pt-3 mb-2">
 				<div class="col-lg">
-					<label for="recommender">Recommender's Email</label>
-					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender" value="" required></textarea>
+					<label for="recommender">First Recommender's Email</label>
+					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender1" value="" required></textarea>
+				</div>
+			</div>
+
+			<div class="row pt-3 mb-2">
+				<div class="col-lg">
+					<label for="recommender">Second Recommender's Email</label>
+					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender2" value=""></textarea>
+				</div>
+			</div>
+
+			<div class="row pt-3 mb-2">
+				<div class="col-lg">
+					<label for="recommender">Third Recommender's Email</label>
+					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender3" value=""></textarea>
 				</div>
 			</div>
 
