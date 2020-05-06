@@ -402,7 +402,7 @@ CREATE TABLE `recommender` (
 
 CREATE TABLE `verification_codes` (
   `username` int(8),
-  `verification`  int(5) PRIMARY KEY
+  `verification` int(5) PRIMARY KEY
 );
 
 ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
@@ -431,13 +431,13 @@ INSERT INTO applicant VALUES(00001236, 'Carlos', 'Santana', 'prsLuvr123@gwu.edu'
 
 INSERT INTO `application` VALUES (1,15555555, 0,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0);
-INSERT INTO `application` VALUES (1,15555555, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (1,16666666, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GWU University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 0, '', 'ms', 0);
-INSERT INTO `application` VALUES (1,15555555, 0,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (1,00001234, 0,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 0, '', 'ms', 0);
-INSERT INTO `application` VALUES (1,15555555, 0,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (1,00001235, 0,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 0, '', 'ms', 0);
-INSERT INTO `application` VALUES (1,15555555, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (1,00001236, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 0, '', 'phd', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

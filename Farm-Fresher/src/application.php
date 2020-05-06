@@ -115,22 +115,25 @@ if (isset($_POST['submit'])) {
 		0)";
 	$applicationdata = mysqli_query($dbc, $application);
 
-	$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";
-	$reviewerQ = mysqli_query($dbc, $reviewerIDS);
-
-	if(mysqli_num_rows($reviewerQ) != 0) {
-		$row = mysqli_fetch_array($reviewerQ);
-
-		$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['id'] .",". $username .",0)";
-		$reviewerInsert = mysqli_query($dbc, $insertReviewer);
-	}
-	else {
-		$reviewerIDS = "SELECT count(username) as count,username from reviewer_application  group by username order by count asc, username asc";
+	$i = 0;
+	for ($i = 0; $i < 2; $i++) {
+		$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";
 		$reviewerQ = mysqli_query($dbc, $reviewerIDS);
 
-		$row = mysqli_fetch_array($reviewerQ);
-		$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['username'] .",". $username .",0)";
-		$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+		if(mysqli_num_rows($reviewerQ) != 0) {
+			$row = mysqli_fetch_array($reviewerQ);
+
+			$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['id'] .",". $username .",0)";
+			$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+		}
+		else {
+			$reviewerIDS = "SELECT count(username) as count,username from reviewer_application  group by username order by count asc, username asc";
+			$reviewerQ = mysqli_query($dbc, $reviewerIDS);
+
+			$row = mysqli_fetch_array($reviewerQ);
+			$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['username'] .",". $username .",0)";
+			$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+		}
 	}
 
 	$msg = "Hello new applicant! Your new username to login is:\n".$username;
