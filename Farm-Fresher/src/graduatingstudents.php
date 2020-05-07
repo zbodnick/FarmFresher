@@ -89,9 +89,9 @@ $dbc->query('SET foreign_key_checks = 0');
       <thead>
         <tr class="text-center table-primary">
           <th scope="col"> U_ID </th>
+          <th scope="col"> Email </th>
           <th scope="col"> First Name </th>
           <th scope="col"> Last Name </th>
-          <th scope="col"> Email </th>
           <th> </th>
         </tr>
       </thead>
