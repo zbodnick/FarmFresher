@@ -135,7 +135,7 @@
             echo '<table style="width:100%">';
             echo '<tr><th>Course ID</th><th>Title</th><th>Credits</th></tr>';
             while($row = $result->fetch_assoc()){
-                echo "<tr><td>" . $row["courseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["credits"]. "</td></tr>";
+                echo "<tr><td>" . $row["cid"] . "</td></tr>";
             }
             echo '</table></div>';
 
