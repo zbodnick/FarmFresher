@@ -252,18 +252,31 @@
           $numberOfFs = $numberOfFs->fetch_assoc();
           $resultF= $numberOfFs['totalF'];
 
-          $query2 = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and grade != 'IP') as A;";
-          $chours = mysqli_query($dbc, $query2);
-          $chours = $chours->fetch_assoc();
-          $totalhours= $chours['credits'] + 0.00;
+          $credit_hours_query = "SELECT SUM(credits) as totalCredits from catalog, courses_taken, schedule where catalog.c_id=schedule.course_id and courses_taken.crn=schedule.crn and courses_taken.u_id=$id and courses_taken.grade!='IP'";
+          // $credit_hours_query = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and grade != 'IP') as A;";
+        
+          $chours = mysqli_query($dbc, $credit_hours_query);
+          $totalhours = (int) mysqli_fetch_array($chours)['totalCredits'];
+
+          // echo "<br><center><h4>GPA : ".$chours."</h4></center>";
+
+          // while ($s = mysqli_fetch_array($chours)) {
+          //   $totalhours += $s['credits'];
+          // }
+
+          // echo "Credit Hours: " . $totalhours . ", ";
+          // echo "A: " . $resultA . ", ";
+          // echo "B: " . $resultB . ", ";
+          // echo "C: " . $resultC . ", ";
+          // echo "D: " . $resultD . ", ";
+          // echo "F: " . $resultF;
 
           function avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours){
                 $attemptedhours = ($resultA * 4.00 * 3.00) + ($resultB * 3.00 * 3.00) + ($resultC * 2.00 * 3.00) + ($resultD * 1.00 * 3.00) + ($resultF * 0.00 * 3.00);
-                $avggpa = $attemptedhours / $totalhours;
-                return $avggpa;
+                return ($attemptedhours / $totalhours);
           }
           $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
-          echo "<br><center><h4>GPA : ".$avggpa."</h4></center>";
+          echo "<br><center><h4>GPA : ".round($avggpa, 2)."</h4></center>";
 
         }
       }
