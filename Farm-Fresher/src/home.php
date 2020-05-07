@@ -55,7 +55,7 @@
             <h2 class="section-title-underline mb-8">
               <span>Home</span>
             </h2>
-          </div>        
+          </div>
         </div>
 
 		<div class="row">
@@ -413,6 +413,20 @@
                 </div>
               </div>
           </div>
+          <div class="row mb-5 justify-content-center text-center">
+              <div class="col-lg-3 col-md-6 mb-4 mb-lg-2">
+                <div class="feature-1 border">
+                  <div class="icon-wrapper bg-primary">
+                    <span class="flaticon-mortarboard text-white"></span>
+                  </div>
+                  <div class="feature-1-content">
+                    <h2>Alumni</h2>
+                    <p>View To-Be-Graduated Students and Alumni</p>
+                    <p><a href="graduatingstudents.php" class="btn btn-primary px-4 rounded-0">View</a></p>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
 <?php
 } else if (strcmp($permLevel, "GS") == 0) {
@@ -480,6 +494,20 @@
               </div>
             </div>
           </div>
+          </div>
+          <div class="row mb-5 justify-content-center text-center">
+              <div class="col-lg-3 col-md-6 mb-4 mb-lg-2">
+                <div class="feature-1 border">
+                  <div class="icon-wrapper bg-primary">
+                    <span class="flaticon-mortarboard text-white"></span>
+                  </div>
+                  <div class="feature-1-content">
+                    <h2>Alumni</h2>
+                    <p>View To-Be-Graduated Students and Alumni</p>
+                    <p><a href="graduatingstudents.php" class="btn btn-primary px-4 rounded-0">View</a></p>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
 <?php

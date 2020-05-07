@@ -24,7 +24,7 @@ $dbc->query('SET foreign_key_checks = 0');
 <body>
 
 	<div class="container mt-5 pt-3">
-        <h1 class="text-primary"> Graduation Cleared Students & Alumni</h1> <br>
+        <h1 class="text-primary"> Graduation Cleared Students</h1> <br>
 		<input class="form-control" id="search_filter" type="text" placeholder="Search...">
 
 
@@ -77,8 +77,8 @@ $dbc->query('SET foreign_key_checks = 0');
 
       <br>
       <br>
-      
-      <h1 class="text-primary"> Graduation Cleared Students & Alumni</h1> <br>
+
+      <h1 class="text-primary"> Alumni</h1> <br>
       <div class="row mt-3">
   			<table class="table table-bordered">
 
