@@ -22,6 +22,7 @@ create table student(
   advisorid   int,
   applied_to_grad  int,
   has_hold BOOLEAN NOT NULL DEFAULT 0,
+  admission_year int,
   primary key (u_id),
   foreign key (u_id) references users(id)
 );
@@ -105,7 +106,13 @@ CREATE TABLE course (
 DROP TABLE IF EXISTS alumni CASCADE;
 CREATE TABLE alumni (
   univid     int primary key,
-  yeargrad   int
+  yeargrad   int,
+  fname varchar(20) NOT NULL,
+  lname varchar(20) NOT NULL,
+  addr varchar(50) NOT NULL,
+  email varchar(30) NOT NULL,
+  major varchar(20) NOT NULL,
+  program varchar(3)
 );
 
 
@@ -158,218 +165,6 @@ ALTER TABLE student
 ADD foreign key (u_id) references formone(universityid);
 ALTER TABLE transcript
 ADD foreign key (crseid) references course(courseid);
-
-INSERT INTO users (id, p_level, password) VALUES (10000000, 'Admin', 'admin');
-INSERT INTO users (id, p_level, password) VALUES (10000001, 'GS', 'gs123');
-INSERT INTO users (id, p_level, password) VALUES (10000002, 'Faculty', 'bhagiweb');
-INSERT INTO users (id, p_level, password) VALUES (10000003, 'Faculty', 'choi123');
-INSERT INTO users (id, p_level, password) VALUES (10000004, 'Faculty', 'PASS');
-INSERT INTO users (id, p_level, password) VALUES (10000005, 'Faculty', 'Pass999');
-INSERT INTO users (id, p_level, password) VALUES (10000006, 'Faculty', 'PASSWORD');
-INSERT INTO users (id, p_level, password) VALUES (10000007, 'Faculty', 'pass123');
-INSERT INTO users (id, p_level, password) VALUES (10000008, 'Faculty', 'pass789');
-INSERT INTO users (id, p_level, password) VALUES (10000009, 'Faculty', 'pass456');
-INSERT INTO users (id, p_level, password) VALUES (88888888, 'Student', 'password');
-INSERT INTO users (id, p_level, password) VALUES (99999999, 'Student', 'pword');
-INSERT INTO users (id, p_level, password) VALUES (45678901, 'Student', 'pass');
-INSERT INTO users (id, p_level, password) VALUES (10101010, 'Student', 'pword');
-
-
-INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (88888888, 'Billie', 'Holiday', '11111 Street St. City, ST 22222', 'jacobpritchard9@gwu.edu', 'Computer Science');
-INSERT INTO student (u_id, fname, lname, addr, email, major) VALUES (99999999, 'Diana', 'Krall', '33333 Drive Dr. City, ST 44444', 'jumina@gwu.edu', 'Computer Science');
-INSERT INTO student (u_id, fname, lname, addr, email, major, program) VALUES (45678901, 'Jimi', 'Hendrix', '123 THISADDRESS, ISREAL', 'jimi@gmail.com', 'Computer Science', 'MS');
-
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'zbodnick@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000003, 'Hyeong-Ah', 'Choi', '77777 Place Pl. City, ST 88888', 'jacobpritchard9@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000004, 'Roxana', 'Leontie', '99999 F St. Washington, D.C. 11111', 'jumina@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000005, 'Rahul', 'Simha', '12345 E St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000006, 'Pablo', 'Frank-Bolton', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000007, 'Abdou Youssef', 'Youssef', '13579 K St. Washington, D.C. 11111', 'jumina@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000008, 'James', 'Taylor', '24681 D St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000009, 'Gabe', 'Parmer', '38273 C St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
-
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6221, 'SW Paradigms', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6461, 'Computer Architecture', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6212, 'Algorithms', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6220, 'Machine Learning', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6232, 'Networks 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6233, 'Networks 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6241, 'Database 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6242, 'Database 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6246, 'Compilers', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6260, 'Multimedia', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6251, 'Cloud Computing', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6254, 'SW Engineering', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6262, 'Graphics 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6283, 'Security 1', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6284, 'Cryptography', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6286, 'Network Security', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6325, 'Algorithms 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6339, 'Embedded Systems', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6384, 'Cryptography 2', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6241, 'Communication Theory', 3);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6242, 'Information Theory', 2);
-INSERT INTO catalog (department, c_no, title, credits) VALUES ('MATH', 6210, 'Logic', 2);
-
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (1, 1, 'Fall', 2020, 'M', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (2, 1, 'Fall', 2020, 'T', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (3, 1, 'Fall', 2020, 'W', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (5, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (6, 1, 'Fall', 2020, 'T', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (7, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (8, 1, 'Fall', 2020, 'R', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (9, 1, 'Fall', 2020, 'T', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (11, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (12, 1, 'Fall', 2020, 'M', '15:30', '18:00');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (10, 1, 'Fall', 2020, 'R', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (13, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (14, 1, 'Fall', 2020, 'T', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (15, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (16, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (19, 1, 'Fall', 2020, 'W', '15:00', '17:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (20, 1, 'Fall', 2020, 'M', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (21, 1, 'Fall', 2020, 'T', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (22, 1, 'Fall', 2020, 'W', '18:00', '20:30');
-INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (18, 1, 'Fall', 2020, 'R', '16:00', '18:30');
-
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 2, 'IP');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (88888888, 3, 'IP');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 1, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 3, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 2, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 5, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 6, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 15, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 16, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 7, 'A');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 20, 'B');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 21, 'B');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 22, 'B');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 4, 'B');
-INSERT INTO courses_taken(u_id, crn, grade) VALUES (45678901, 8, 'B');
-
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 1);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 2);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000003, 3);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 4);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 5);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 6);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000005, 7);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 8);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000008, 9);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 10);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 11);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 12);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 13);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 14);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000009, 15);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000004, 16);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 17);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 18);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000007, 19);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 20);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 21);
-INSERT INTO courses_taught(f_id, crn) VALUES (10000002, 22);
-
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (6, 'CSCI 6232', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (8, 'CSCI 6241', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (9, 'CSCI 6461', 'CSCI 6212');
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (11, 'CSCI 6241', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (12, 'CSCI 6221', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (14, 'CSCI 6212', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (15, 'CSCI 6212', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (16, 'CSCI 6283', 'CSCI 6232');
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
-INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
-
-
-INSERT INTO course VALUES ( 'CSCI6221', 'SW Paradigms', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6461', 'Computer Architecture', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6212', 'Algorithms', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6220', 'Machine Learning', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6232', 'Networks 1', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6233', 'Networks 2', 3, 6232, null);
-INSERT INTO course VALUES ( 'CSCI6241', 'Database 1', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6242', 'Database 2', 3, 6241, null);
-INSERT INTO course VALUES ( 'CSCI6246', 'Compilers', 3, 6461, 6212);
-INSERT INTO course VALUES ( 'CSCI6260', 'Multimedia', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6251', 'Cloud Computing', 3, 6461, null);
-INSERT INTO course VALUES ( 'CSCI6254', 'SW Engineering', 3, 6221, null);
-INSERT INTO course VALUES ( 'CSCI6262', 'Graphics 1', 3, null, null);
-INSERT INTO course VALUES ( 'CSCI6283', 'Security 1', 3, 6212, null);
-INSERT INTO course VALUES ( 'CSCI6284', 'Cryptography', 3, 6212, null);
-INSERT INTO course VALUES ( 'CSCI6286', 'Network Security', 3, 6283, 6232);
-INSERT INTO course VALUES ( 'CSCI6325', 'Algorithms 2', 3, 6212, null);
-INSERT INTO course VALUES ( 'CSCI6339', 'Embedded Systems', 3, 6461, 6212);
-INSERT INTO course VALUES ( 'CSCI6384', 'Cryptography 2', 3, 6284, null);
-INSERT INTO course VALUES ( 'ECE6241',  'Communication Theory', 3, null, null);
-INSERT INTO course VALUES ( 'ECE6242',  'Information Theory', 2, null, null);
-INSERT INTO course VALUES ( 'MATH6210', 'Logic', 2, null, null);
-
-INSERT INTO alumni VALUES ( 77777777, 2014);
-
-INSERT INTO transcript VALUES (1, 'CSCI6221', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6461', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6212', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6220', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6232', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6233', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6241', 'Fall', 2014, 'B', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6242', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6251', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6254', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'CSCI6262', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (1, 'ECE6241',  'Fall', 2019, 'A', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6221', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6212', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6461', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6232', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6223', 'Fall', 2014, 'A', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6241', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6246', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6262', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6283', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (55555555, 'CSCI6242', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'ECE6242',  'Fall', 2014, 'C', 2);
-INSERT INTO transcript VALUES (66666666, 'CSCI6221', 'Fall', 2014, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6461', 'Fall', 2014, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6212', 'Fall', 2014, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6232', 'Fall', 2014, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6233', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6241', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6242', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6283', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (66666666, 'CSCI6284', 'Spring', 2015, 'B', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6221', 'Fall', 2013, 'B', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6212', 'Fall', 2013, 'B', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6461', 'Fall', 2013, 'B', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6232', 'Fall', 2013, 'B', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6233', 'Fall', 2013, 'B', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6241', 'Spring', 2014, 'A', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6242', 'Spring', 2014, 'A', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6283', 'Spring', 2014, 'A', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6284', 'Spring', 2014, 'A', 3);
-INSERT INTO transcript VALUES (77777777, 'CSCI6286', 'Spring', 2014, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6221', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6212', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6461', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6232', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6233', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6284', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6286', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'CSCI6241', 'Spring', 2017, 'A', 3);
-INSERT INTO transcript VALUES (45678901, 'ECE6241', 'Spring', 2017, 'B', 3);
-INSERT INTO transcript VALUES (45678901, 'ECE6242', 'Spring', 2017, 'B', 3);
-INSERT INTO transcript VALUES (45678901, 'MATH6210', 'Spring', 2017, 'B', 3);
-
-INSERT INTO personalinfo VALUES (1, 'Stanislav', 'Lukashevich', '1998-12-12', 'Arlington, VA, 22206', 7036094317);
-INSERT INTO personalinfo VALUES (55555555, 'Paul', 'McCartney', '1999-04-04', 'Atlanta, GA, 22666', 2024892713);
-INSERT INTO personalinfo VALUES (66666666, 'George', 'Harrison', '1999-02-02', 'Boston, MA, 22777', 2024892714);
-INSERT INTO personalinfo VALUES (77777777, 'Eric', 'Clapton', '1996-02-02', 'Washington, DC, 22236', 2024892715);
-INSERT INTO personalinfo VALUES (88888888, 'Bhagirath', 'Narahari', '1966-12-12', 'Washington, DC, 22236', 2024892716);
-INSERT INTO personalinfo VALUES (99999999, 'Eric', 'Clapton', '1981-02-02', 'Washington, DC, 22236', 2024892717);
-INSERT INTO personalinfo VALUES (2, 'Jake', 'Harris', '1999-01-01', 'Atlanta, GA, 44436', 2024892718);
 
 /* -----------------------------------------------------------------------------
 
@@ -445,38 +240,13 @@ CREATE TABLE `verification_codes` (
   `verification`  int(5) PRIMARY KEY
 );
 
-ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
+ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
 ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `applicant` (`username`);
-ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
-ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`);
-ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
+ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
+ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
+ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
 
-INSERT INTO applicant VALUES(55555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
-INSERT INTO applicant VALUES(66666666, 'Ringo', 'Starr', 'rstarr@gwu.edu', 222111111, '321 Penny Lane');
-INSERT INTO applicant VALUES(33333333, 'Paul', 'McCartney', 'pmccartney@gwu.edu', 333333333, '542 Abbey Road');
-
-INSERT INTO `application` VALUES(1,66666666, 0,'lovesYoko@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '100', '2014', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-INSERT INTO `application` VALUES(2,55555555, 0,'bestBeatle@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '100', '2014', '', '', '', '', '', 'BA', '2.0', 'Drums', '1971', 'Oxford', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-INSERT INTO `application` VALUES(3,33333333, 0,'paulM@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '100', '2014', '', '', '', '', '', 'BA', '4.0', 'Sound Engin.', '1972', 'Abbey Rd Uni', 'Worked at Elec Lady Studios', 'Yoko', 0, 0, '', 'MS', 0);
-
-INSERT INTO reviewer_application VALUES(10000002,66666666,0);
-INSERT INTO reviewer_application VALUES(10000003,55555555,0);
-INSERT INTO reviewer_application VALUES(10000004,33333333,0);
-
-INSERT INTO users (id, p_level, password) VALUES (55555555, 'Applicant', 'password');
-INSERT INTO users (id, p_level, password) VALUES (66666666, 'Applicant', 'password');
-INSERT INTO users (id, p_level, password) VALUES (33333333, 'Applicant', 'password');
-INSERT INTO users (id, p_level, password) VALUES (98765432, 'CAC', 'cac123');
-
-INSERT INTO recommender VALUES('Eric','Clapton',66666666,'looks like a great applicant');
-INSERT INTO recommender VALUES('Eric','Clapton',55555555,'not so sure - gpa is very low from bachelor degree');
-INSERT INTO recommender VALUES('Eric','Clapton',33333333,'absolutely');
-
-SET FOREIGN_KEY_CHECKS = 1;
 /*
   ┌─┐  ─┐
 　│▒│ /▒/
@@ -488,3 +258,420 @@ SET FOREIGN_KEY_CHECKS = 1;
 └┐▒▒▒▒▒▒┌┘
  └┐▒▒▒▒┌
 */
+
+-- Populate catalog with courses
+SET FOREIGN_KEY_CHECKS = 0;
+
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6221, 'SW Paradigms', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6461, 'Computer Architecture', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6212, 'Algorithms', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6220, 'Machine Learning', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6232, 'Networks 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6233, 'Networks 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6241, 'Database 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6242, 'Database 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6246, 'Compilers', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6260, 'Multimedia', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6251, 'Cloud Computing', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6254, 'SW Engineering', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6262, 'Graphics 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6283, 'Security 1', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6284, 'Cryptography', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6286, 'Network Security', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6325, 'Algorithms 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6339, 'Embedded Systems', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6384, 'Cryptography 2', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6241, 'Communication Theory', 3);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6242, 'Information Theory', 2);
+INSERT INTO catalog (department, c_no, title, credits) VALUES ('MATH', 6210, 'Logic', 2);
+
+-- Populate schedule with courses
+
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (1, 1, 'Fall', 2019, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (2, 1, 'Fall', 2019, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (3, 1, 'Fall', 2019, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (5, 1, 'Fall', 2019, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (6, 1, 'Fall', 2019, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (7, 1, 'Fall', 2019, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (8, 1, 'Fall', 2019, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (9, 1, 'Fall', 2019, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (11, 1, 'Fall', 2019, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (12, 1, 'Fall', 2019, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (10, 1, 'Fall', 2019, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (13, 1, 'Fall', 2019, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (14, 1, 'Fall', 2019, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (15, 1, 'Fall', 2019, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (16, 1, 'Fall', 2019, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (19, 1, 'Fall', 2019, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (20, 1, 'Fall', 2019, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (21, 1, 'Fall', 2019, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (22, 1, 'Fall', 2019, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (18, 1, 'Fall', 2019, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (1, 1, 'Spring', 2020, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (2, 1, 'Spring', 2020, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (3, 1, 'Spring', 2020, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (5, 1, 'Spring', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (6, 1, 'Spring', 2020, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (7, 1, 'Spring', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (8, 1, 'Spring', 2020, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (9, 1, 'Spring', 2020, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (11, 1, 'Spring', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (12, 1, 'Spring', 2020, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (10, 1, 'Spring', 2020, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (13, 1, 'Spring', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (14, 1, 'Spring', 2020, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (15, 1, 'Spring', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (16, 1, 'Spring', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (19, 1, 'Spring', 2020, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (20, 1, 'Spring', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (21, 1, 'Spring', 2020, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (22, 1, 'Spring', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (18, 1, 'Spring', 2020, 'R', '16:00', '18:30');
+
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (1, 1, 'Fall', 2020, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (2, 1, 'Fall', 2020, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (3, 1, 'Fall', 2020, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (5, 1, 'Fall', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (6, 1, 'Fall', 2020, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (7, 1, 'Fall', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (8, 1, 'Fall', 2020, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (9, 1, 'Fall', 2020, 'T', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (11, 1, 'Fall', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (12, 1, 'Fall', 2020, 'M', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (10, 1, 'Fall', 2020, 'R', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (13, 1, 'Fall', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (14, 1, 'Fall', 2020, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (15, 1, 'Fall', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (16, 1, 'Fall', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (19, 1, 'Fall', 2020, 'W', '15:00', '17:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (20, 1, 'Fall', 2020, 'M', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (21, 1, 'Fall', 2020, 'T', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (22, 1, 'Fall', 2020, 'W', '18:00', '20:30');
+INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (18, 1, 'Fall', 2020, 'R', '16:00', '18:30');
+
+-- Populate pre-requisites
+
+
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (6, 'CSCI 6232', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (8, 'CSCI 6241', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (9, 'CSCI 6461', 'CSCI 6212');
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (11, 'CSCI 6241', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (12, 'CSCI 6221', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (14, 'CSCI 6212', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (15, 'CSCI 6212', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (16, 'CSCI 6283', 'CSCI 6232');
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
+INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
+
+-- Populating Faculty
+
+
+-- ADMIN
+INSERT INTO users (id, p_level, password) VALUES (10000000, "Admin", "pass");
+-- GS
+INSERT INTO users (id, p_level, password) VALUES (10000001, "GS", "pass");
+-- CAC
+INSERT INTO users (id, p_level, password) VALUES (10000002, "CAC", "pass");
+
+
+-- Populating Applicants
+
+
+-- TODO: Need reviewer_application, reccomender, application and applicant?
+
+-- John Lennon
+INSERT INTO users (id, p_level, password) VALUES (15555555, "Applicant", "pass");
+
+-- Ringo Starr
+INSERT INTO users (id, p_level, password) VALUES (66666666, "Applicant", "pass");
+
+-- Louis Armstrong
+INSERT INTO users (id, p_level, password) VALUES (00001234, "Applicant", "pass");
+
+-- Aretha Franklin
+INSERT INTO users (id, p_level, password) VALUES (00001235, "Applicant", "pass");
+
+-- Carlos Santana
+INSERT INTO users (id, p_level, password) VALUES (00001236, "Applicant", "pass");
+
+
+-- Populating Students
+
+
+-- Billie Holiday
+INSERT INTO users (id, p_level, password) VALUES (88888888, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (88888888, "Billie", "Holiday", "88888 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340007, 0, 0, 2018);
+INSERT INTO courses_taken (u_id, crn, grade) VALUES
+(88888888, 22, "IP"),
+(88888888, 23, "IP");
+
+-- Diana Krall 
+INSERT INTO users (id, p_level, password) VALUES (99999999, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (99999999, "Diana", "Krall", "99999 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340004, 0, 1, 2019);
+
+-- Ella Fitzgerald
+INSERT INTO users (id, p_level, password) VALUES (23456789, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (23456789, "Ella", "Fitzgerald", "23456 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "phd", 12340002, 0, 1, 2019);
+
+-- Eva Cassidy
+INSERT INTO users (id, p_level, password) VALUES (87654321, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (87654321, "Eva", "Cassidy", "87654 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340006, 0, 0, 2017);
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(87654321, 1, "A"),
+(87654321, 2, "A"),
+(87654321, 3, "A"),
+(87654321, 4, "A"),
+(87654321, 5, "A"),
+(87654321, 14, "A"),
+(87654321, 15, "A"),
+(87654321, 6, "C"),
+(87654321, 8, "C"),
+(87654321, 12, "C");
+
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6221");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6212");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6461");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6232");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6233");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6284");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6286");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6241");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6246");
+INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6262");
+
+-- Jimi Hendrix
+INSERT INTO users (id, p_level, password) VALUES (45678901, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (45678901, "Jimi", "Hendrix", "87654 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340005, 0, 0, 2017);
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(45678901, 1, "A"),
+(45678901, 2, "A"),
+(45678901, 3, "A"),
+(45678901, 4, "A"),
+(45678901, 5, "A"),
+(45678901, 6, "A"),
+(45678901, 14, "A"),
+(45678901, 15, "A"),
+(45678901, 17, "B"),
+(45678901, 18, "B"),
+(45678901, 19, "B");
+
+-- Paul McCartney
+INSERT INTO users (id, p_level, password) VALUES (14444444, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (14444444, "Paul", "McCartney", "14444 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340002, 0, 0, 2017);
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(14444444, 1, "A"),
+(14444444, 2, "A"),
+(14444444, 3, "A"),
+(14444444, 4, "A"),
+(14444444, 5, "A"),
+(14444444, 6, "B"),
+(14444444, 7, "B"),
+(14444444, 8, "B"),
+(14444444, 12, "B"),
+(14444444, 13, "B");
+
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6221");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6212");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6461");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6232");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6233");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6283");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6242");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6241");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6246");
+INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6262");
+
+-- George Harrison
+INSERT INTO users (id, p_level, password) VALUES (16666666, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (16666666, "George", "Harrison", "16666 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340005, 0, 0, 2016);
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(16666666, 18, "C"),
+(16666666, 1, "B"),
+(16666666, 2, "B"),
+(16666666, 3, "B"),
+(16666666, 4, "B"),
+(16666666, 5, "B"),
+(16666666, 6, "B"),
+(16666666, 7, "B"),
+(16666666, 13, "B"),
+(16666666, 14, "B");
+
+-- Stevie Nicks
+INSERT INTO users (id, p_level, password) VALUES (12345678, "Student", "pass");
+INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (12345678, "Stevie", "Nicks", "12345 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "phd", 12340007, 0, 0, 2017);
+
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(12345678, 1, "A"),
+(12345678, 2, "A"),
+(12345678, 3, "A"),
+(12345678, 4, "A"),
+(12345678, 5, "A"),
+(12345678, 6, "B"),
+(12345678, 7, "B"),
+(12345678, 8, "B"),
+(12345678, 12, "B"),
+(12345678, 13, "B"),
+(12345678, 14, "A"),
+(12345678, 15, "A");
+
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6221");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6212");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6461");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6232");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6233");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6284");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6242");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6241");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6246");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6262");
+INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6283");
+
+
+
+-- Populating alumni
+
+-- Eric Clapton
+INSERT INTO users (id, p_level, password) VALUES (77777777, "Alumni", "pass");
+INSERT INTO alumni (univid, yeargrad, fname, lname, addr, email, major, program) VALUES (77777777, 2014, "Eric", "Clapton", "77777 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS");
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(77777777, 1, "B"),
+(77777777, 2, "B"),
+(77777777, 3, "B"),
+(77777777, 5, "B"),
+(77777777, 6, "B"),
+(77777777, 7, "B"),
+(77777777, 8, "B"),
+(77777777, 14, "A"),
+(77777777, 15, "A"),
+(77777777, 16, "A");
+
+-- Kurt Cobain
+INSERT INTO users (id, p_level, password) VALUES (34567890, "Alumni", "pass");
+INSERT INTO alumni (univid, yeargrad, fname, lname, addr, email, major, program) VALUES (34567890, 2015, "Kurt", "Cobain", "34567 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "phd");
+INSERT INTO courses_taken (u_id, crn, grade) VALUES 
+(34567890, 1, "A"),
+(34567890, 2, "A"),
+(34567890, 3, "A"),
+(34567890, 5, "A"),
+(34567890, 6, "A"),
+(34567890, 7, "A"),
+(34567890, 14, "A"),
+(34567890, 15, "A"),
+(34567890, 16, "A"),
+(34567890, 8, "B"),
+(34567890, 11, "B"),
+(34567890, 12, "B");
+
+
+-- Populating faculty
+
+
+-- Bhagi Narahari
+INSERT INTO users (id, p_level, password) VALUES (12340002, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'zbodnick@gwu.edu', 'CSCI');
+INSERT INTO courses_taught (f_id, crn) VALUES 
+-- Fall 2019
+(12340002, 1),
+(12340002, 2),
+(12340002, 9),
+(12340002, 10),
+(12340002, 11),
+-- Sprint 2020
+(12340002, 21),
+(12340002, 22),
+(12340002, 29),
+(12340002, 30),
+(12340002, 31),
+-- Fall 2020
+(12340002, 41),
+(12340002, 42),
+(12340002, 49),
+(12340002, 50),
+(12340002, 51);
+
+-- Hyeong-Ah Choi
+INSERT INTO users (id, p_level, password) VALUES (12340003, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340003, 'Hyeong-Ah', 'Choi', '77777 Place Pl. City, ST 88888', 'jacobpritchard9@gwu.edu', 'CSCI');
+INSERT INTO courses_taught (f_id, crn) VALUES
+-- Fall 2019
+(12340003, 3),
+(12340003, 4),
+(12340003, 5),
+(12340003, 12),
+(12340003, 13),
+-- Sprint 2020
+(12340003, 23),
+(12340003, 24),
+(12340003, 25),
+(12340003, 32),
+(12340003, 33),
+-- Fall 2020
+(12340003, 43),
+(12340003, 44),
+(12340003, 45),
+(12340003, 52),
+(12340003, 53);
+
+-- Gabe Parmer
+INSERT INTO users (id, p_level, password) VALUES (12340004, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340004, 'Gabe', 'Parmer', '38273 C St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
+
+-- Tim Wood
+INSERT INTO users (id, p_level, password) VALUES (12340005, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000008, 'Tim', 'Wood', '24681 D St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
+INSERT INTO courses_taught (f_id, crn) VALUES 
+-- Fall 2019
+(12340005, 6),
+(12340005, 8),
+(12340005, 14),
+(12340005, 15),
+(12340005, 16),
+-- Spring 2020
+(12340005, 26),
+(12340005, 28),
+(12340005, 34),
+(12340005, 35),
+(12340005, 36),
+-- Fall 2020
+(12340005, 46),
+(12340005, 48),
+(12340005, 54),
+(12340005, 55),
+(12340005, 56);
+
+-- Shelly Heller
+INSERT INTO users (id, p_level, password) VALUES (12340006, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000006, 'Shelly', 'Heller', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
+
+-- Sarah Morin
+INSERT INTO users (id, p_level, password) VALUES (12340007, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340007, 'Sarah', 'Morin', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
+
+-- Kevin Deems
+INSERT INTO users (id, p_level, password) VALUES (12340008, "Faculty", "pass");
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340008, 'Kevin', 'Deems', '12345 E St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
+INSERT INTO courses_taught (f_id, crn) VALUES 
+-- Fall 2019
+(12340008, 7),
+(12340008, 17),
+(12340008, 18),
+(12340008, 19),
+(12340008, 20),
+
+-- Spring 2020
+(12340008, 27),
+(12340008, 37),
+(12340008, 38),
+(12340008, 39),
+(12340008, 40),
+
+-- Fall 2020
+(12340008, 47),
+(12340008, 57),
+(12340008, 58),
+(12340008, 59),
+(12340008, 60);
+
+SET FOREIGN_KEY_CHECKS = 1;
