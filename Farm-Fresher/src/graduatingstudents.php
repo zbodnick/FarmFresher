@@ -48,11 +48,11 @@ $dbc->query('SET foreign_key_checks = 0');
 
 			<?php
 				$query = 'SELECT u_id, fname, lname, email, addr, major, program
-						  FROM student WHERE applied_to_grad = 1';
+						  FROM student WHERE applied_to_grad = 1 ';
 
         if (isset($_POST['submit'])) {
           if(!empty($_POST['degree'])){
-              $query = $query . " and program = $_POST['degree']";
+              $query = $query . "and program = $_POST['degree']";
           }else{
 
           }
