@@ -77,8 +77,8 @@ $dbc->query('SET foreign_key_checks = 0');
 
       <br></br>
 
-      <h1 class="text-primary"> Alumni</h1> <br><br><br></br>
-      <div class="row mt-3">
+      <h1 class="text-primary"> Alumni</h1> <br><br>
+      <div>
   			<table class="table table-bordered">
 
   				<thead>
