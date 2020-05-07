@@ -186,8 +186,9 @@
                   <p><a href="change_password.php" class="btn btn-primary px-4 rounded-0">Change Password</a></p>
                 </div>
               </div>
-          <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+              <br/><br/><br/>
+          <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
               <div class="feature-1 border">
                 <div class="icon-wrapper bg-primary">
                   <span class="flaticon-mortarboard text-white"></span>
