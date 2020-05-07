@@ -48,7 +48,7 @@ $dbc->query('SET foreign_key_checks = 0');
 
 			<?php
 				$query = 'SELECT u_id, fname, lname, email, addr, major, program
-						  FROM student WHERE applied_to_grad = 3';
+						  FROM student WHERE applied_to_grad = 1';
 				$students = mysqli_query ($dbc, $query);
 
 				while ($students && $s = mysqli_fetch_assoc ($students)) {
