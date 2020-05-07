@@ -639,7 +639,7 @@ INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340004, 'G
 
 -- Tim Wood
 INSERT INTO users (id, p_level, password) VALUES (12340005, "Faculty", "pass");
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000008, 'Tim', 'Wood', '24681 D St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340005, 'Tim', 'Wood', '24681 D St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
 INSERT INTO courses_taught (f_id, crn) VALUES 
 -- Fall 2019
 (12340005, 6),
@@ -662,7 +662,7 @@ INSERT INTO courses_taught (f_id, crn) VALUES
 
 -- Shelly Heller
 INSERT INTO users (id, p_level, password) VALUES (12340006, "Faculty", "pass");
-INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000006, 'Shelly', 'Heller', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
+INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340006, 'Shelly', 'Heller', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
 
 -- Sarah Morin
 INSERT INTO users (id, p_level, password) VALUES (12340007, "Faculty", "pass");

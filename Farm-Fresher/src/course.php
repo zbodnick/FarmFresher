@@ -152,9 +152,9 @@
                             $semester_enrolled = $year_query_row['semester'];
                             $current_year = date("Y");
 
-                            if (!empty($year_query_row)) {
-                                echo "You've previously enrolled in this course: " . $semester_enrolled . " " . $year_enrolled ;
-                            }
+                            // if (!empty(mysqli_fetch_array($enrollement_results)) && !empty($year_query_row)) {
+                            //     echo "You've previously enrolled in this course: " . $semester_enrolled . " " . $year_enrolled ;
+                            // }
 							// Only show an enroll/drop button if this is a student
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
                                 if ($has_hold == 1) { ?>
