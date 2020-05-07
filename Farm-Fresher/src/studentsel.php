@@ -10,7 +10,7 @@
 		if (empty ($_SESSION['id'])) {
 			header ('Location: home.php');
     }
-    
+
     include ('php/connectvars.php');
 	  ?>
 </head>
@@ -25,7 +25,7 @@
 <?php
 
   require_once('appvars.php');
-  
+
   //Load DBC
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $dbc->query('SET foreign_key_checks = 0');
@@ -52,7 +52,10 @@
     mysqli_query($dbc, $query);
 
     //Move user into alumni
-    $query = "INSERT INTO alumni (univid, yeargrad) VALUES ('$_POST[cleargrad]', 2020)";
+    $fname = $dbc->query(('select fname from student where u_id = ' . $_POST["univID"])->fetch_assoc()['fname'];
+    $lname = $dbc->query(('select lname from student where u_id = ' . $_POST["univID"])->fetch_assoc()['lname'];
+    $email = $dbc->query(('select email from student where u_id = ' . $_POST["univID"])->fetch_assoc()['email'];
+    $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email) VALUES ('$_POST[cleargrad]', 2020, $fname, $lname, $email)";
     mysqli_query($dbc, $query);
     echo '<center><h3>Student Graduated</h3></center><hr />';
   }
@@ -189,7 +192,7 @@
     <?php
       echo '<center><h4 class="text-success">Student Found</h4></center><div class="basicdata">';
       $input = $_POST['univID'];
-      
+
 
       //LOADING BASIC STUDENT DATA
       $query = "select * from student WHERE u_id = '$input'"; // and (NOT applied_to_grad = 3)";

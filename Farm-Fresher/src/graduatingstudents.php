@@ -106,7 +106,7 @@ $dbc->query('SET foreign_key_checks = 0');
 
   			<?php
         //alumni list
-  				$query = 'SELECT univid as U_ID
+  				$query = 'SELECT univid as U_ID, email, fname, lname
   						  FROM alumni';
           $students = mysqli_query ($dbc, $query);
 
