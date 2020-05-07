@@ -150,7 +150,7 @@ CREATE TABLE advisingform (
   cid  varchar(8),
   primary key (u_id, cid),
   foreign key (u_id) references users(id),
-  foreign key (cid) references schedule(crn)
+  foreign key (cid) references schedule(crn) /* this gives a foreign key error*/
 );
 
 ALTER TABLE alumni
@@ -159,10 +159,10 @@ ALTER TABLE personalinfo
 ADD foreign key (universid) references users(id);
 ALTER TABLE alumni
 ADD foreign key (univid) references personalinfo(universid);
-ALTER TABLE student
-ADD foreign key (u_id) references transcript(univerid);
-ALTER TABLE student
-ADD foreign key (u_id) references formone(universityid);
+ALTER TABLE transcript
+ADD foreign key (univerid) references student(u_id);
+ALTER TABLE formone
+ADD foreign key (universityid) references student(u_id);
 ALTER TABLE transcript
 ADD foreign key (crseid) references course(courseid);
 
@@ -248,28 +248,21 @@ ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
 ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`);
 ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
 
-INSERT INTO users (id, p_level, password) VALUES (15555555, 'Applicant', 'pass');
-INSERT INTO users (id, p_level, password) VALUES (16666666, 'Applicant', 'pass');
-INSERT INTO users (id, p_level, password) VALUES (00001234, 'Applicant', 'pass');
-INSERT INTO users (id, p_level, password) VALUES (00001235, 'Applicant', 'pass');
-INSERT INTO users (id, p_level, password) VALUES (00001236, 'Applicant', 'pass');
-INSERT INTO users (id, p_level, password) VALUES (98765432, 'CAC', 'cac123');
-
 INSERT INTO applicant VALUES(15555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
-INSERT INTO applicant VALUES(16666666, 'Ringo', 'Starr', 'bestdrummer@gwu.edu', 222111111, '600 Penny Lane');
+INSERT INTO applicant VALUES(19999999, 'Ringo', 'Starr', 'bestdrummer@gwu.edu', 222111111, '600 Penny Lane');
 INSERT INTO applicant VALUES(00001234, 'Louis', 'Armstrong', 'awonderfulworld@gwu.edu', 555111111, '987 Trumpet St');
 INSERT INTO applicant VALUES(00001235, 'Aretha', 'Franklin', 'aFranklin12@gwu.edu', 666111111, '56 Soul Ave');
 INSERT INTO applicant VALUES(00001236, 'Carlos', 'Santana', 'prsLuvr123@gwu.edu', 777111111, '200 Woodstock Dr');
 
 INSERT INTO `application` VALUES (1,15555555, 1,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0, 2020);
-INSERT INTO `application` VALUES (1,16666666, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GWU University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 0, '', 'ms', 0, 2020);
-INSERT INTO `application` VALUES (1,00001234, 0,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (2,19999999, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GW University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 0, '', 'ms', 0, 2020);
+INSERT INTO `application` VALUES (3,00001234, 0,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 0, '', 'ms', 1, 2017);
-INSERT INTO `application` VALUES (1,00001235, 0,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (4,00001235, 0,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 0, '', 'ms', 4, 2017);
-INSERT INTO `application` VALUES (1,00001236, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+INSERT INTO `application` VALUES (5,00001236, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 0, '', 'phd', 4, 2017);
 
 SET FOREIGN_KEY_CHECKS = 1;
@@ -411,7 +404,7 @@ INSERT INTO users (id, p_level, password) VALUES (10000002, "CAC", "pass");
 INSERT INTO users (id, p_level, password) VALUES (15555555, "Applicant", "pass");
 
 -- Ringo Starr
-INSERT INTO users (id, p_level, password) VALUES (66666666, "Applicant", "pass");
+INSERT INTO users (id, p_level, password) VALUES (19999999, "Applicant", "pass");
 
 -- Louis Armstrong
 INSERT INTO users (id, p_level, password) VALUES (00001234, "Applicant", "pass");

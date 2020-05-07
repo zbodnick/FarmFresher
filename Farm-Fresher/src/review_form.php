@@ -52,11 +52,13 @@
 
       if (strcmp($row['reviewer_comment'],$concatComment)) {
         $concatComment = $row['reviewer_comment'];
-        $concatComment = $concatComment . ' | ' . $_SESSION['id'] . '\'s comment: ' . $_POST['comment'];
+        $concatComment = $concatComment . ' | ' . $_SESSION['id'] . ': ' . $_POST['comment'];
       }
       else {
-        $concatComment = $_SESSION['id'] . '\'s comment: ' . $_POST['comment'];
+        $concatComment = $_SESSION['id'] . ': ' . $_POST['comment'];
       }
+
+      echo 'concat:'.$concatComment;
 
       $sql = "UPDATE application SET reviewer_comment ='". $concatComment ."' WHERE username=".$_POST['id'];
       $res = mysqli_query($dbc,$sql);

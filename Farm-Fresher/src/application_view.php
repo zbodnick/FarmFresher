@@ -47,7 +47,9 @@ if (isset($_POST['accept'])) {
   $query = "DELETE FROM applicant WHERE username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
 
-  header("Location: home.php");
+  $_SESSION['p_level'] = "Student";
+
+  header("Location: payfee.php");
 }
 else if (isset($_POST['reject'])) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
