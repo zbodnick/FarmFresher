@@ -89,18 +89,15 @@ $dbc->query('SET foreign_key_checks = 0');
         <input type="submit" value="Submit">
       </form>
 
-      div class="row mt-3">
+      <div class="row mt-3">
   			<table class="table table-bordered">
 
   				<thead>
   					<tr class="text-center table-primary">
-  						<th scope="col">  U_ID </th>
+  						<th scope="col"> U_ID </th>
   						<th scope="col"> First Name </th>
   						<th scope="col"> Last Name </th>
   						<th scope="col"> Email </th>
-  						<th scope="col"> Address </th>
-  						<th scope="col"> Major </th>
-  						<th scope="col"> Program Type </th>
   						<th> </th>
   					</tr>
   				</thead>
@@ -109,7 +106,7 @@ $dbc->query('SET foreign_key_checks = 0');
 
   			<?php
         //alumni list
-  				$query = 'SELECT univid, fname, lname, email
+  				$query = 'SELECT univid as U_ID
   						  FROM alumni';
           $students = mysqli_query ($dbc, $query);
 
