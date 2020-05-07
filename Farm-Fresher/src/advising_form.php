@@ -85,7 +85,6 @@ $dbc->query('SET foreign_key_checks = 0');
 
                 <?php if (empty($data['prereq1']) && !empty($data['prereq2'])) { ?>
                     <td>None</td>
-
                     <td>
                     <?php echo $pre2[0] ?> <?php echo $pre2[1] ?>
                     </td>

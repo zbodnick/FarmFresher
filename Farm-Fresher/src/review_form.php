@@ -49,6 +49,8 @@
 
       $sql = "UPDATE application SET recommendation =".$_POST['recommendation']." WHERE username=".$_POST['id'];
       $res = mysqli_query($dbc,$sql);
+
+      header("Location: reviewer_portal.php?success=yes"); 
     }
     else if (strcmp($permLevel, "GS") == 0) {
       $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -68,6 +70,23 @@
         $sql = "UPDATE application SET transID =".$_POST['received']." WHERE username=".$_POST['id'];
         $res = mysqli_query($dbc,$sql);
       }
+      header("Location: reviewer_portal.php?success=yes");
+    }
+    else if (strcmp($permLevel, "CAC") == 0) {
+      $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+      if (!empty($_POST['decision'])) {
+        $sql = "UPDATE application SET final_decision =".$_POST['decision']." WHERE username=".$_POST['id'];
+        $res = mysqli_query($dbc,$sql);
+
+        $sql = "SELECT email FROM applicant WHERE username=".$_POST['id'];
+        $res = mysqli_query($dbc,$sql);
+        $row = mysqli_fetch_array($res);
+
+        $msg = "Hello! Your application status has been updated. Login to your applicant portal to view.";
+        $header = "From: farmfresh@gmail.edu";
+        $retval = mail($row['email'],"Application Updated",$msg, $header);
+      }
+      header("Location: reviewer_portal.php?success=yes");
     }
   }
 
@@ -75,7 +94,6 @@ if (strcmp($permLevel, "Faculty") == 0) {
 ?>
     <br><br>
     <div class="container pt-3">
-    <?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Changes Submitted Successfully</div>"; } ?>
     <h1 class="text-primary">Review Form</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">

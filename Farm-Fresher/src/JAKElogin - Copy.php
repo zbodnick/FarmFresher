@@ -7,7 +7,7 @@
 
   // Clear the error message
   $error_msg = "";
-  require_once('connectvars.php');
+  require_once('php/connectvars.php');
   // TODO: If the user isn't logged in, try to log them in
   if (empty($user_username) || empty($user_password)) {
     if (isset($_POST['submit'])) {

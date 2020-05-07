@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Form One</title>
+    <title>First Semester Advising Form</title>
     <?php
     require_once ('header.php');
     session_start();
@@ -21,14 +21,10 @@ include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 $dbc->query('SET foreign_key_checks = 0');
+?>
 
-$query = "SELECT * from formone where universityid = $id";
-$result = mysqli_query($dbc, $query);
+<script type="text/javascript">
 
-if(mysqli_num_rows($result) > 0){
-	header("Location: home.php");
-	}?>
-	<script type="text/javascript">
 function populateCookies()
 {
 	var expires;
@@ -41,14 +37,15 @@ function populateCookies()
 	var array = [];
 
 	var input = document.getElementsByTagName('input');
-	//if(chkcontroll() != false){
-		for(var i = 0; i < input.length; i++) {
-			if(input[i].checked == true){
-				document.cookie = input[i].value + "=" + "True" + expires + "; path=/";
-			}else{
-				document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
-			}
-		}
+	// window.alert(input[0].value);
+	// //if(chkcontroll() != false){
+	// 	for(var i = 0; i < input.length; i++) {
+	// 		if(input[i].checked == true){
+	// 			document.cookie = input[i].value + "=" + "True" + expires + "; path=/";
+	// 		}else{
+	// 			document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
+	// 		}
+	// 	}
 	/*}else{
 		for(var i = 0; i < input.length; i++) {
 				document.cookie = input[i].value + "=" + "False" + expires + "; path=/";
@@ -63,8 +60,8 @@ function populateCookies()
     <div class="container pt-3">
     <form method="post" class="card ml-5 mr-5 mb-5" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div class="card-header">
-        <h1 class="text-primary">Form One</h1>
-        <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking/have taken</small></h4>
+        <h1 class="text-primary">First Semester Advising Form</h1>
+        <h4 class="pl-1 font-weight-lighter"><small>Mark the checkboxes of the courses you intend on taking</small></h4>
     </div>
         <?php
 
@@ -102,7 +99,7 @@ function populateCookies()
                 $dept = $row["department"];
                 $title = $row["title"];
                 $credits = $row["credits"];
-								$val = $dept . $crn;
+                $val = $dept . $crn;
 
                 $prereq_query = "SELECT prereq1, prereq2 FROM prereqs WHERE course_Id=$cid";
                 $query_result = mysqli_query($dbc, $prereq_query);
@@ -155,7 +152,7 @@ function populateCookies()
             echo "</tbody>
             </table>";
         } else {
-            echo "Error: form one cannot find any classes";
+            echo "Error: cannot find any classes";
         }
         ?>
          <div class="row mx-auto">
@@ -188,23 +185,11 @@ function populateCookies()
 		if(isset($_POST['submit']))
 		{
 			if (mysqli_num_rows($result) > 0) {
-				$count = 0;
 				while ($row = mysqli_fetch_assoc($result)) {
 					$crn = $row["c_no"];
-					$dep = $row["department"];
-					$val = $dep . $crn;
-					if($_COOKIE[$val] == "True"){
-						echo $val;
-						$count = $count + 1;
-						$dbc->query("INSERT INTO formone VALUES ($id, '$val')");
+					if($_COOKIE[$crn] == "True"){
+						$dbc->query("INSERT INTO advisingform VALUES ($id, '$crn')");
 					}
-				}
-				if(!(($count <= 12) && ($count >= 10))){
-					$dbc->query("delete from formone where universityid = $id");
-					?><script type="text/javascript">window.alert("Please select 10-12 classes. Form One not submitted.");</script><?php
-				}else{
-					//SUCCESS
-					?><script type="text/javascript">window.alert("Form One submitted.");</script><?php
 				}
 			}
 		}

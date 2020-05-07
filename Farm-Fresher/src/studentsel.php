@@ -5,9 +5,8 @@
 	$page_title = 'GWU Advising System Catalog';
 
 	//Load php tag into file once
-  require_once('connectvars.php');
+  require_once('php/connectvars.php');
   require_once('appvars.php');
-	require_once('header.php');
   require_once('navmenu.php');
 
   //Load DBC
@@ -61,7 +60,7 @@
   if(isset($_POST["Search"])){
 
     //THIS ONLY ALLOWS FOR AN ADVISOR TO LOOK UP THEIR STUDENTS AND ONLY THEIR STUDENTS
-    if((strcmp($_SESSION['uType'], 'Advisor') == 0)){
+    if((strcmp($_SESSION['p_level'], 'Advisor') == 0)){
       echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';
       $input = $_POST['univID'];
 
@@ -215,7 +214,7 @@
               echo  '<button type="submit" name="acceptform1" value="'.$_POST["univID"].'">Accept Form 1</button>';
               echo	'</form>';
             }
-            $query = "select program, applied_to_grad from student where unid = '$_POST[univID]'";
+            $query = "select program, applied_to_grad from student where u_id = '$_POST[univID]'";
             $result = mysqli_query($dbc, $query);
             if($result->num_rows > 0){
               //IF IT HAS BEEN APPROVED, CHECK TO SEE IF USER IS A PHD STUDENT AND NEEDS THEIR THESIS APPROVED
@@ -246,7 +245,7 @@
   //SHOW ALL STUDENTS : THIS IS ONLY SHOWN IF A STUDENT HAS NOT YET BEEN SEARCHED
   else{
     //DISPLAY ALL USERS FOR GS AND ADMIN
-    if((strcmp($_SESSION['uType'], 'GS') == 0 || strcmp($_SESSION['uType'], 'Admin') == 0)){
+    if((strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="stuData">';
    	  $query = "select * from student";
       $result= mysqli_query($dbc, $query);
@@ -267,7 +266,7 @@
 
 
     //DISPLAY ONLY USERS FOR THE SELECTED ADVISOR
-    else if((strcmp($_SESSION['uType'], 'Advisor') == 0)){
+    else if((strcmp($_SESSION['p_level'], 'Advisor') == 0)){
       echo '<center><h4>Student Selection</h4></center><div class="advstuData">';
    	  $query = "select * from student where advisorid = '$_SESSION[uID]'";
       $result= mysqli_query($dbc, $query);

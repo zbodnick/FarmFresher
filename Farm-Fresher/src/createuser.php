@@ -6,7 +6,7 @@
     $page_title = 'GWU Advising System';
     $error_msg = "";
 
-     require_once('connectvars.php');
+     require_once('php/connectvars.php');
      require_once('appvars.php');
      require_once('header.php');
      require_once('navmenu.php');
