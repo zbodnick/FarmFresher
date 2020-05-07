@@ -121,7 +121,10 @@
                 </li>
                 <li>
 								  <a href="reviewer_portal.php" class="nav-link text-left">Update Applications</a>
-								</li>
+                </li>
+                <li>
+                <a href="studentsel.php" class="small btn btn-warning nav-link rounded-2 px-4 py-2">Access Dashbaord</a>
+                </li>
 							';
 							break;
 						case "Admin":
