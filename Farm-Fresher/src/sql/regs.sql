@@ -232,7 +232,7 @@ CREATE TABLE `reviewer_application` (
 CREATE TABLE `recommender` (
   `fname` varchar(255),
   `lname` varchar(255),
-  `applicationID` int(8) PRIMARY KEY,
+  `applicationID` int(8),
   `recommendation` VARCHAR(10000)
 );
 
