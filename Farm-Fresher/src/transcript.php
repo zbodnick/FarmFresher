@@ -58,7 +58,7 @@
 <br><br><br>
 
     <div class="container">
-		<h1 class="text-primary"> Transcript </h1>
+		<h1 class="text-primary">Transcript</h1>
 
         <?php
               include ('php/connectvars.php');
@@ -66,7 +66,7 @@
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
       $dbc->query('SET foreign_key_checks = 0');
             // If current user is not a student, show a dropdown menu to select a student
-            if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Student') != 0) {
+            if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Student') != 0 && strcmp ($_SESSION['p_level'], 'Alumni') != 0) {
                 echo '
                     <div class="row mt-5">
                         <div class="dropdown">
@@ -197,13 +197,7 @@
 			if ($empty_transcript && strcmp ($_SESSION['p_level'], "Student") == 0) {
 				echo '<div class="container pt-3">
 					      <h4 class="pl-1 font-weight-lighter"> <small>
-						    You have not taken any classes and are not currently registered for any.
-						  </small></h4>
-					  </div>';
-			} else if(strcmp($_SESSION['p_level'], "Student") != 0){
-				echo '<div class="container pt-3">
-					      <h4 class="pl-1 font-weight-lighter"> <small>
-							Student has not taken any classes and is not currently registered for any.
+						    You have not completed any courses and are not currently enrolled in any.
 						  </small></h4>
 					  </div>';
 			}
@@ -214,8 +208,6 @@
 
       $result= mysqli_query($dbc, $query);
 
-      echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
-
       if ($result->num_rows > 0)
         {
         //IF USER IS AN ALUMNI, SHOW FINAL GPA
@@ -225,7 +217,7 @@
           $row = $result->fetch_assoc();
 
           echo "<br><center><h4>GPA : ".$row["gpa"]."</h4></center>";
-        }else{
+        } else {
           $id = $_SESSION['id'];
           $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM courses_taken WHERE u_id = $id;";
           $numberOfAs = mysqli_query($dbc, $queryA);
@@ -276,7 +268,9 @@
                 return ($attemptedhours / $totalhours);
           }
           $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
-          echo "<br><center><h4>GPA : ".round($avggpa, 2)."</h4></center>";
+
+          echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
+          echo "<center><h4>GPA : ".round($avggpa, 2)."</h4></center>";
 
         }
       }
