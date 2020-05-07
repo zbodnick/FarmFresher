@@ -77,47 +77,48 @@ $dbc->query('SET foreign_key_checks = 0');
 
       <br></br>
 
-      <h1 class="text-primary"> Alumni</h1> <br><br>
-
-      <div style="padding-top:10px;">
-        <div class="row mt-3">
-  			<table class="table table-bordered">
-
-  				<thead>
-  					<tr class="text-center table-primary">
-  						<th scope="col"> U_ID </th>
-  						<th scope="col"> First Name </th>
-  						<th scope="col"> Last Name </th>
-  						<th scope="col"> Email </th>
-  						<th> </th>
-  					</tr>
-  				</thead>
-
-  				<tbody id="student_table">
-          </div>
-  			<?php
-        //alumni list
-  				$query = 'SELECT univid as U_ID, email, fname, lname
-  						  FROM alumni';
-          $students = mysqli_query ($dbc, $query);
-
-  				while ($students && $s = mysqli_fetch_assoc ($students)) {
-  					echo '<tr class="text-center">';
-
-  					// Print each field of each student
-  					foreach ($s as $data) {
-  						echo '<td class="align-middle">' . $data . '</td>';
-  					}
-
-  				}
-  			?>
-  				</tbody>
-
-  			</table>
-
-		</div>
 
 	</div>
+
+  <h1 class="text-primary"> Alumni</h1> <br><br>
+
+  <div style="padding-top:10px;">
+    <div class="row mt-3">
+    <table class="table table-bordered">
+
+      <thead>
+        <tr class="text-center table-primary">
+          <th scope="col"> U_ID </th>
+          <th scope="col"> First Name </th>
+          <th scope="col"> Last Name </th>
+          <th scope="col"> Email </th>
+          <th> </th>
+        </tr>
+      </thead>
+
+      <tbody id="student_table">
+      </div>
+    <?php
+    //alumni list
+      $query = 'SELECT univid as U_ID, email, fname, lname
+            FROM alumni';
+      $students = mysqli_query ($dbc, $query);
+
+      while ($students && $s = mysqli_fetch_assoc ($students)) {
+        echo '<tr class="text-center">';
+
+        // Print each field of each student
+        foreach ($s as $data) {
+          echo '<td class="align-middle">' . $data . '</td>';
+        }
+
+      }
+    ?>
+      </tbody>
+
+    </table>
+
+</div>
 
 </body>
 
