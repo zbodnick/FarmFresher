@@ -127,13 +127,13 @@
 
 
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
-          $query = "select * from formone where universityid = '$_POST[univID]'";
+          $query = "select * from formone where universityid = " . $_POST['univID'];
           $result = mysqli_query($dbc, $query);
 
           echo '<center><h4>Form One Data</h4></center><div class="formdata">';
           if ($result->num_rows > 0){
             echo '<table style="width:100%">';
-            echo '<tr><th>Course ID</th><th>Title</th><th>Credits</th></tr>';
+            echo '<tr><th>Course ID</th></tr>';
             while($row = $result->fetch_assoc()){
                 echo "<tr><td>" . $row["cid"] . "</td></tr>";
             }
