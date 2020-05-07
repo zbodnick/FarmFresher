@@ -40,8 +40,7 @@
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $dbc->query('SET foreign_key_checks = 0');
     $appQ = "SELECT reviewer_application.username,reviewer_application.applicantid from reviewer_application JOIN application on
-            reviewer_application.applicantid=application.username where recommendation=0 and
-            reviewer_application.username=".$_SESSION['id'];
+            reviewer_application.applicantid=application.username where reviewer_application.username=".$_SESSION['id'];
     $data = mysqli_query($dbc, $appQ);
     echo "<div class='col-md-10 form-group'><h1 class='text-primary'>Admissions Portal</h1></div>";
     if (mysqli_num_rows($data)) {
@@ -72,14 +71,14 @@
     }
   } else if (strcmp($permLevel, "GS") == 0) {
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    $appQ = "SELECT applicantid,username from reviewer_application";
+    $appQ = "select a.applicantid as applicantid, a.username as recommender1,b.username as recommender2 from reviewer_application a, reviewer_application b where a.applicantid=b.applicantid AND a.username!=b.username AND a.username<b.username";
     $data = mysqli_query($dbc, $appQ);
     echo "<div class='col-md-6 form-group'><h1 class='text-primary'>GS Admissions Portal</h1></div>";
     if (mysqli_num_rows($data)) {
       while ($row = mysqli_fetch_array($data)) {
         echo "<div class='row'>
                 <div class='col-md-10 form-group'>
-                    <h3 class='text-primary'>Applicant ID: ".$row['applicantid']." | Reviewer ID: ".$row['username']."</h3>
+                    <h3 class='text-primary'>Applicant ID: ".$row['applicantid']." | Reviewer ID: ".$row['recommender1']." and ".$row['recommender2']."</h3>
                     <form action='application_view.php' style='display:inline-block' method='POST'>
                       <input type='hidden' name='id' value='".$row['applicantid']."' />
                       <input type='submit' id='btn' value='View Application' name='view' class='btn btn-primary btn-lg px-5' />
@@ -94,14 +93,14 @@
     }
   } else if (strcmp($permLevel, "CAC") == 0) {
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    $appQ = "SELECT applicantid,username from reviewer_application";
+    $appQ = "select a.applicantid as applicantid, a.username as recommender1,b.username as recommender2 from reviewer_application a, reviewer_application b where a.applicantid=b.applicantid AND a.username!=b.username AND a.username<b.username";
     $data = mysqli_query($dbc, $appQ);
     echo "<div class='col-md-6 form-group'><h1 class='text-primary'>CAC Admissions Portal</h1></div>";
     if (mysqli_num_rows($data)) {
       while ($row = mysqli_fetch_array($data)) {
         echo "<div class='row'>
                 <div class='col-md-10 form-group'>
-                    <h3 class='text-primary'>Applicant ID: ".$row['applicantid']." | Reviewer ID: ".$row['username']."</h3>
+                    <h3 class='text-primary'>Applicant ID: ".$row['applicantid']." | Reviewer ID: ".$row['recommender1']." and ".$row['recommender2']."</h3>
                     <form action='application_view.php' style='display:inline-block' method='POST'>
                       <input type='hidden' name='id' value='".$row['applicantid']."' />
                       <input type='submit' id='btn' value='View Application' name='view' class='btn btn-primary btn-lg px-5' />

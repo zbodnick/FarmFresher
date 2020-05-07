@@ -9,46 +9,39 @@
 	?>
 
 	<script type = "text/javascript">
-	function validate() {
-		var retVal = true;
-		var fname = document.app.fname.value;
-		var mname = document.app.mname.value;
-		var lname = document.app.lname.value;
-		var address = document.app.address.value;
-		var quantgre = document.app.quantgre.value;
-		var mathgre = document.app.verbalgre.value;
-		var gre = document.app.gre.value;
+		function validate() {
+			var retVal = true;
+			var fname = document.app.fname.value;
+			var mname = document.app.mname.value;
+			var lname = document.app.lname.value;
+			var address = document.app.address.value;
+			var quantgre = document.app.quantgre.value;
+			var mathgre = document.app.verbalgre.value;
+			var gre = document.app.gre.value;
 
-		var special = new RegExp(/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/);
-		var ssnSpecial = new RegExp(/[#$%^&*()+=\[\]\';,.\/{}|":<>?~\\\\]/);
-		if (special.test(fname) || special.test(mname) || special.test(lname) || special.test(address) || ssnSpecial.test(ssn) || special.test(gre) || special.test(quantgre) || special.test(verbalgre)) {
-			alert('No special characters in names, address, or ssn');
-			retVal= false;
-		}
+			var special = new RegExp(/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/);
+			var ssnSpecial = new RegExp(/[#$%^&*()+=\[\]\';,.\/{}|":<>?~\\\\]/);
+			if (special.test(fname) || special.test(mname) || special.test(lname) || special.test(address) || ssnSpecial.test(ssn) || special.test(gre) || special.test(quantgre) || special.test(verbalgre)) {
+				alert('No special characters in names, address, or ssn');
+				retVal= false;
+			}
 
-		document.app.ssn.value = document.app.ssn.value.replace('-','');
-		if (isNaN(document.app.ssn.value)) {
-			alert('No characters in ssn');
-			retVal= false;
-		}
+			document.app.ssn.value = document.app.ssn.value.replace('-','');
+			if (isNaN(document.app.ssn.value)) {
+				alert('No characters in ssn');
+				retVal= false;
+			}
 
-		if (document.app.password.value != document.app.password2.value) {
-			retVal= false;
-		}
+			if (document.app.password.value != document.app.password2.value) {
+				retVal= false;
+			}
 
-		return retVal;
+			return retVal;
 		}
-		</script>
+	</script>
 </head>
 
 <?php
-
-/*if (isset($_SESSION['id']))
-	$id = $_SESSION['id'];
-
-if (!empty($id)) {
-    header("Location: home.php");
-}*/
 
 include ('php/connectvars.php');
 
@@ -83,11 +76,22 @@ if (isset($_POST['submit'])) {
 	$data = mysqli_query($dbc, $maxID);
 	$row = mysqli_fetch_array($data);
 	$appID = $row['ID']+1;
+
+	$recommenderEmails = '';
+
+	$recommenderEmails = $recommenderEmails . $_POST['recommender1'];
+	if (!empty($_POST['recommender2'])) {
+		$recommenderEmails = $recommenderEmails . ', ' . $_POST['recommender2'];
+	}
+	if (!empty($_POST['recommender3'])) {
+		$recommenderEmails = $recommenderEmails . ', ' . $_POST['recommender3'];
+	}
+
 	$application = "INSERT INTO application VALUES (
 		".$appID.",
 		".$username.",
 		0,
-		'".$_POST['recommender']."',
+		'".$recommenderEmails."',
 		'".$_POST['verbalgre']."',
 		'".$_POST['quantgre']."',
 		'".$_POST['gre_date']."',
@@ -110,27 +114,31 @@ if (isset($_POST['submit'])) {
 		'".$_POST['interests']."',
 		0,
 		0,
-		'n/a',
+		'',
 		'".$_POST['dgr']."',
-		0)";
+		0,
+		".date("Y").")";
 	$applicationdata = mysqli_query($dbc, $application);
 
-	$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";
-	$reviewerQ = mysqli_query($dbc, $reviewerIDS);
-
-	if(mysqli_num_rows($reviewerQ) != 0) {
-		$row = mysqli_fetch_array($reviewerQ);
-
-		$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['id'] .",". $username .",0)";
-		$reviewerInsert = mysqli_query($dbc, $insertReviewer);
-	}
-	else {
-		$reviewerIDS = "SELECT count(username) as count,username from reviewer_application  group by username order by count asc, username asc";
+	$i = 0;
+	for ($i = 0; $i < 2; $i++) {
+		$reviewerIDS = "SELECT id FROM users WHERE NOT EXISTS (SELECT * FROM reviewer_application WHERE users.id = reviewer_application.username) AND users.p_level='Faculty' ORDER BY id ASC";
 		$reviewerQ = mysqli_query($dbc, $reviewerIDS);
 
-		$row = mysqli_fetch_array($reviewerQ);
-		$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['username'] .",". $username .",0)";
-		$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+		if(mysqli_num_rows($reviewerQ) != 0) {
+			$row = mysqli_fetch_array($reviewerQ);
+
+			$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['id'] .",". $username .",0)";
+			$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+		}
+		else {
+			$reviewerIDS = "SELECT count(username) as count,username from reviewer_application  group by username order by count asc, username asc";
+			$reviewerQ = mysqli_query($dbc, $reviewerIDS);
+
+			$row = mysqli_fetch_array($reviewerQ);
+			$insertReviewer = "INSERT INTO reviewer_application VALUES(". $row['username'] .",". $username .",0)";
+			$reviewerInsert = mysqli_query($dbc, $insertReviewer);
+		}
 	}
 
 	$msg = "Hello new applicant! Your new username to login is:\n".$username;
@@ -139,15 +147,43 @@ if (isset($_POST['submit'])) {
 
 	$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! You will recieve a second email shortly with a verification code to verify your recommendation. Once you have the verification code, you may follow the link below to complete the recommendation. In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. These steps are for security purposes only. We appreciate your cooperation. Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php\nThank you!";
 	$header = "From: farmfresh@gmail.edu";
-	$retval = mail($_POST['recommender'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+	$retval = mail($_POST['recommender1'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
 
 	$verification = rand(10001,99999);
 	$msg = "YOUR VERICATION CODE IS: ".$verification." for the Farm Fresher University system. Please see previous email for instructions.";
 	$header = "From: farmfresh@gmail.edu";
-	$retval = mail($_POST['recommender'],"Verification Code",$msg, $header);
+	$retval = mail($_POST['recommender1'],"Verification Code",$msg, $header);
 
 	$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
 	$verQ = mysqli_query($dbc, $verCode);
+
+	if (!empty($_POST['recommender2'])) {
+		$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! You will recieve a second email shortly with a verification code to verify your recommendation. Once you have the verification code, you may follow the link below to complete the recommendation. In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. These steps are for security purposes only. We appreciate your cooperation. Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php\nThank you!";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender2'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+	
+		$verification = rand(10001,99999);
+		$msg = "YOUR VERICATION CODE IS: ".$verification." for the Farm Fresher University system. Please see previous email for instructions.";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender2'],"Verification Code",$msg, $header);
+
+		$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
+		$verQ = mysqli_query($dbc, $verCode);
+	}
+
+	if (!empty($_POST['recommender3'])) {
+		$msg = "Hello you have been selected to be a recommender by ".$_POST['fname']." ".$_POST['lname']."! You will recieve a second email shortly with a verification code to verify your recommendation. Once you have the verification code, you may follow the link below to complete the recommendation. In the recommendation form, fill out the APPLICANT's first and last name (NOT YOUR OWN), the verification code recieved in the subsequent email, and YOUR email that you recieved these emails in. These steps are for security purposes only. We appreciate your cooperation. Here is the link to fill out the recommendation form: http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/src/recommendation.php\nThank you!";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender3'],"Recommendation for ".$_POST['fname']." ".$_POST['lname'],$msg, $header);
+	
+		$verification = rand(10001,99999);
+		$msg = "YOUR VERICATION CODE IS: ".$verification." for the Farm Fresher University system. Please see previous email for instructions.";
+		$header = "From: farmfresh@gmail.edu";
+		$retval = mail($_POST['recommender3'],"Verification Code",$msg, $header);
+
+		$verCode = "INSERT INTO verification_codes VALUES (".$username.",".$verification.")";
+		$verQ = mysqli_query($dbc, $verCode);
+	}
 
   	$dbc->query('SET foreign_key_checks = 1');
 }
@@ -175,7 +211,7 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label for="email">Email Address</label>
-					<input type="text" id="email" name="email" maxlength="254" class="form-control form-control-lg text-muted" value="">
+					<input type="email" id="email" name="email" maxlength="254" class="form-control form-control-lg text-muted" value="">
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="address">Address</label>
@@ -222,7 +258,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="gre_date">GRE Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="gre_date" value="">
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="gre_date" value="">
 				</div>
 			</div>
 
@@ -240,7 +276,7 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-lg form-group">
 					<label for="advgre_date">Adv. GRE Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="advgre_date" value=""/>
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="advgre_date" value=""/>
 				</div>
 			</div>
 
@@ -251,7 +287,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="toefl_date">TOEFL Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="toefl_date" value="">
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="toefl_date" value="">
 				</div>
 			</div>
 
@@ -271,7 +307,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="ms_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="text" maxlength="4" name="ms_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="0" max="4" step="0.01" name="ms_gpa" value="" />
 				</div>
 				<div class="col form-group">
 					<label for="ms_major">Major:</label>
@@ -279,7 +315,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col form-group">
 					<label for="ms_year">Year:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="ms_year" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="ms_year" value="" />
 				</div>
 				<div class="col form-group">
 					<label for="ms_uni">University:</label>
@@ -297,7 +333,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="text" maxlength="4" name="b_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="0" max="4" step="0.01" name="b_gpa" value="" />
 				</div>
 
 				<div class="col form-group">
@@ -307,7 +343,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_year">Year:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="b_year" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="b_year" value="" />
 				</div>
 
 				<div class="col form-group">
@@ -349,8 +385,22 @@ if (isset($_POST['submit'])) {
 
 			<div class="row pt-3 mb-2">
 				<div class="col-lg">
-					<label for="recommender">Recommender's Email</label>
-					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender" value="" required></textarea>
+					<label for="recommender">First Recommender's Email</label>
+					<input type="email" class="form-control form-control-lg text-muted" maxlength="254" name="recommender1" value="" required></textarea>
+				</div>
+			</div>
+
+			<div class="row pt-3 mb-2">
+				<div class="col-lg">
+					<label for="recommender">Second Recommender's Email</label>
+					<input type="email" class="form-control form-control-lg text-muted" maxlength="254" name="recommender2" value=""></textarea>
+				</div>
+			</div>
+
+			<div class="row pt-3 mb-2">
+				<div class="col-lg">
+					<label for="recommender">Third Recommender's Email</label>
+					<input type="email" class="form-control form-control-lg text-muted" maxlength="254" name="recommender3" value=""></textarea>
 				</div>
 			</div>
 
