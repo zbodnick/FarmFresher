@@ -9,46 +9,39 @@
 	?>
 
 	<script type = "text/javascript">
-	function validate() {
-		var retVal = true;
-		var fname = document.app.fname.value;
-		var mname = document.app.mname.value;
-		var lname = document.app.lname.value;
-		var address = document.app.address.value;
-		var quantgre = document.app.quantgre.value;
-		var mathgre = document.app.verbalgre.value;
-		var gre = document.app.gre.value;
+		function validate() {
+			var retVal = true;
+			var fname = document.app.fname.value;
+			var mname = document.app.mname.value;
+			var lname = document.app.lname.value;
+			var address = document.app.address.value;
+			var quantgre = document.app.quantgre.value;
+			var mathgre = document.app.verbalgre.value;
+			var gre = document.app.gre.value;
 
-		var special = new RegExp(/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/);
-		var ssnSpecial = new RegExp(/[#$%^&*()+=\[\]\';,.\/{}|":<>?~\\\\]/);
-		if (special.test(fname) || special.test(mname) || special.test(lname) || special.test(address) || ssnSpecial.test(ssn) || special.test(gre) || special.test(quantgre) || special.test(verbalgre)) {
-			alert('No special characters in names, address, or ssn');
-			retVal= false;
-		}
+			var special = new RegExp(/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/);
+			var ssnSpecial = new RegExp(/[#$%^&*()+=\[\]\';,.\/{}|":<>?~\\\\]/);
+			if (special.test(fname) || special.test(mname) || special.test(lname) || special.test(address) || ssnSpecial.test(ssn) || special.test(gre) || special.test(quantgre) || special.test(verbalgre)) {
+				alert('No special characters in names, address, or ssn');
+				retVal= false;
+			}
 
-		document.app.ssn.value = document.app.ssn.value.replace('-','');
-		if (isNaN(document.app.ssn.value)) {
-			alert('No characters in ssn');
-			retVal= false;
-		}
+			document.app.ssn.value = document.app.ssn.value.replace('-','');
+			if (isNaN(document.app.ssn.value)) {
+				alert('No characters in ssn');
+				retVal= false;
+			}
 
-		if (document.app.password.value != document.app.password2.value) {
-			retVal= false;
-		}
+			if (document.app.password.value != document.app.password2.value) {
+				retVal= false;
+			}
 
-		return retVal;
+			return retVal;
 		}
-		</script>
+	</script>
 </head>
 
 <?php
-
-/*if (isset($_SESSION['id']))
-	$id = $_SESSION['id'];
-
-if (!empty($id)) {
-    header("Location: home.php");
-}*/
 
 include ('php/connectvars.php');
 
@@ -121,9 +114,10 @@ if (isset($_POST['submit'])) {
 		'".$_POST['interests']."',
 		0,
 		0,
-		'n/a',
+		'',
 		'".$_POST['dgr']."',
-		0)";
+		0,
+		".date("Y").")";
 	$applicationdata = mysqli_query($dbc, $application);
 
 	$i = 0;
@@ -217,7 +211,7 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label for="email">Email Address</label>
-					<input type="text" id="email" name="email" maxlength="254" class="form-control form-control-lg text-muted" value="">
+					<input type="email" id="email" name="email" maxlength="254" class="form-control form-control-lg text-muted" value="">
 				</div>
 				<div class="col-md-4 form-group">
 					<label for="address">Address</label>
@@ -264,7 +258,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="gre_date">GRE Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="gre_date" value="">
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="gre_date" value="">
 				</div>
 			</div>
 
@@ -282,7 +276,7 @@ if (isset($_POST['submit'])) {
 			<div class="row">
 				<div class="col-lg form-group">
 					<label for="advgre_date">Adv. GRE Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="advgre_date" value=""/>
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="advgre_date" value=""/>
 				</div>
 			</div>
 
@@ -293,7 +287,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-6 form-group">
 					<label for="toefl_date">TOEFL Year Taken:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="toefl_date" value="">
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="toefl_date" value="">
 				</div>
 			</div>
 
@@ -313,7 +307,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="ms_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="text" maxlength="4" name="ms_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="0" max="4" step="0.01" name="ms_gpa" value="" />
 				</div>
 				<div class="col form-group">
 					<label for="ms_major">Major:</label>
@@ -321,7 +315,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col form-group">
 					<label for="ms_year">Year:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="ms_year" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="ms_year" value="" />
 				</div>
 				<div class="col form-group">
 					<label for="ms_uni">University:</label>
@@ -339,7 +333,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_gpa">GPA:</label>
-					<input class="form-control form-control-lg text-muted" type="text" maxlength="4" name="b_gpa" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="0" max="4" step="0.01" name="b_gpa" value="" />
 				</div>
 
 				<div class="col form-group">
@@ -349,7 +343,7 @@ if (isset($_POST['submit'])) {
 
 				<div class="col form-group">
 					<label for="b_year">Year:</label>
-					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="2020" name="b_year" value="" />
+					<input class="form-control form-control-lg text-muted" type="number" min="1900" max="<?php echo date("Y"); ?>" name="b_year" value="" />
 				</div>
 
 				<div class="col form-group">
@@ -392,21 +386,21 @@ if (isset($_POST['submit'])) {
 			<div class="row pt-3 mb-2">
 				<div class="col-lg">
 					<label for="recommender">First Recommender's Email</label>
-					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender1" value="" required></textarea>
+					<input type="email" class="form-control form-control-lg text-muted" maxlength="254" name="recommender1" value="" required></textarea>
 				</div>
 			</div>
 
 			<div class="row pt-3 mb-2">
 				<div class="col-lg">
 					<label for="recommender">Second Recommender's Email</label>
-					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender2" value=""></textarea>
+					<input type="email" class="form-control form-control-lg text-muted" maxlength="254" name="recommender2" value=""></textarea>
 				</div>
 			</div>
 
 			<div class="row pt-3 mb-2">
 				<div class="col-lg">
 					<label for="recommender">Third Recommender's Email</label>
-					<input class="form-control form-control-lg text-muted" maxlength="254" name="recommender3" value=""></textarea>
+					<input type="email" class="form-control form-control-lg text-muted" maxlength="254" name="recommender3" value=""></textarea>
 				</div>
 			</div>
 

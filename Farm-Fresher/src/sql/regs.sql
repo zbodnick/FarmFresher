@@ -219,7 +219,8 @@ CREATE TABLE `application` (
   `recommendation` int, /*0=under review 1=reject, 2=borderline, 3=admit without aid, 4=admit with aid*/
   `reviewer_comment` varchar(255),
   `degree_type` varchar(255),
-  `final_decision` int /*reject/accept/accept with aid*/
+  `final_decision` int, /*reject/accept/accept with aid/applicant denied admissions*/
+  `year` int
 );
 
 CREATE TABLE `reviewer_application` (
@@ -247,10 +248,6 @@ ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
 ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`);
 ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
 
-INSERT INTO reviewer_application VALUES(10000002,66666666,0);
-INSERT INTO reviewer_application VALUES(10000003,55555555,0);
-INSERT INTO reviewer_application VALUES(10000004,33333333,0);
-
 INSERT INTO users (id, p_level, password) VALUES (15555555, 'Applicant', 'pass');
 INSERT INTO users (id, p_level, password) VALUES (16666666, 'Applicant', 'pass');
 INSERT INTO users (id, p_level, password) VALUES (00001234, 'Applicant', 'pass');
@@ -264,16 +261,16 @@ INSERT INTO applicant VALUES(00001234, 'Louis', 'Armstrong', 'awonderfulworld@gw
 INSERT INTO applicant VALUES(00001235, 'Aretha', 'Franklin', 'aFranklin12@gwu.edu', 666111111, '56 Soul Ave');
 INSERT INTO applicant VALUES(00001236, 'Carlos', 'Santana', 'prsLuvr123@gwu.edu', 777111111, '200 Woodstock Dr');
 
-INSERT INTO `application` VALUES (1,15555555, 0,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0);
+INSERT INTO `application` VALUES (1,15555555, 1,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0, 2020);
 INSERT INTO `application` VALUES (1,16666666, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GWU University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 0, '', 'ms', 0);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GWU University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 0, '', 'ms', 0, 2020);
 INSERT INTO `application` VALUES (1,00001234, 0,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 0, '', 'ms', 0);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 0, '', 'ms', 1, 2017);
 INSERT INTO `application` VALUES (1,00001235, 0,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 0, '', 'ms', 0);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 0, '', 'ms', 4, 2017);
 INSERT INTO `application` VALUES (1,00001236, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 0, '', 'phd', 0);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 0, '', 'phd', 4, 2017);
 
 SET FOREIGN_KEY_CHECKS = 1;
 /*
