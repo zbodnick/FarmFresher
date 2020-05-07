@@ -45,7 +45,6 @@ $dbc->query('SET foreign_key_checks = 0');
             <table class="table ">
                 <thead>
                 <tr class="text-center">
-                    <th scope="col">CRN</th>
                     <th scope="col">Course</th>
                     <th scope="col">Title</th>
                     <th scope="col">Credits</th>
@@ -56,10 +55,8 @@ $dbc->query('SET foreign_key_checks = 0');
             <tbody id="course_table">
             <?php
             while ($row = mysqli_fetch_assoc($result)) {
-                $crnn = $row['crn'];
             ?>
                 <tr class="text-center">
-                <td> <?php echo $crnn?> </td>
                 <td>
                 <?php
 

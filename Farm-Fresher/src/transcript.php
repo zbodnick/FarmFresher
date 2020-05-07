@@ -161,26 +161,30 @@
                 ';
 
                 // Find all courses this student has taken/is taking
-                $query = 'SELECT c_no, department, title, credits, grade, faculty.lname ' .
+                $query = 'SELECT semester, year, c_no, department, title, credits, grade, faculty.lname ' .
                           'FROM faculty, schedule, courses_taught, catalog, courses_taken ' .
                           'WHERE u_id="' . $id . '" and faculty.f_id=courses_taught.f_id ' .
                             'and courses_taken.crn=schedule.crn and catalog.c_id=schedule.course_id ' .
-							'and courses_taught.crn=courses_taken.crn;';
+							'and courses_taught.crn=courses_taken.crn';
                 $classes = mysqli_query ($dbc, $query);
 
                 while ($c = mysqli_fetch_array($classes)) {
-                    echo '
-                    <tbody>
-                        <tr class="text-center">
-                            <td>'. $c['department'] .'</td>
-                            <td>'. $c['c_no'] .'</td>
-                            <td>'. $c['title'] .'</td>
-                            <td>'. $c['credits'] .'</td>
-                            <td>'. $c['lname'] .'</td>
-                            <td>'. $c['grade'] .'</td>
-                        </tr>
-                    </tbody>
-                    ';
+                    $current_transcript_year = $s['year'];
+                    $current_class_year = $c['year'];
+                    if ( strcmp($c['semester'], $s['semester']) == 0 && $current_transcript_year == $current_class_year) {
+                      echo '
+                      <tbody>
+                          <tr class="text-center">
+                              <td>'. $c['department'] .'</td>
+                              <td>'. $c['c_no'] .'</td>
+                              <td>'. $c['title'] .'</td>
+                              <td>'. $c['credits'] .'</td>
+                              <td>'. $c['lname'] .'</td>
+                              <td>'. $c['grade'] .'</td>
+                          </tr>
+                      </tbody>
+                      ';
+                    }
                 }
 
                 echo '
