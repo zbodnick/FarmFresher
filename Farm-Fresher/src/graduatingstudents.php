@@ -75,20 +75,10 @@ $dbc->query('SET foreign_key_checks = 0');
 
 			</table>
 
-      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <p>Select filter option</p>
-        <p>Semester graduated</p>
-        <input type="text" id="semester" name="semester" value="">
-        <br>
-        <p>Year graduated</p>
-        <input type="text" id="year" name="year" value="">
-        <br>
-        <p>MS/PHD</p>
-        <input type="text" id="degree" name="degree" value="">
-
-        <input type="submit" value="Submit">
-      </form>
-
+      <br>
+      <br>
+      
+      <h1 class="text-primary"> Graduation Cleared Students & Alumni</h1> <br>
       <div class="row mt-3">
   			<table class="table table-bordered">
 
