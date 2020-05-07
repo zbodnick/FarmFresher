@@ -52,9 +52,9 @@
     mysqli_query($dbc, $query);
 
     //Move user into alumni
-    $fname = $dbc->query(('select fname from student where u_id = ' . $_POST["univID"])->fetch_assoc()['fname'];
-    $lname = $dbc->query(('select lname from student where u_id = ' . $_POST["univID"])->fetch_assoc()['lname'];
-    $email = $dbc->query(('select email from student where u_id = ' . $_POST["univID"])->fetch_assoc()['email'];
+    $fname = $dbc->query(('select fname from student where u_id = ' . $_POST["univID"]))->fetch_assoc()['fname'];
+    $lname = $dbc->query(('select lname from student where u_id = ' . $_POST["univID"]))->fetch_assoc()['lname'];
+    $email = $dbc->query(('select email from student where u_id = ' . $_POST["univID"]))->fetch_assoc()['email'];
     $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email) VALUES ('$_POST[cleargrad]', 2020, $fname, $lname, $email)";
     mysqli_query($dbc, $query);
     echo '<center><h3>Student Graduated</h3></center><hr />';
