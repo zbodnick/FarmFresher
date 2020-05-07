@@ -52,7 +52,7 @@ $dbc->query('SET foreign_key_checks = 0');
 
         if (isset($_POST['submit'])) {
           if(!empty($_POST['degree'])){
-              $query = $query . "and program = $_POST['degree']";
+              $query = $query . "and program = $_POST[degree]";
           }else{
 
           }
