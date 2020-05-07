@@ -141,16 +141,31 @@
                             $row = mysqli_fetch_array($advising_hold_results);
                             $has_hold = $row['has_hold'];
 
+                            $course_year_enrolled_query = "SELECT year FROM schedule WHERE crn=$crn";
+                            $course_year_results = mysqli_query($dbc, $course_year_enrolled_query);
+                            $year_query_row = mysqli_fetch_array($course_year_results);
+                            $year_enrolled = $year_query_row['year'];
+                            $current_year = date("Y");
+
+                            echo "Year Enrolled: " . $year_enrolled ;
+                            echo "Year Enrolled: " . $current_year ;
+
 							// Only show an enroll/drop button if this is a student
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
                                 if ($has_hold == 1) { ?>
                                     <td> <a href="advising_form_new.php" class="btn btn-danger btn-sm rounded-2 px-3"><span class="glyphicon glyphicon-exclamation-sign pr-2"></span>Lift Advising Hold</a> </td>
                                 <?php } else {
-								if (empty(mysqli_fetch_array($enrollement_results))) { ?>
-									<td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
-								<?php } else { ?>
-									<td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
-                                <?php } 
+
+                                if (empty(mysqli_fetch_array($enrollement_results))) { ?>
+                                    <td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
+                                <?php } else { 
+                                    if ( strcmp(strval($year_enrolled), strval($current_year)) == 0) { ?>
+                                    
+                                    <td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
+                                <?php } else { ?>
+                                    <td> <a href="#" class="btn btn-secondary btn-sm rounded-2 px-3">Course Completed</a></td>
+                                <?php }
+                                } 
                                 } ?>
 								</tr>
 							<?php
