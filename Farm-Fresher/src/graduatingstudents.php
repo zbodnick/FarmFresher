@@ -51,17 +51,6 @@ $dbc->query('SET foreign_key_checks = 0');
 						  FROM student WHERE applied_to_grad = 1';
 
         if (isset($_POST['submit'])) {
-          /*
-          if(!empty($_POST['semester'])){
-              $query = $query . "and program = $_POST['semester']"
-          }else{
-
-          }
-          if(!empty($_POST['year'])){
-              $query = $query . "and program = $_POST['year']"
-          }else{
-
-          }*/
           if(!empty($_POST['degree'])){
               $query = $query . " and program = $_POST['degree']";
           }else{
