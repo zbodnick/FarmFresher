@@ -17,7 +17,8 @@
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $dbc->query('SET foreign_key_checks = 0');
     $c_no = $_GET["cno"];
-    $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no=$c_no AND s.course_id=c.c_id";
+    $current_year = date("Y");
+    $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no=$c_no AND s.course_id=c.c_id AND s.year=$current_year";
     $cid = mysqli_fetch_array(mysqli_query($dbc, $cid_query));
     $crn  = $cid['crn'];
 
@@ -160,7 +161,6 @@
                                     <td> <a href="register.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-primary btn-sm rounded-2 px-3">Enroll</a> </td>
                                 <?php } else { 
                                     if ( strcmp(strval($year_enrolled), strval($current_year)) == 0) { ?>
-                                    
                                     <td> <a href="drop.php?crn=<?php echo $crn ?>&cno=<?php echo $c_no ?>&dept=<?php echo $dept ?>" class="btn btn-danger btn-sm rounded-2 px-3">Drop</a> </td>
                                 <?php } else { ?>
                                     <td> <a href="#" class="btn btn-secondary btn-sm rounded-2 px-3">Course Completed</a></td>
