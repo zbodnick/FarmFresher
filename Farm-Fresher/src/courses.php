@@ -35,8 +35,8 @@ $dbc->query('SET foreign_key_checks = 0');
 
         // Schedule links to faculty on crn
         // Courses not being taught shouldnt have a proffesoror time alloted to them
-
-        $course_query = 'SELECT * from catalog';
+        $current_year = date("Y");
+        $course_query = "SELECT * from catalog c, schedule s WHERE s.year=$current_year AND c.c_id=s.course_id";
 
         $result = mysqli_query($dbc, $course_query);
 
