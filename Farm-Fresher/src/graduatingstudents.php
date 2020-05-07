@@ -80,6 +80,7 @@ $dbc->query('SET foreign_key_checks = 0');
       <h1 class="text-primary"> Alumni</h1> <br><br>
 
       <div style="padding-top:10px;">
+        <div class="row mt-3">
   			<table class="table table-bordered">
 
   				<thead>
@@ -93,7 +94,7 @@ $dbc->query('SET foreign_key_checks = 0');
   				</thead>
 
   				<tbody id="student_table">
-
+          </div>
   			<?php
         //alumni list
   				$query = 'SELECT univid as U_ID, email, fname, lname
