@@ -127,7 +127,7 @@
 
 
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
-          $query = "select * from formone, course where universityid = '$_POST[univID]' and cid = courseid";
+          $query = "select * from formone where universityid = '$_POST[univID]'";
           $result = mysqli_query($dbc, $query);
 
           echo '<center><h4>Form One Data</h4></center><div class="formdata">';
