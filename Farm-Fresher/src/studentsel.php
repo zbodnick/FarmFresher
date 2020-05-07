@@ -128,8 +128,8 @@
 
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
           $query = "select * from formone where universityid = " . $_POST['univID'];
+          echo $_POST['univID'];
           $result = mysqli_query($dbc, $query);
-          echo $dbc->error;
           echo '<center><h4>Form One Data</h4></center><div class="formdata">';
           if ($result->num_rows > 0){
             echo '<table style="width:100%">';
