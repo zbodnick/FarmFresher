@@ -49,16 +49,17 @@ $dbc->query('SET foreign_key_checks = 0');
 			<?php
 				$query = 'SELECT u_id, fname, lname, email, addr, major, program
 						  FROM student WHERE applied_to_grad = 1 ';
-
+        $students = mysqli_query ($dbc, $query);
         if (isset($_POST['submit'])) {
           if(!empty($_POST['degree'])){
               $query = $query . "and program = $_POST[degree]";
+              $students = mysqli_query ($dbc, $query);
           }else{
 
           }
         }
 
-				$students = mysqli_query ($dbc, $query);
+
 
 				while ($students && $s = mysqli_fetch_assoc ($students)) {
 					echo '<tr class="text-center">';
@@ -76,11 +77,14 @@ $dbc->query('SET foreign_key_checks = 0');
 
       <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <p>Select filter option</p>
-        <input type="text" id="semester" name="gender" value="semester">
+        <p>Semester graduated</p>
+        <input type="text" id="semester" name="semester" value="">
         <br>
-        <input type="text" id="year" name="gender" value="year">
+        <p>Year graduated</p>
+        <input type="text" id="year" name="year" value="">
         <br>
-        <input type="text" id="degree" name="gender" value="degree">
+        <p>MS/PHD</p>
+        <input type="text" id="degree" name="degree" value="">
 
         <input type="submit" value="Submit">
       </form>
