@@ -1,14 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Student Info Dashboard</title>
+    <?php
+		require_once ('header.php');
+		session_start ();
+
+		if (empty ($_SESSION['id'])) {
+			header ('Location: home.php');
+    }
+    
+    include ('php/connectvars.php');
+	  ?>
+</head>
+
+
+<body  data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  <div class="site-section">
+    <div class="container text-center align-center">
+    <div class="row">
+		<h1 class="text-primary mx-auto">Student Information Dashboard</h1>
+	</div>
 <?php
 
-  //Start session to gather variables, Print page title
-  session_start();
-	$page_title = 'GWU Advising System Catalog';
-
-	//Load php tag into file once
-  require_once('php/connectvars.php');
   require_once('appvars.php');
-  require_once('navmenu.php');
-
+  
   //Load DBC
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $dbc->query('SET foreign_key_checks = 0');
@@ -46,22 +63,29 @@
 
     echo "<center><h3>Student Advisor updated to '$_POST[assignAdvi]'</h3></center><hr />";
   }
-
+  ?>
+  <div class="row">
+<?php
 
   //SEARCH BAR
-  echo '<form action="" method="post">';
-  echo  '<label for="univID">University ID:</label><br>';
-  echo  '<input type="text" id="univID" name="univID"><br>';
-  echo  '<input type="submit" name="Search" value="Search">';
+  echo '<form action="" class="mx-auto mb-4" method="post">';
+  echo '<label for=:univID">University ID</label>';
+  ?><div class="col"><?php
+  echo  '<input type="text" class="form-control form-control-lg text-muted" id="univID" name="univID">';
+  ?></div>
+  <div class="col"><?php
+  echo  '<input type="submit" class="btn btn-primary mt-2 btn-block btn-md" name="Search" value="Search">';
+  ?></div><?php
   echo	'</form>';
-  echo '<hr />';
-
+  ?>
+</div>
+<?php
   //IF A USER HAS BEEN SEARCHED
   if(isset($_POST["Search"])){
 
     //THIS ONLY ALLOWS FOR AN ADVISOR TO LOOK UP THEIR STUDENTS AND ONLY THEIR STUDENTS
     if((strcmp($_SESSION['p_level'], 'Advisor') == 0)){
-      echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';
+      echo '<center><h4 class="text-success>Student Found</h4></center><div class="advbasicdata">';
       $input = $_POST['univID'];
 
 
@@ -144,19 +168,28 @@
         echo '<center>Student Not Found</center>';
       }
 
-
     // THIS IS FOR GS AND ADMIN : ALLOWS THEM TO VIEW EVERY USER AND THEIR ADVISOR ID'S. CANNOT CLEAR A USER'S THESIS.
     }else{
       //ALLOW GS/ADMIN TO ASSIGN THE STUDENT'S ADVISOR
-      echo '<br><form action="" method="post">';
-      echo  '<label for="assignAdvi">Assign Student an Advisor</label><br>';
-      echo  '<input type="text" id="assignAdvi" name="assignAdvi"><br>';
+      ?>
+      <div class="row">
+      <?php
+      echo '<br><form action="" class="mx-auto mb-4" method="post">';
+      echo  '<label for="assignAdvi">Assign Student to an Advisor</label>';
+      ?><div class="col"><?php
+      echo  '<input type="text" class="form-control form-control-lg text-muted" id="assignAdvi" name="assignAdvi">';
+      ?></div>
+      <div class="col"><?php
       echo  '<input type="hidden" id="assignstuID" name="assignstuID" value ="'.$_POST['univID'].'">';
-      echo  '<input type="submit" name="Assign" value="Assign">';
+      echo  '<input type="submit" class="btn btn-primary mt-2 btn-block btn-md" name="Assign" value="Assign">';
+      ?></div><?php
       echo	'</form><br>';
-
-      echo '<center><h4>Student Found</h4></center><div class="basicdata">';
+      ?>
+    </div>
+    <?php
+      echo '<center><h4 class="text-success">Student Found</h4></center><div class="basicdata">';
       $input = $_POST['univID'];
+      
 
       //LOADING BASIC STUDENT DATA
       $query = "select * from student WHERE u_id = '$input'"; // and (NOT applied_to_grad = 3)";
@@ -176,7 +209,6 @@
         }
         echo '</table></div>';
         echo '<hr />';
-
 
         //SHOW STUDENT'S TRANSCRIPT (ONLY IF BASIC DATA APPEARS)
         $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_POST['univID'] ." and catalog.c_id = courses_taken.crn;";
@@ -287,5 +319,8 @@
     }
   }
   $dbc->close();
-  require_once('footer.php');
 ?>
+        </div>
+	    </div>
+  </body>
+</html>
