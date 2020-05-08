@@ -48,7 +48,7 @@
         $id = $_SESSION['id1'];
     }else if($_SESSION['p_level1'] == "Alumni" || $_SESSION['p_level1'] == "alumni"){
         $permLevel = "Alumni";
-        $id = $_SESSION['id1'];
+        $id = $_SESSION['id'];
     }
 
     $fNameError = $lNameError = $addrError = $emailError = $currentPassError = $newPassError = $newPassConfirmError =  "" ;
