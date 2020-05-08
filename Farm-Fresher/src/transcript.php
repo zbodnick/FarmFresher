@@ -210,7 +210,8 @@
 
       // BELOW IS JAKE's GPA STUFF
 
-      if (strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 || strcmp($_SESSION['p_level'], 'Faculty') == 0 && isset($_GET['student'])) {
+      if ((strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 || strcmp($_SESSION['p_level'], 'Faculty') == 0) && isset($_GET['student'])) {
+        $selected_student_id = $_GET['student'];
         $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = $selected_student_id and catalog.c_id = courses_taken.crn;";
       } else {
         $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
