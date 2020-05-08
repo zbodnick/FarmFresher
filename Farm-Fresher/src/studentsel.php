@@ -56,7 +56,9 @@
     $fname = $dbc->query(("select fname from student where u_id = $theuID"))->fetch_assoc()['fname'];
     $lname = $dbc->query(("select lname from student where u_id = $theuID"))->fetch_assoc()['lname'];
     $email = $dbc->query(("select email from student where u_id = $theuID"))->fetch_assoc()['email'];
-    $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email) VALUES ($theuID, 2020, '$fname', '$lname', '$email')";
+    $major = $dbc->query(("select major from student where u_id = $theuID"))->fetch_assoc()['major'];
+    $address = $dbc->query(("select addr from student where u_id = $theuID"))->fetch_assoc()['addr'];
+    $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email, major, addr) VALUES ($theuID, 2020, '$fname', '$lname', '$email', '$major', '$address')";
     mysqli_query($dbc, $query);
 
     echo '<center><h3>Student Graduated</h3></center><hr />';
