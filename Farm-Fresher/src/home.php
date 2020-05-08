@@ -186,7 +186,21 @@
                   <p><a href="change_password.php" class="btn btn-primary px-4 rounded-0">Change Password</a></p>
                 </div>
               </div>
+              <br/><br/><br/>
+          <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+              <div class="feature-1 border">
+                <div class="icon-wrapper bg-primary">
+                  <span class="flaticon-mortarboard text-white"></span>
+                </div>
+              <div class="feature-1-content">
+                <h2>Edit Application</h2>
+                <p>Edit your currently submitted application.</p>
+                <p><a href="application_edit.php" class="btn btn-primary px-4 rounded-0">Edit Application</a></p>
+              </div>
             </div>
+          </div>
+        </div>
       </div>
   <?php
 } else if (strcmp($permLevel, "Faculty") == 0) {
