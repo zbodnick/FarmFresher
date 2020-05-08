@@ -140,24 +140,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 }
             }
             else if (!strcmp($cats[$i],"Completion")) {
-              if ($row[$i] == 0) {
-              echo '
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                    <b>Status</b>: Not Complete
-                  </div>
-                </div>
-              ';
-              }
-              else {
-                echo '
-                  <div class="row">
-                    <div class="col-md-6 form-group">
-                      <b>Status</b>: Complete
-                    </div>
-                  </div>
-                ';
-                }
+
             }
             else if ((!strcmp($cats[$i],"Reviewer Comment") || !strcmp($cats[$i],"Average Review") || !strcmp($cats[$i],"Final Decision")) && !strcmp($_SESSION['p_level'],"Applicant")) {
               // do nothing
