@@ -31,8 +31,10 @@
 				alert('No characters in ssn');
 				retVal= false;
 			}
-
-			if (document.app.password.value != document.app.password2.value) {
+			var password1 = form.password.value;
+			var password2 = form.password2.value
+			if (password1 != password2) {
+				alert('Passwords do not match!');
 				retVal= false;
 			}
 
@@ -183,7 +185,7 @@ if (isset($_POST['submit'])) {
     	<div class="container pt-3">
 		<?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Successfully Submitted Application</div>"; } ?>
     	<h1 class="text-primary">Application</h1><div class='card p-5 mt-4'>
-		<form method="post" name="app" onsubmit="return validate();" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<form method="post" name="app" onsubmit="return validate()" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<div class="row">
 				<div class="col-md-4 form-group">
 					<label for="fname">First Name</label>
