@@ -15,11 +15,11 @@
 
 <?php
     session_start();
-
+/*
     if(!isset($_SESSION['id'])){ // If user is not logged in redirect to login
         header("Location: login.php");
     }
-
+*/
     $permLevel = $id = "";
 
     include('php/connectvars.php');
