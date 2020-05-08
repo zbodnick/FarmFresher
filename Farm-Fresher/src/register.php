@@ -45,6 +45,7 @@ session_start();
             $course_id = $class_data["course_id"];
             $day = $class_data["day"];
             $term = $class_data["semester"];
+            $year = $class_data['year'];
             $start_time = strtotime($class_data["start_time"]);
             $end_time = strtotime($class_data["end_time"]);
         }
@@ -93,12 +94,34 @@ session_start();
                     array_push($crns_taken, $row['crn']);
                 }
 
-                if ($day == $row['day'] && $term == $row['semester'] && $year == $row['year'] && $start_time <= $row['start_time'] && $end_time >= $row['start_time']) {
+                if ( strcmp(strval($day), $row['day']) == 0 && $term == $row['semester'] && $year == $row['year'] && $start_time <= strtotime($row['start_time']) && $end_time >= strtotime($row['start_time'])) {
+                    // $time_conflict = checkTimeConflict(strval($day), $row['day'], strtotime($start_time), strtotime($row['start_time']), strtotime($end_time), strtotime($row['end_time']));
                     $time_conflict = 1;
                 }
-
             }
         }
+
+        $current_year = date("Y");
+        $course_taking_query = "SELECT * FROM courses_taken c, schedule s WHERE c.u_id=$uid and c.crn=s.crn and year=$current_year and semester='Spring'";
+        $courses_taking_data = mysqli_query($dbc, $course_taking_query);
+
+        if ($courses_taking_data && mysqli_num_rows($courses_taking_data) > 0) {
+            while ($row = mysqli_fetch_assoc($courses_taking_data)) {
+                //  == 0 && ($start_time) >= ($row['start_time']) && ($end_time) <= ($row['start_time'])
+                // if (strcmp( strval($day), $row['day']) == 0 && strtotime($start_time) >= strtotime($row['start_time']) && strtotime($end_time) <= strtotime($row['start_time'])) {
+                //     $time_conflict = checkTimeConflict(strval($day), $row['day'], strtotime($start_time), strtotime($row['start_time']), strtotime($end_time), strtotime($row['end_time']));
+                // }
+            }
+        }
+
+        // function checkTimeConflict($dayOne, $dayTwo, $startOne, $endOne, $startTwo, $endTwo) {
+        //     if (strcmp($dayOne, $dayTwo) == 0
+        //         && (($startOne > $startTwo && $endOne < $endTwo)
+        //         || (($startOne > $startTwo && $startOne < $endTwo) || ($endOne > $startTwo && $endOne < $endTwo))
+        //         || ($startTwo > $startOne && $endTwo < $endOne))) {
+        //         return 1;
+        //     }
+        // }
 
         // die(implode($crns_taken));
         if (!empty($prereq1)) {
@@ -109,7 +132,7 @@ session_start();
             $crn_prereq1_data = mysqli_fetch_assoc(mysqli_query($dbc, $cid_query));
             $crn_prereq1 = $crn_prereq1_data['crn'];
 
-            if (  in_array($crn_prereq1, $crns_taken) ) {
+            if ( in_array($crn_prereq1, $crns_taken) ) {
                 $prereq1_conflict = 0;
             }
         }
