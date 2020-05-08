@@ -66,6 +66,7 @@
   else if(isset($_POST["Assign"])){
     //Update User's advisor ID
     $query = "UPDATE student SET advisorid = $_POST[assignAdvi] WHERE unid = $_POST[assignstuID]";
+    die($query);
     mysqli_query($dbc, $query);
 
     echo "<center><h3>Student Advisor updated to $_POST[assignAdvi]</h3></center><hr />";
