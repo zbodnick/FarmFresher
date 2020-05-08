@@ -50,6 +50,7 @@ $command = 'mysql'
         . ' --password=' . DB_PASSWORD
         . ' --database=' . DB_NAME
         . ' --execute="SOURCE ' . $script_path;
+echo 'res:'.$command;
 
 $output1 = shell_exec($command . '/regs.sql"');
 
