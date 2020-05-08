@@ -64,7 +64,7 @@
   $query3 = "SELECT SUM(credits) as totalCredits from catalog, courses_taken, schedule where catalog.c_id=schedule.course_id and courses_taken.crn=schedule.crn and courses_taken.u_id=$id and courses_taken.grade!='IP' and catalog.department='CSCI'";
   $choursCSCI = mysqli_query($dbc, $query3);
   $choursCSCI = $choursCSCI->fetch_assoc();
-  $choursCSCItotal = $choursCSCI['credits'];
+  $choursCSCItotal = $choursCSCI['totalCredits'];
 
 
   $query4 = "SELECT program FROM student WHERE u_id = $id;" ;
