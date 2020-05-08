@@ -66,6 +66,7 @@
   $choursCSCI = $choursCSCI->fetch_assoc();
   $choursCSCItotal = $choursCSCI['credits'];
 
+
   $query4 = "SELECT program FROM student WHERE u_id = $id;" ;
   $studenttype = mysqli_query($dbc, $query4);
   $studenttype = $studenttype->fetch_assoc();
@@ -76,7 +77,7 @@
 
 
 
-
+  echo $avggpa;
 
   if($program == 'MS' && $avggpa >= 3.0 && $chours >= 30 && $numBadGrades <= 2 && $aprv == 1)
   {
