@@ -84,7 +84,7 @@
     if(mysqli_query($dbc, $queryMS) == TRUE)
     {
       echo "<br>";
-      echo "Request to the Graduate Secretary is sent to clear your for graduation. Stay tuned.";
+      echo "Request to the Graduate Secretary is sent to clear you for graduation. Stay tuned.";
       echo "<br>";
     }
   }
