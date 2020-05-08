@@ -274,7 +274,11 @@
 
           function avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours){
                 $attemptedhours = ($resultA * 4.00 * 3.00) + ($resultB * 3.00 * 3.00) + ($resultC * 2.00 * 3.00) + ($resultD * 1.00 * 3.00) + ($resultF * 0.00 * 3.00);
+                if ($totalhours == 0) {
+                  return "NONE";
+                } else {
                 return ($attemptedhours / $totalhours);
+              }
           }
           $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
 
@@ -329,7 +333,11 @@
 
           function avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours){
                 $attemptedhours = ($resultA * 4.00 * 3.00) + ($resultB * 3.00 * 3.00) + ($resultC * 2.00 * 3.00) + ($resultD * 1.00 * 3.00) + ($resultF * 0.00 * 3.00);
+                if ($totalhours == 0) {
+                  return "NONE";
+                } else {
                 return ($attemptedhours / $totalhours);
+              }
           }
           $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
 
