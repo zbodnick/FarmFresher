@@ -92,13 +92,32 @@ session_start();
                 if (strcmp($row['grade'], "IP") != 0) {
                     array_push($crns_taken, $row['crn']);
                 }
-
-                if ($day == $row['day'] && $term == $row['semester'] && $year == $row['year'] && $start_time <= $row['start_time'] && $end_time >= $row['start_time']) {
-                    $time_conflict = 1;
-                }
-
             }
         }
+
+        $current_year = date("Y");
+        $course_taking_query = "SELECT * FROM courses_taken c, schedule s WHERE c.u_id=$uid and c.crn=s.crn and year=$current_year and semester='Spring'";
+        $courses_taking_data = mysqli_query($dbc, $course_taking_query);
+
+        if ($courses_taking_data && mysqli_num_rows($courses_taking_data) > 0) {
+            while ($row = mysqli_fetch_assoc($courses_taking_data)) {
+                //  == 0 && ($start_time) >= ($row['start_time']) && ($end_time) <= ($row['start_time'])
+                // if (strcmp( strval($day), $row['day']) == 0 && strtotime($start_time) >= strtotime($row['start_time']) && strtotime($end_time) <= strtotime($row['start_time'])) {
+                    $time_conflict = checkTimeConflict(strval($day), $row['day'], strtotime($start_time), strtotime($row['start_time']), strtotime($end_time), strtotime($row['end_time']));
+                // }
+            }
+        }
+
+        function checkTimeConflict($dayOne, $dayTwo, $startOne, $endOne, $startTwo, $endTwo) {
+            if (strcmp($dayOne, $dayTwo) == 0
+                && (($startOne > $startTwo && $endOne < $endTwo)
+                || (($startOne > $startTwo && $startOne < $endTwo) || ($endOne > $startTwo && $endOne < $endTwo))
+                || ($startTwo > $startOne && $endTwo < $endOne))) {
+                return 1;
+            }
+        }
+
+
 
         // die(implode($crns_taken));
         if (!empty($prereq1)) {
