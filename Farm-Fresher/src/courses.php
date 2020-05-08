@@ -35,8 +35,8 @@ $dbc->query('SET foreign_key_checks = 0');
 
         // Schedule links to faculty on crn
         // Courses not being taught shouldnt have a proffesoror time alloted to them
-
-        $course_query = 'SELECT * from catalog';
+        $current_year = date("Y");
+        $course_query = "SELECT * from catalog c, schedule s WHERE s.year=$current_year AND c.c_id=s.course_id AND s.semester='Spring'";
 
         $result = mysqli_query($dbc, $course_query);
 
@@ -61,7 +61,6 @@ $dbc->query('SET foreign_key_checks = 0');
                 <?php
 
                 $cid = $row["c_id"];
-
                 $crn = $row["c_no"];
                 $dept = $row["department"];
                 $title = $row["title"];
@@ -74,7 +73,6 @@ $dbc->query('SET foreign_key_checks = 0');
                 $pre2 = explode(' ', trim($data['prereq2']));
 
                 ?>
-
                 <a href="course.php?cno=<?php echo $crn ?>&dept=<?php echo $dept ?>"> <?php echo $dept ?> <?php echo $crn ?> </a>
                 </td>
                 <td> <?php echo $title?> </td>

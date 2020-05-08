@@ -5,7 +5,7 @@
     <title>Applicant Review Form</title>
     <?php
     require_once ('header.php');
-    session_start();
+    //session_start();
 	?>
 
 </head>
@@ -44,10 +44,42 @@
   if (isset($_POST['submit'])) {
     if (strcmp($permLevel, "Faculty") == 0) {
       $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-      $sql = "UPDATE application SET reviewer_comment ='".$_POST['comment']."' WHERE username=".$_POST['id'];
+      $sql = "SELECT reviewer_comment FROM application WHERE username=".$_POST['id'];
+      $res = mysqli_query($dbc,$sql);
+      $row = mysqli_fetch_array($res);
+
+      $concatComment = '';
+
+      if (strcmp($row['reviewer_comment'],$concatComment)) {
+        $concatComment = $row['reviewer_comment'];
+        $concatComment = $concatComment . ' | ' . $_SESSION['id'] . ': ' . $_POST['comment'];
+      }
+      else {
+        $concatComment = $_SESSION['id'] . ': ' . $_POST['comment'];
+      }
+
+      echo 'concat:'.$concatComment;
+
+      $sql = "UPDATE application SET reviewer_comment ='". $concatComment ."' WHERE username=".$_POST['id'];
       $res = mysqli_query($dbc,$sql);
 
-      $sql = "UPDATE application SET recommendation =".$_POST['recommendation']." WHERE username=".$_POST['id'];
+      $sql = "SELECT recommendation FROM application WHERE username=".$_POST['id'];
+      $res = mysqli_query($dbc,$sql);
+      $row = mysqli_fetch_array($res);
+
+      $rec = 0;
+
+      if ($row['recommendation'] != 0) {
+        $rec = ($row['recommendation'] + $_POST['recommendation']) / 2;
+      }
+      else {
+        $rec = $_POST['recommendation'];
+      }
+
+      $sql = "UPDATE application SET recommendation =". ceil($rec) ." WHERE username=".$_POST['id'];
+      $res = mysqli_query($dbc,$sql);
+
+      $sql = "UPDATE reviewer_application SET status=1 WHERE applicantid=".$_POST['id']." AND username=".$_SESSION['id'];
       $res = mysqli_query($dbc,$sql);
 
       header("Location: reviewer_portal.php?success=yes"); 
@@ -94,6 +126,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
 ?>
     <br><br>
     <div class="container pt-3">
+    <br><br>
     <h1 class="text-primary">Review Form</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
@@ -167,6 +200,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
 <br><br>
     <div class="container pt-3">
     <?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Changes Submitted Successfully</div>"; } ?>
+    <br><br>
     <h1 class="text-primary">Update Application</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">

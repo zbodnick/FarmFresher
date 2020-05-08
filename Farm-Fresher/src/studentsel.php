@@ -1,13 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Student Info Dashboard</title>
+    <?php
+		require_once ('header.php');
+		session_start ();
+
+		if (empty ($_SESSION['id'])) {
+			header ('Location: home.php');
+    }
+
+    include ('php/connectvars.php');
+	  ?>
+</head>
+
+
+<body  data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  <div class="site-section">
+    <div class="container text-center align-center">
+    <div class="row">
+		<h1 class="text-primary mx-auto">Student Information Dashboard</h1>
+	</div>
 <?php
 
-  //Start session to gather variables, Print page title
-  session_start();
-	$page_title = 'GWU Advising System Catalog';
-
-	//Load php tag into file once
-  require_once('php/connectvars.php');
   require_once('appvars.php');
-  require_once('navmenu.php');
 
   //Load DBC
  	$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -31,37 +48,51 @@
     //Graduate User
     $query = "UPDATE student SET applied_to_grad=3 WHERE unid = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
-    $query = "UPDATE users SET p_level='alumni' WHERE id = '$_POST[cleargrad]'";
+    $query = "UPDATE users SET p_level='Alumni' WHERE id = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
 
     //Move user into alumni
-    $query = "INSERT INTO alumni (univid, yeargrad) VALUES ('$_POST[cleargrad]', 2020)";
+    $theuID = $_POST["univID"];
+    $fname = $dbc->query(("select fname from student where u_id = $theuID"))->fetch_assoc()['fname'];
+    $lname = $dbc->query(("select lname from student where u_id = $theuID"))->fetch_assoc()['lname'];
+    $email = $dbc->query(("select email from student where u_id = $theuID"))->fetch_assoc()['email'];
+    $major = $dbc->query(("select major from student where u_id = $theuID"))->fetch_assoc()['major'];
+    $address = $dbc->query(("select addr from student where u_id = $theuID"))->fetch_assoc()['addr'];
+    $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email, major, addr) VALUES ($theuID, 2020, '$fname', '$lname', '$email', '$major', '$address')";
     mysqli_query($dbc, $query);
+
     echo '<center><h3>Student Graduated</h3></center><hr />';
   }
   else if(isset($_POST["Assign"])){
     //Update User's advisor ID
-    $query = "UPDATE student SET advisorid = '$_POST[assignAdvi]' WHERE unid = '$_POST[assignstuID]'";
+    $query = "UPDATE student SET advisorid = $_POST[assignAdvi] WHERE u_id = $_POST[assignstuID]";
     mysqli_query($dbc, $query);
 
-    echo "<center><h3>Student Advisor updated to '$_POST[assignAdvi]'</h3></center><hr />";
+    echo "<center><h3>Student Advisor updated to $_POST[assignAdvi]</h3></center><hr />";
   }
-
+  ?>
+  <div class="row">
+<?php
 
   //SEARCH BAR
-  echo '<form action="" method="post">';
-  echo  '<label for="univID">University ID:</label><br>';
-  echo  '<input type="text" id="univID" name="univID"><br>';
-  echo  '<input type="submit" name="Search" value="Search">';
+  echo '<form action="" class="mx-auto mb-4" method="post">';
+  echo '<label for=:univID">University ID</label>';
+  ?><div class="col"><?php
+  echo  '<input type="text" class="form-control form-control-lg text-muted" id="univID" name="univID">';
+  ?></div>
+  <div class="col"><?php
+  echo  '<input type="submit" class="btn btn-primary mt-2 btn-block btn-md" name="Search" value="Search">';
+  ?></div><?php
   echo	'</form>';
-  echo '<hr />';
-
+  ?>
+</div>
+<?php
   //IF A USER HAS BEEN SEARCHED
   if(isset($_POST["Search"])){
 
     //THIS ONLY ALLOWS FOR AN ADVISOR TO LOOK UP THEIR STUDENTS AND ONLY THEIR STUDENTS
     if((strcmp($_SESSION['p_level'], 'Advisor') == 0)){
-      echo '<center><h4>Student Found</h4></center><div class="advbasicdata">';
+      echo '<center><h4 class="text-success>Student Found</h4></center><div class="advbasicdata">';
       $input = $_POST['univID'];
 
 
@@ -100,15 +131,14 @@
 
 
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
-          $query = "select * from formone, course where universityid = '$_POST[univID]' and cid = courseid";
+          $query = "select * from formone where universityid = " . $_POST['univID'];
           $result = mysqli_query($dbc, $query);
-
           echo '<center><h4>Form One Data</h4></center><div class="formdata">';
           if ($result->num_rows > 0){
             echo '<table style="width:100%">';
-            echo '<tr><th>Course ID</th><th>Title</th><th>Credits</th></tr>';
+            echo '<tr><th>Course ID</th></tr>';
             while($row = $result->fetch_assoc()){
-                echo "<tr><td>" . $row["courseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["credits"]. "</td></tr>";
+                echo "<tr><td>" . $row["cid"] . "</td></tr>";
             }
             echo '</table></div>';
 
@@ -144,19 +174,28 @@
         echo '<center>Student Not Found</center>';
       }
 
-
     // THIS IS FOR GS AND ADMIN : ALLOWS THEM TO VIEW EVERY USER AND THEIR ADVISOR ID'S. CANNOT CLEAR A USER'S THESIS.
     }else{
       //ALLOW GS/ADMIN TO ASSIGN THE STUDENT'S ADVISOR
-      echo '<br><form action="" method="post">';
-      echo  '<label for="assignAdvi">Assign Student an Advisor</label><br>';
-      echo  '<input type="text" id="assignAdvi" name="assignAdvi"><br>';
+      ?>
+      <div class="row">
+      <?php
+      echo '<br><form action="" class="mx-auto mb-4" method="post">';
+      echo  '<label for="assignAdvi">Assign Student to an Advisor</label>';
+      ?><div class="col"><?php
+      echo  '<input type="text" class="form-control form-control-lg text-muted" id="assignAdvi" name="assignAdvi">';
+      ?></div>
+      <div class="col"><?php
       echo  '<input type="hidden" id="assignstuID" name="assignstuID" value ="'.$_POST['univID'].'">';
-      echo  '<input type="submit" name="Assign" value="Assign">';
+      echo  '<input type="submit" class="btn btn-primary mt-2 btn-block btn-md" name="Assign" value="Assign">';
+      ?></div><?php
       echo	'</form><br>';
-
-      echo '<center><h4>Student Found</h4></center><div class="basicdata">';
+      ?>
+    </div>
+    <?php
+      echo '<center><h4 class="text-success">Student Found</h4></center><div class="basicdata">';
       $input = $_POST['univID'];
+
 
       //LOADING BASIC STUDENT DATA
       $query = "select * from student WHERE u_id = '$input'"; // and (NOT applied_to_grad = 3)";
@@ -177,7 +216,6 @@
         echo '</table></div>';
         echo '<hr />';
 
-
         //SHOW STUDENT'S TRANSCRIPT (ONLY IF BASIC DATA APPEARS)
         $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_POST['univID'] ." and catalog.c_id = courses_taken.crn;";
         $result = mysqli_query($dbc, $query);
@@ -193,14 +231,14 @@
 
 
           //SHOW STUDENT FORMONE DATA (ONLY IF TRANSCRIPT APPEARS)
-          $query = "select * from formone, course where universityid = '$_POST[univID]' and cid = courseid";
+          $query = "select * from formone where universityid = " . $_POST['univID'];
           $result = mysqli_query($dbc, $query);
           echo '<center><h4>Form One Data</h4></center><div class="formdata">';
           if ($result->num_rows > 0){
             echo '<table style="width:100%">';
-            echo '<tr><th>Course ID</th><th>Title</th><th>Credits</th></tr>';
+            echo '<tr><th>Course ID</th></tr>';
             while($row = $result->fetch_assoc()){
-                echo "<tr><td>" . $row["courseid"]. "</td><td>" . $row["title"]. "</td><td>" . $row["credits"]. "</td></tr>";
+                echo "<tr><td>" . $row["cid"] . "</td></tr>";
             }
             echo '</table></div>';
 
@@ -223,6 +261,7 @@
                   //IF THEY ARE, GIVE A BUTTON FOR ADVISOR TO GRADUATE THEM
                 echo  '<form action="" method="post">';
                 echo  '<button type="submit" name="cleargrad" value="'.$_POST["univID"].'">Clear For Graduation</button>';
+                echo  '<input type="hidden" name="univID" value="'.$_POST["univID"].'">';
                 echo	'</form>';
               }
             }
@@ -287,5 +326,8 @@
     }
   }
   $dbc->close();
-  require_once('footer.php');
 ?>
+        </div>
+	    </div>
+  </body>
+</html>

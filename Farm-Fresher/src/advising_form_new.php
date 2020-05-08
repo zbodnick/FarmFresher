@@ -180,7 +180,7 @@ function populateCookies()
 
 		$result = mysqli_query($dbc, $course_query);
 		if(!$result){
-			echo("Error description: " . $mysqli -> error);
+			echo "Error description: " . $mysqli -> error;
 		}
 		if(isset($_POST['submit']))
 		{
@@ -191,7 +191,8 @@ function populateCookies()
 						$dbc->query("INSERT INTO advisingform VALUES ($id, '$crn')");
 					}
 				}
-			}
+            }
+            ?><script type="text/javascript">window.alert("Advising form has been submitted and is currently under review.");</script><?php
 		}
 		?>
 

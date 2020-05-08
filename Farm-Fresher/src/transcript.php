@@ -58,7 +58,7 @@
 <br><br><br>
 
     <div class="container">
-		<h1 class="text-primary"> Transcript </h1>
+		<h1 class="text-primary">Transcript</h1>
 
         <?php
               include ('php/connectvars.php');
@@ -66,7 +66,7 @@
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
       $dbc->query('SET foreign_key_checks = 0');
             // If current user is not a student, show a dropdown menu to select a student
-            if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Student') != 0) {
+            if (isset ($_SESSION['p_level']) && strcmp($_SESSION['p_level'], 'Student') != 0 && strcmp ($_SESSION['p_level'], 'Alumni') != 0) {
                 echo '
                     <div class="row mt-5">
                         <div class="dropdown">
@@ -78,7 +78,12 @@
 									id="myInput" onkeyup="filterFunction()">
 				';
 
-				$query = 'SELECT u_id, fname, lname FROM student;';
+        if (strcmp($_SESSION['p_level'], 'Faculty') == 0) {
+          $fid = $_SESSION['id'];
+          $query = "SELECT u_id, fname, lname, advisorid FROM student WHERE advisorid=$fid";
+        } else {
+        $query = 'SELECT u_id, fname, lname FROM student;';
+        }
 				$students = mysqli_query ($dbc, $query);
 
 				while ($s = mysqli_fetch_array($students)) {
@@ -99,7 +104,8 @@
 
 				// If user selected a specific student, display the name
 				if (isset ($_GET['student'])) {
-					$query = "SELECT fname, lname FROM student WHERE u_id='" . $_GET['student'] . "';";
+          $query = "SELECT fname, lname FROM student WHERE u_id='" . $_GET['student'] . "';";
+          $selected_student_id = $_GET['student'];
 					$name = mysqli_fetch_array (mysqli_query ($dbc, $query));
 					echo ' ' . $name['fname'] . ' ' . $name['lname'];
 				} else { // User has not selected a student yet
@@ -161,26 +167,30 @@
                 ';
 
                 // Find all courses this student has taken/is taking
-                $query = 'SELECT c_no, department, title, credits, grade, faculty.lname ' .
+                $query = 'SELECT semester, year, c_no, department, title, credits, grade, faculty.lname ' .
                           'FROM faculty, schedule, courses_taught, catalog, courses_taken ' .
                           'WHERE u_id="' . $id . '" and faculty.f_id=courses_taught.f_id ' .
                             'and courses_taken.crn=schedule.crn and catalog.c_id=schedule.course_id ' .
-							'and courses_taught.crn=courses_taken.crn;';
+							'and courses_taught.crn=courses_taken.crn';
                 $classes = mysqli_query ($dbc, $query);
 
                 while ($c = mysqli_fetch_array($classes)) {
-                    echo '
-                    <tbody>
-                        <tr class="text-center">
-                            <td>'. $c['department'] .'</td>
-                            <td>'. $c['c_no'] .'</td>
-                            <td>'. $c['title'] .'</td>
-                            <td>'. $c['credits'] .'</td>
-                            <td>'. $c['lname'] .'</td>
-                            <td>'. $c['grade'] .'</td>
-                        </tr>
-                    </tbody>
-                    ';
+                    $current_transcript_year = $s['year'];
+                    $current_class_year = $c['year'];
+                    if ( strcmp($c['semester'], $s['semester']) == 0 && $current_transcript_year == $current_class_year) {
+                      echo '
+                      <tbody>
+                          <tr class="text-center">
+                              <td>'. $c['department'] .'</td>
+                              <td>'. $c['c_no'] .'</td>
+                              <td>'. $c['title'] .'</td>
+                              <td>'. $c['credits'] .'</td>
+                              <td>'. $c['lname'] .'</td>
+                              <td>'. $c['grade'] .'</td>
+                          </tr>
+                      </tbody>
+                      ';
+                    }
                 }
 
                 echo '
@@ -193,27 +203,23 @@
 			if ($empty_transcript && strcmp ($_SESSION['p_level'], "Student") == 0) {
 				echo '<div class="container pt-3">
 					      <h4 class="pl-1 font-weight-lighter"> <small>
-						    You have not taken any classes and are not currently registered for any.
-						  </small></h4>
-					  </div>';
-			} else if(strcmp($_SESSION['p_level'], "Student") != 0){
-				echo '<div class="container pt-3">
-					      <h4 class="pl-1 font-weight-lighter"> <small>
-							Student has not taken any classes and is not currently registered for any.
+						    You have not completed any courses and are not currently enrolled in any.
 						  </small></h4>
 					  </div>';
 			}
 
       // BELOW IS JAKE's GPA STUFF
 
-      $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
+      if ((strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 || strcmp($_SESSION['p_level'], 'Faculty') == 0) && isset($_GET['student'])) {
+        $selected_student_id = $_GET['student'];
+        $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = $selected_student_id and catalog.c_id = courses_taken.crn;";
+      } else {
+        $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
+      }
 
       $result= mysqli_query($dbc, $query);
 
-      echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
-
-      if ($result->num_rows > 0)
-        {
+      if ($result->num_rows > 0) {
         //IF USER IS AN ALUMNI, SHOW FINAL GPA
         if(strcmp($_SESSION['p_level'], 'alumni') == 0){
           $query = "select gpa from student where u_id = " . $_SESSION['id'];
@@ -221,7 +227,66 @@
           $row = $result->fetch_assoc();
 
           echo "<br><center><h4>GPA : ".$row["gpa"]."</h4></center>";
-        }else{
+        } else if (strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 || strcmp($_SESSION['p_level'], 'Faculty') == 0) {
+          $id = $selected_student_id;
+          $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM courses_taken WHERE u_id = $id;";
+          $numberOfAs = mysqli_query($dbc, $queryA);
+          $numberOfAs = $numberOfAs->fetch_assoc();
+          $resultA= $numberOfAs['totalA'];
+
+          $queryB = "SELECT SUM(CASE grade WHEN 'B' THEN 1 ELSE 0 END) totalB FROM courses_taken WHERE u_id = $id;";
+          $numberOfBs = mysqli_query($dbc, $queryB);
+          $numberOfBs = $numberOfBs->fetch_assoc();
+          $resultB= $numberOfBs['totalB'];
+
+          $queryC = "SELECT SUM(CASE grade WHEN 'C' THEN 1 ELSE 0 END) totalC FROM courses_taken WHERE u_id = $id;";
+          $numberOfCs = mysqli_query($dbc, $queryC);
+          $numberOfCs = $numberOfCs->fetch_assoc();
+          $resultC= $numberOfCs['totalC'];
+
+          $queryD = "SELECT SUM(CASE grade WHEN 'D' THEN 1 ELSE 0 END) totalD FROM courses_taken WHERE u_id = $id;";
+          $numberOfDs = mysqli_query($dbc, $queryD);
+          $numberOfDs = $numberOfDs->fetch_assoc();
+          $resultD= $numberOfDs['totalD'];
+
+          $queryF = "SELECT SUM(CASE grade WHEN 'F' THEN 1 ELSE 0 END) totalF FROM courses_taken WHERE u_id = $id;";
+          $numberOfFs = mysqli_query($dbc, $queryF);
+          $numberOfFs = $numberOfFs->fetch_assoc();
+          $resultF= $numberOfFs['totalF'];
+
+          $credit_hours_query = "SELECT SUM(credits) as totalCredits from catalog, courses_taken, schedule where catalog.c_id=schedule.course_id and courses_taken.crn=schedule.crn and courses_taken.u_id=$id and courses_taken.grade!='IP'";
+          // $credit_hours_query = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and grade != 'IP') as A;";
+        
+          $chours = mysqli_query($dbc, $credit_hours_query);
+          $totalhours = (int) mysqli_fetch_array($chours)['totalCredits'];
+
+          // echo "<br><center><h4>GPA : ".$chours."</h4></center>";
+
+          // while ($s = mysqli_fetch_array($chours)) {
+          //   $totalhours += $s['credits'];
+          // }
+
+          // echo "Credit Hours: " . $totalhours . ", ";
+          // echo "A: " . $resultA . ", ";
+          // echo "B: " . $resultB . ", ";
+          // echo "C: " . $resultC . ", ";
+          // echo "D: " . $resultD . ", ";
+          // echo "F: " . $resultF;
+
+          function avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours){
+                $attemptedhours = ($resultA * 4.00 * 3.00) + ($resultB * 3.00 * 3.00) + ($resultC * 2.00 * 3.00) + ($resultD * 1.00 * 3.00) + ($resultF * 0.00 * 3.00);
+                if ($totalhours == 0) {
+                  return "NONE";
+                } else {
+                return ($attemptedhours / $totalhours);
+              }
+          }
+          $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
+
+          echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
+          echo "<center><h4>GPA : ".round($avggpa, 2)."</h4></center>";
+
+        } else {
           $id = $_SESSION['id'];
           $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM courses_taken WHERE u_id = $id;";
           $numberOfAs = mysqli_query($dbc, $queryA);
@@ -248,24 +313,44 @@
           $numberOfFs = $numberOfFs->fetch_assoc();
           $resultF= $numberOfFs['totalF'];
 
-          $query2 = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and grade != 'IP') as A;";
-          $chours = mysqli_query($dbc, $query2);
-          $chours = $chours->fetch_assoc();
-          $totalhours= $chours['credits'] + 0.00;
+          $credit_hours_query = "SELECT SUM(credits) as totalCredits from catalog, courses_taken, schedule where catalog.c_id=schedule.course_id and courses_taken.crn=schedule.crn and courses_taken.u_id=$id and courses_taken.grade!='IP'";
+          // $credit_hours_query = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits, department from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn and grade != 'IP') as A;";
+        
+          $chours = mysqli_query($dbc, $credit_hours_query);
+          $totalhours = (int) mysqli_fetch_array($chours)['totalCredits'];
+
+          // echo "<br><center><h4>GPA : ".$chours."</h4></center>";
+
+          // while ($s = mysqli_fetch_array($chours)) {
+          //   $totalhours += $s['credits'];
+          // }
+
+          // echo "Credit Hours: " . $totalhours . ", ";
+          // echo "A: " . $resultA . ", ";
+          // echo "B: " . $resultB . ", ";
+          // echo "C: " . $resultC . ", ";
+          // echo "D: " . $resultD . ", ";
+          // echo "F: " . $resultF;
 
           function avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours){
                 $attemptedhours = ($resultA * 4.00 * 3.00) + ($resultB * 3.00 * 3.00) + ($resultC * 2.00 * 3.00) + ($resultD * 1.00 * 3.00) + ($resultF * 0.00 * 3.00);
-                $avggpa = $attemptedhours / $totalhours;
-                return $avggpa;
+                if ($totalhours == 0) {
+                  return "NONE";
+                } else {
+                return ($attemptedhours / $totalhours);
+              }
           }
           $avggpa = avgGPAfunction($resultA, $resultB, $resultC, $resultD, $resultF, $totalhours);
-          echo "<br><center><h4>GPA : ".$avggpa."</h4></center>";
 
+          echo "<center><h4>University ID : ".$_SESSION['id']."</h4></center>";
+          echo "<center><h4>GPA : ".round($avggpa, 2)."</h4></center>";
         }
       }
       else
       {
+        if ($empty_transcript == True) {
         echo "<center>No Results Found</center";
+        }
       }
 
         ?>

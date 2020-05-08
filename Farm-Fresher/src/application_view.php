@@ -20,15 +20,19 @@ include ('php/connectvars.php');
 if (isset($_POST['accept'])) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $dbc->query('SET foreign_key_checks = 0');
+
   $query = "SELECT * FROM applicant WHERE username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
   $applicantData = mysqli_fetch_array($data);
 
   $query2 = "SELECT * FROM application WHERE username=".$_SESSION['id'];
-  $data2 = mysqli_query($dbc, $query);
-  $applicantData2 = mysqli_fetch_array($data);
+  $data2 = mysqli_query($dbc, $query2);
+  $applicantData2 = mysqli_fetch_array($data2);
 
-  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', '".$applicantData2['degree_type']."', NULL, NULL, NULL, 0, 0)";
+  $query = "INSERT INTO accepted VALUES (".$_SESSION['id'].",'".$applicantData2['degree_type']."',".date("Y").",1)";
+  $data2 = mysqli_query($dbc, $query);
+
+  $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', '".$applicantData2['degree_type']."', NULL, NULL, NULL, 0, 1, ". date("Y") .")";
 
   $data = mysqli_query($dbc, $query);
 
@@ -47,24 +51,17 @@ if (isset($_POST['accept'])) {
   $query = "DELETE FROM applicant WHERE username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
 
-  header("Location: logout.php");
+  $_SESSION['p_level'] = "Student";
+
+  header("Location: payfee.php");
 }
 else if (isset($_POST['reject'])) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-  $query = "DELETE FROM reviewer_application WHERE applicantid=".$_SESSION['id'];
+  $query = "UPDATE application SET final_decision=4 WHERE username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
 
-  $query = "DELETE FROM recommender WHERE applicationID=".$_SESSION['id'];
-  $data = mysqli_query($dbc, $query);
-
-  $query = "DELETE FROM application WHERE username=".$_SESSION['id'];
-  $data = mysqli_query($dbc, $query);
-
-  $query = "DELETE FROM applicant WHERE username=".$_SESSION['id'];
-  $data = mysqli_query($dbc, $query);
-
-  header("Location: logout.php");
+  header("Location: home.php");
 }
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -87,7 +84,12 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         if (mysqli_num_rows($data) == 1) {
           $row = mysqli_fetch_array($data);
           $i = 0;
-          if ($row[28] == 3 && !strcmp($_SESSION['p_level'],"Applicant")) {
+          if ($row[28] == 4 && !strcmp($_SESSION['p_level'],"Applicant")) {
+            echo '<div class="row"><div class="col-md-6 form-group">
+                  <h2 class="text-primary">You have rejected admission offer.</h2>
+                  </form></div></div><div class="card p-5 mt-4">';
+          }
+          else if ($row[28] == 3 && !strcmp($_SESSION['p_level'],"Applicant")) {
             echo '<div class="row"><div class="col-md-6 form-group"><h2 class="text-primary">CONGRATULATIONS! You have been accepted with aid!</h2>';
             echo '<form action="application_view.php" method="post">
                     <input type="submit" id="btn" value="Accept Offer" name="accept" value="accept" class="btn btn-primary btn-lg px-5"/>
@@ -101,7 +103,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                     <input type="submit" id="btn" value="Reject Offer" name="reject" value="reject" class="btn btn-primary btn-lg px-5"/>
                   </form></div></div><div class="card p-5 mt-4">';
           }
-          else if ($row[25] == 1 && !strcmp($_SESSION['p_level'],"Applicant")) {
+          else if ($row[28] == 1 && !strcmp($_SESSION['p_level'],"Applicant")) {
             echo '<div class="row"><div class="col-md-6 form-group">
                   <h2 class="text-primary">We regret to inform you that your application has been rejected.</h2>
                   </div></div><div class="card p-5 mt-4">';
@@ -114,7 +116,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
                   "TOEFL Score","TOEFL Date","MS Prior","MS GPA","MS Major","MS Year","MS University",
                   "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
-                  "Completion","Average Review","Reviewer Comment","Degree Type","Final Decision");
+                  "Completion","Average Review","Reviewer Comment","Degree Type","Final Decision","Year Applied","Semester (1: Fall, 2: Spring)");
           $accepted = array("Review In Progress","Rejected","Deferred","Accepted, No Aid","Accepted, Aid");
           for ($i; $i < (sizeof($row)/2); $i++) {
             if (!strcmp($cats[$i],"Transcript")) {
@@ -138,24 +140,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                 }
             }
             else if (!strcmp($cats[$i],"Completion")) {
-              if ($row[$i] == 0) {
-              echo '
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                    <b>Status</b>: Not Complete
-                  </div>
-                </div>
-              ';
-              }
-              else {
-                echo '
-                  <div class="row">
-                    <div class="col-md-6 form-group">
-                      <b>Status</b>: Complete
-                    </div>
-                  </div>
-                ';
-                }
+
             }
             else if ((!strcmp($cats[$i],"Reviewer Comment") || !strcmp($cats[$i],"Average Review") || !strcmp($cats[$i],"Final Decision")) && !strcmp($_SESSION['p_level'],"Applicant")) {
               // do nothing
