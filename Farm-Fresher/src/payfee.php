@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Application</title>
+    <title>Payment Method</title>
     <?php
     require_once ('header.php');
     //session_start();
@@ -23,6 +23,7 @@ if (isset($_POST['submit'])) {
     	<br><br>
     	<div class="container pt-3">
 		<?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Successfully Submitted Information</div>"; } ?>
+		<br><br>
     	<h1 class="text-primary">Fee Payment</h1><div class='card p-5 mt-4'>
 		<form method="post" name="app" onsubmit="return validate();" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<div class="row">
