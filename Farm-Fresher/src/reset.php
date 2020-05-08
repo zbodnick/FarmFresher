@@ -43,18 +43,18 @@
 include ('php/connectvars.php');
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-// Get the contents of the sql file
-$reset_query = file_get_contents ('sql/regs.sql');
+$script_path = '/home/ead/sp20DBp2-FarmFresher/public_html/Farm-Fresher/Farm-Fresher/src/sql';
+$command = 'mysql'
+        . ' --host=' . DB_HOST
+        . ' --user=' . DB_USER
+        . ' --password=' . DB_PASSWORD
+        . ' --database=' . DB_NAME
+        . ' --execute="SOURCE ' . $script_path;
 
-$reset_query = str_replace("\n", "", $reset_query); 
-
-//$reset_query = mysqli_real_escape_string($dbc,$reset_query);
-echo 'res:'.$reset_query;
-// Run the query
-$result = mysqli_multi_query ($dbc, $reset_query);
+$output1 = shell_exec($command . '/regs.sql"');
 
 // Check if the query ran successfuly
-if ($result) {
+if (strcmp($output1,"")) {
     echo '
     <div class="d-flex flex-column align-items-center justify-content-center">
         <div class="row">

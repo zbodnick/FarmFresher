@@ -170,74 +170,83 @@ drop table if exists applicant cascade;
 drop table if exists application cascade;
 drop table if exists reviewer_application cascade;
 drop table if exists recommender cascade;
+drop table if exists accepted cascade;
 drop table if exists verification_codes cascade;
 
-CREATE TABLE `applicant` (
-  `username` int(8) PRIMARY KEY,
-  `fname` varchar(255),
-  `lname` varchar(255),
-  `email` varchar(255),
-  `ssn` int(9),
-  `addr` varchar(255)
+CREATE TABLE applicant (
+  username int(8) PRIMARY KEY,
+  fname varchar(255),
+  lname varchar(255),
+  email varchar(255),
+  ssn int(9),
+  addr varchar(255)
 );
 
-CREATE TABLE `application` (
-  `applicationID` int UNIQUE PRIMARY KEY AUTO_INCREMENT,
-  `username` int(8) UNIQUE,
-  `transID` int,
-  `recommenderEmail` varchar(255),
-  `GRE_ScoreVerbal` varchar(10),
-  `GRE_ScoreQuantitative` varchar(10),
-  `GRE_Date` varchar(10),
-  `AdvGRE_Score` varchar(10),
-  `AdvGRE_Subject` varchar(255),
-  `AdvGRE_Date` varchar(10),
-  `TOEFL_Score` varchar(10),
-  `TOEFL_Date` varchar(10),
-  `MS_Prior` varchar(10),
-  `MS_GPA` varchar(4),
-  `MS_Major` varchar(255),
-  `MS_Year` varchar(10),
-  `MS_University` varchar(255),
-  `B_Prior` varchar(10),
-  `B_GPA` varchar(4),
-  `B_Major` varchar(255),
-  `B_Year` varchar(10),
-  `B_University` varchar(255),
-  `experience` varchar(1000),
-  `interests` varchar(1000),
-  `completion` int,
-  `recommendation` int,
-  `reviewer_comment` varchar(255),
-  `degree_type` varchar(255),
-  `final_decision` int,
-  `year` int
+CREATE TABLE application (
+  applicationID int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+  username int(8) UNIQUE,
+  transID int,
+  recommenderEmail varchar(255),
+  GRE_ScoreVerbal varchar(10),
+  GRE_ScoreQuantitative varchar(10),
+  GRE_Date varchar(10),
+  AdvGRE_Score varchar(10),
+  AdvGRE_Subject varchar(255),
+  AdvGRE_Date varchar(10),
+  TOEFL_Score varchar(10),
+  TOEFL_Date varchar(10),
+  MS_Prior varchar(10),
+  MS_GPA varchar(4),
+  MS_Major varchar(255),
+  MS_Year varchar(10),
+  MS_University varchar(255),
+  B_Prior varchar(10),
+  B_GPA varchar(4),
+  B_Major varchar(255),
+  B_Year varchar(10),
+  B_University varchar(255),
+  experience varchar(1000),
+  interests varchar(1000),
+  completion int,
+  recommendation int,
+  reviewer_comment varchar(255),
+  degree_type varchar(255),
+  final_decision int,
+  year int,
+  semester int
 );
 
-CREATE TABLE `reviewer_application` (
-  `username` int(8) PRIMARY KEY,
-  `applicantid` int(8),
-  `status` int
+CREATE TABLE reviewer_application (
+  username int(8) PRIMARY KEY,
+  applicantid int(8),
+  status int
 );
 
-CREATE TABLE `recommender` (
-  `fname` varchar(255),
-  `lname` varchar(255),
-  `applicationID` int(8),
-  `recommendation` VARCHAR(10000)
+CREATE TABLE recommender (
+  fname varchar(255),
+  lname varchar(255),
+  applicationID int(8),
+  recommendation VARCHAR(10000)
 );
 
-CREATE TABLE `verification_codes` (
-  `username` int(8),
-  `verification` int(5) PRIMARY KEY
+CREATE TABLE accepted (
+  username int(8),
+  program varchar(255),
+  year int,
+  semester int
 );
 
-ALTER TABLE `application` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`) ON DELETE CASCADE;
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
-ALTER TABLE `reviewer_application` ADD FOREIGN KEY (`applicantid`) REFERENCES `applicant` (`username`);
-ALTER TABLE `applicant` ADD FOREIGN KEY (`username`) REFERENCES `users` (`id`);
-ALTER TABLE `recommender` ADD FOREIGN KEY (`applicationID`) REFERENCES `applicant` (`username`);
-ALTER TABLE `verification_codes` ADD FOREIGN KEY (`username`) REFERENCES `applicant` (`username`);
+CREATE TABLE verification_codes (
+  username int(8),
+  verification int(5) PRIMARY KEY
+);
+
+ALTER TABLE application ADD FOREIGN KEY (username) REFERENCES applicant (username) ON DELETE CASCADE;
+ALTER TABLE reviewer_application ADD FOREIGN KEY (username) REFERENCES users (id);
+ALTER TABLE reviewer_application ADD FOREIGN KEY (applicantid) REFERENCES applicant (username);
+ALTER TABLE applicant ADD FOREIGN KEY (username) REFERENCES users (id);
+ALTER TABLE recommender ADD FOREIGN KEY (applicationID) REFERENCES applicant (username);
+ALTER TABLE verification_codes ADD FOREIGN KEY (username) REFERENCES applicant (username);
 
 INSERT INTO applicant VALUES(15555555, 'John', 'Lennon', 'jlennon@gwu.edu', 111111111, '123 Fairy Tale Lane');
 INSERT INTO applicant VALUES(19999999, 'Ringo', 'Starr', 'bestdrummer@gwu.edu', 222111111, '600 Penny Lane');
@@ -245,16 +254,21 @@ INSERT INTO applicant VALUES(00001234, 'Louis', 'Armstrong', 'awonderfulworld@gw
 INSERT INTO applicant VALUES(00001235, 'Aretha', 'Franklin', 'aFranklin12@gwu.edu', 666111111, '56 Soul Ave');
 INSERT INTO applicant VALUES(00001236, 'Carlos', 'Santana', 'prsLuvr123@gwu.edu', 777111111, '200 Woodstock Dr');
 
-INSERT INTO `application` VALUES (1,15555555, 1,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0, 2020);
-INSERT INTO `application` VALUES (2,19999999, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GW University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 0, '', 'ms', 0, 2020);
-INSERT INTO `application` VALUES (3,00001234, 0,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 0, '', 'ms', 1, 2017);
-INSERT INTO `application` VALUES (4,00001235, 0,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 0, '', 'ms', 4, 2017);
-INSERT INTO `application` VALUES (5,00001236, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 0, '', 'phd', 4, 2017);
+INSERT INTO application VALUES (1,15555555, 1,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0, 2020,1);
+INSERT INTO application VALUES (2,19999999, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GW University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 3, '12340004: awesome, 12340005: pretty good!', 'ms', 0, 2020,1);
+INSERT INTO application VALUES (3,00001234, 1,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 1, '', 'ms', 1, 2017,1);
+INSERT INTO application VALUES (4,00001235, 1,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 3, '', 'ms', 4, 2017,1);
+INSERT INTO application VALUES (5,00001236, 1,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 4, '', 'phd', 4, 2017,1);
+
+INSERT INTO reviewer_application VALUES (12340002,15555555,0);
+INSERT INTO reviewer_application VALUES (12340003,15555555,0);
+INSERT INTO reviewer_application VALUES (12340004,19999999,1);
+INSERT INTO reviewer_application VALUES (12340005,19999999,1);
 
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6221, 'SW Paradigms', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6461, 'Computer Architecture', 3);

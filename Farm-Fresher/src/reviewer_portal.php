@@ -40,7 +40,7 @@
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $dbc->query('SET foreign_key_checks = 0');
     $appQ = "SELECT reviewer_application.username,reviewer_application.applicantid from reviewer_application JOIN application on
-            reviewer_application.applicantid=application.username where reviewer_application.username=".$_SESSION['id'];
+            reviewer_application.applicantid=application.username where reviewer_application.status=0 AND reviewer_application.username=".$_SESSION['id'];
     $data = mysqli_query($dbc, $appQ);
     echo "<div class='col-md-10 form-group'><h1 class='text-primary'>Admissions Portal</h1></div>";
     if (mysqli_num_rows($data)) {
