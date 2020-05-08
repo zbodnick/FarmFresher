@@ -37,7 +37,7 @@ Phase 2 || Members: Will, Zach, Jake || Advisors: Billy &amp; Huzefa
 *ID#:* 12340004 <br>
 *Password:* pass <br>
 
-4. Time Wood <br>
+4. Tim Wood <br>
 *ID#:* 12340005 <br>
 *Password:* pass <br>
 
