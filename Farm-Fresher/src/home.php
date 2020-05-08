@@ -146,7 +146,7 @@
                 <div class="feature-1-content">
                   <h2>Apply To Graduate</h2>
                   <p>Submit graduation status to be approved</p>
-                  <p><a href="reviewer_portal.php" class="btn btn-primary px-4 rounded-0">Apply</a></p>
+                  <p><a href="applygraduate.php" class="btn btn-primary px-4 rounded-0">Apply</a></p>
                 </div>
               </div>
             </div>
