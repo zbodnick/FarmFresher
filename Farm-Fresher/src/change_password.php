@@ -38,6 +38,11 @@
         $idFormat = 'username';
         break;
 
+        case 'Alumni':
+        $userTable = 'alumni';
+        $idFormat = 'univid';
+        break;
+
         case 'Admin':
         header("Location: home.php");
         break;

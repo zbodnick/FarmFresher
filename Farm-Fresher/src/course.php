@@ -13,13 +13,17 @@
     }
 
     include ('php/connectvars.php');
+    include ('appvars.php');
 
     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $dbc->query('SET foreign_key_checks = 0');
     $c_no = $_GET["cno"];
-    $cid_query = "SELECT crn FROM schedule s, catalog c WHERE c.c_no=$c_no AND s.course_id=c.c_id";
+    $current_year = date("Y");
+    $current_semester = strval(CURRENT_SEMESTER);
+    $cid_query = "SELECT crn, course_id FROM schedule s, catalog c WHERE c.c_no=$c_no AND s.course_id=c.c_id AND s.year=$current_year";
     $cid = mysqli_fetch_array(mysqli_query($dbc, $cid_query));
     $crn  = $cid['crn'];
+    $course_id  = $cid['course_id'];
 
     $dept = $_GET["dept"];
     $query = "SELECT * from catalog WHERE c_no=$c_no and department='$dept'";
@@ -141,6 +145,16 @@
                             $row = mysqli_fetch_array($advising_hold_results);
                             $has_hold = $row['has_hold'];
 
+                            $course_year_enrolled_query = "SELECT semester, year FROM schedule WHERE course_id=$course_id";
+                            $course_year_results = mysqli_query($dbc, $course_year_enrolled_query);
+                            $year_query_row = mysqli_fetch_array($course_year_results);
+                            $year_enrolled = $year_query_row['year'];
+                            $semester_enrolled = $year_query_row['semester'];
+                            $current_year = date("Y");
+
+                            // if (!empty(mysqli_fetch_array($enrollement_results)) && !empty($year_query_row)) {
+                            //     echo "You've previously enrolled in this course: " . $semester_enrolled . " " . $year_enrolled ;
+                            // }
 							// Only show an enroll/drop button if this is a student
 							if (strcmp ($_SESSION['p_level'], "Student") == 0) {
                                 if ($has_hold == 1) { ?>
