@@ -43,7 +43,7 @@
 include ('php/connectvars.php');
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-$script_path = '/home/ead/sp20DBp2-FarmFresher/public_html/Farm-Fresher/Farm-Fresher/src/sql';
+$script_path = './sql';
 $command = 'mysql'
         . ' --host=' . DB_HOST
         . ' --user=' . DB_USER
