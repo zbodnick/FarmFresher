@@ -15,11 +15,11 @@
 
 <?php
     session_start();
-
+/*
     if(!isset($_SESSION['id'])){ // If user is not logged in redirect to login
         header("Location: login.php");
     }
-
+*/
     $permLevel = $id = "";
 
     include('php/connectvars.php');
@@ -46,7 +46,7 @@
     }else if($_SESSION['p_level1'] == "Applicant"){
         $permLevel = "Applicant";
         $id = $_SESSION['id1'];
-    }else if($_SESSION['p_level1'] == "Alumni"){
+    }else if($_SESSION['p_level1'] == "Alumni" || $_SESSION['p_level1'] == "alumni"){
         $permLevel = "Alumni";
         $id = $_SESSION['id1'];
     }

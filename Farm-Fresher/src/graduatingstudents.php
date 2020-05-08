@@ -2,10 +2,6 @@
 require_once ('header.php');
 session_start();
 
-if (!isset ($_SESSION["id"]) || strcmp ($_SESSION["p_level"], "Admin") != 0) {
-    header("Location: login.php");
-}
-
 include ('php/connectvars.php');
 
 $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

@@ -48,23 +48,27 @@
     //Graduate User
     $query = "UPDATE student SET applied_to_grad=3 WHERE unid = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
-    $query = "UPDATE users SET p_level='alumni' WHERE id = '$_POST[cleargrad]'";
+    $query = "UPDATE users SET p_level='Alumni' WHERE id = '$_POST[cleargrad]'";
     mysqli_query($dbc, $query);
 
     //Move user into alumni
-    $fname = $dbc->query(('select fname from student where u_id = ' . $_POST["univID"]))->fetch_assoc()['fname'];
-    $lname = $dbc->query(('select lname from student where u_id = ' . $_POST["univID"]))->fetch_assoc()['lname'];
-    $email = $dbc->query(('select email from student where u_id = ' . $_POST["univID"]))->fetch_assoc()['email'];
-    $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email) VALUES ('$_POST[cleargrad]', 2020, $fname, $lname, $email)";
+    $theuID = $_POST["univID"];
+    $fname = $dbc->query(("select fname from student where u_id = $theuID"))->fetch_assoc()['fname'];
+    $lname = $dbc->query(("select lname from student where u_id = $theuID"))->fetch_assoc()['lname'];
+    $email = $dbc->query(("select email from student where u_id = $theuID"))->fetch_assoc()['email'];
+    $major = $dbc->query(("select major from student where u_id = $theuID"))->fetch_assoc()['major'];
+    $address = $dbc->query(("select addr from student where u_id = $theuID"))->fetch_assoc()['addr'];
+    $query = "INSERT INTO alumni (univid, yeargrad, fname, lname, email, major, addr) VALUES ($theuID, 2020, '$fname', '$lname', '$email', '$major', '$address')";
     mysqli_query($dbc, $query);
+
     echo '<center><h3>Student Graduated</h3></center><hr />';
   }
   else if(isset($_POST["Assign"])){
     //Update User's advisor ID
-    $query = "UPDATE student SET advisorid = '$_POST[assignAdvi]' WHERE unid = '$_POST[assignstuID]'";
+    $query = "UPDATE student SET advisorid = $_POST[assignAdvi] WHERE u_id = $_POST[assignstuID]";
     mysqli_query($dbc, $query);
 
-    echo "<center><h3>Student Advisor updated to '$_POST[assignAdvi]'</h3></center><hr />";
+    echo "<center><h3>Student Advisor updated to $_POST[assignAdvi]</h3></center><hr />";
   }
   ?>
   <div class="row">
@@ -257,6 +261,7 @@
                   //IF THEY ARE, GIVE A BUTTON FOR ADVISOR TO GRADUATE THEM
                 echo  '<form action="" method="post">';
                 echo  '<button type="submit" name="cleargrad" value="'.$_POST["univID"].'">Clear For Graduation</button>';
+                echo  '<input type="hidden" name="univID" value="'.$_POST["univID"].'">';
                 echo	'</form>';
               }
             }
