@@ -135,6 +135,7 @@
             </div>
           </div>
         </div>
+      </div>
         <br><br><br>
         <div class="row mb-5 justify-content-center text-center">
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
