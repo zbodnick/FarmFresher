@@ -54,7 +54,7 @@ $command = 'mysql'
 $output1 = shell_exec($command . '/regs.sql"');
 
 // Check if the query ran successfuly
-if (strcmp($output1,"")) {
+//if (strcmp($output1,"")) {
     echo '
     <div class="d-flex flex-column align-items-center justify-content-center">
         <div class="row">
@@ -65,9 +65,9 @@ if (strcmp($output1,"")) {
 
 	// Now redirect back to home
 	header ('Refresh: 3; URL=home.php?reset=success');
-} else {
+/*} else {
 	echo '<h1> Error: Unable to reset database </h1>';
-}
+}*/
 ?>
 
 </body>
