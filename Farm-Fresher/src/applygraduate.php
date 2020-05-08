@@ -61,7 +61,7 @@
 
 
   //$query3 = "SELECT SUM(chours) choursCSCI FROM transcript WHERE univerid = $id AND crseid LIKE 'CSCI%';";
-  $query3 = "select sum(A.credits) credits from (select DISTINCT u_id, semester, year, grade, title, credits from courses_taken join schedule join catalog WHERE u_id = " . $id . " and catalog.c_id = courses_taken.crn) as A;";
+  $query3 = "SELECT SUM(credits) as totalCredits from catalog, courses_taken, schedule where catalog.c_id=schedule.course_id and courses_taken.crn=schedule.crn and courses_taken.u_id=$id and courses_taken.grade!='IP' and catalog.department='CSCI'";
   $choursCSCI = mysqli_query($dbc, $query3);
   $choursCSCI = $choursCSCI->fetch_assoc();
   $choursCSCItotal = $choursCSCI['credits'];
