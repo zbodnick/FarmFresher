@@ -255,13 +255,13 @@ INSERT INTO applicant VALUES(00001235, 'Aretha', 'Franklin', 'aFranklin12@gwu.ed
 INSERT INTO applicant VALUES(00001236, 'Carlos', 'Santana', 'prsLuvr123@gwu.edu', 777111111, '200 Woodstock Dr');
 
 INSERT INTO application VALUES (1,15555555, 1,'yoko_o@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'ms', 0, 2020,1);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Worked at Elec Lady Studios', 'Yoko, guitar, singing, peace', 1, 0, '', 'MS', 0, 2020,1);
 INSERT INTO application VALUES (2,19999999, 0,'p_mccartney@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GW University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 3, '12340004: awesome, 12340005: pretty good!', 'ms', 0, 2020,1);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'GW University', 'Walked down Abbey Road', 'Drums, thats about it', 0, 3, '12340004: awesome, 12340005: pretty good!', 'MS', 0, 2020,1);
 INSERT INTO application VALUES (3,00001234, 1,'marty@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 1, '', 'ms', 1, 2017,1);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Everyone knows me', 'Trumpet, beautiful music', 1, 1, '', 'MS', 1, 2017,1);
 INSERT INTO application VALUES (4,00001235, 1,'musiclover@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
-                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 3, '', 'ms', 4, 2017,1);
+                               '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Sung the best soul music you will here', 'Singing and writing songs', 1, 3, '', 'MS', 4, 2017,1);
 INSERT INTO application VALUES (5,00001236, 1,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 4, '', 'phd', 4, 2017,1);
 
@@ -269,6 +269,9 @@ INSERT INTO reviewer_application VALUES (12340002,15555555,0);
 INSERT INTO reviewer_application VALUES (12340003,15555555,0);
 INSERT INTO reviewer_application VALUES (12340004,19999999,1);
 INSERT INTO reviewer_application VALUES (12340005,19999999,1);
+
+INSERT INTO accepted VALUES (00001235,"MS",2017,1);
+INSERT INTO accepted VALUES (00001236,"phd",2017,1);
 
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6221, 'SW Paradigms', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6461, 'Computer Architecture', 3);

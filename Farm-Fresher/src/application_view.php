@@ -20,13 +20,17 @@ include ('php/connectvars.php');
 if (isset($_POST['accept'])) {
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
   $dbc->query('SET foreign_key_checks = 0');
+
   $query = "SELECT * FROM applicant WHERE username=".$_SESSION['id'];
   $data = mysqli_query($dbc, $query);
   $applicantData = mysqli_fetch_array($data);
 
   $query2 = "SELECT * FROM application WHERE username=".$_SESSION['id'];
+  $data2 = mysqli_query($dbc, $query2);
+  $applicantData2 = mysqli_fetch_array($data2);
+
+  $query = "INSERT INTO accepted VALUES (".$_SESSION['id'].",'".$applicantData2['degree_type']."',".date("Y").",1)";
   $data2 = mysqli_query($dbc, $query);
-  $applicantData2 = mysqli_fetch_array($data);
 
   $query = "INSERT INTO student VALUES (".$applicantData['username'].",'".$applicantData['fname']."','".$applicantData['lname']."','".$applicantData['addr']."','".$applicantData['email']."','Computer Science', '".$applicantData2['degree_type']."', NULL, NULL, NULL, 0, 1, ". date("Y") .")";
 
@@ -112,7 +116,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
                   "GRE Quantitative","GRE Date","Adv. GRE Score","Adv. GRE Subject","Adv. GRE Date",
                   "TOEFL Score","TOEFL Date","MS Prior","MS GPA","MS Major","MS Year","MS University",
                   "BS/A Prior","BS/A GPA","BS/A Major","BS/a Year","BS/A University","Experience","Interests",
-                  "Completion","Average Review","Reviewer Comment","Degree Type","Final Decision","Year Applied");
+                  "Completion","Average Review","Reviewer Comment","Degree Type","Final Decision","Year Applied","Semester (1: Fall, 2: Spring)");
           $accepted = array("Review In Progress","Rejected","Deferred","Accepted, No Aid","Accepted, Aid");
           for ($i; $i < (sizeof($row)/2); $i++) {
             if (!strcmp($cats[$i],"Transcript")) {
