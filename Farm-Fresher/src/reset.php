@@ -47,8 +47,8 @@ $script_path = './sql';
 $command = 'mysql'
         . ' --host=' . DB_HOST
         . ' --user=' . DB_USER
-        . ' --password="' . DB_PASSWORD
-        . '" --database=' . DB_NAME
+        . ' --password=\'' . DB_PASSWORD
+        . '\' --database=' . DB_NAME
         . ' --execute="SOURCE ' . $script_path;
 echo 'res:'.$command;
 
