@@ -66,7 +66,7 @@
 			$dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
       $dbc->query('SET foreign_key_checks = 0');
             // If current user is not a student, show a dropdown menu to select a student
-            if (isset ($_SESSION['p_level']) && strcmp ($_SESSION['p_level'], 'Student') != 0 && strcmp ($_SESSION['p_level'], 'Alumni') != 0) {
+            if (isset ($_SESSION['p_level']) && strcmp($_SESSION['p_level'], 'Student') != 0 && strcmp ($_SESSION['p_level'], 'Alumni') != 0) {
                 echo '
                     <div class="row mt-5">
                         <div class="dropdown">
@@ -78,7 +78,12 @@
 									id="myInput" onkeyup="filterFunction()">
 				';
 
-				$query = 'SELECT u_id, fname, lname FROM student;';
+        if (strcmp($_SESSION['p_level'], 'Faculty') == 0) {
+          $fid = $_SESSION['id'];
+          $query = "SELECT u_id, fname, lname, advisorid FROM student WHERE advisorid=$fid";
+        } else {
+        $query = 'SELECT u_id, fname, lname FROM student;';
+        }
 				$students = mysqli_query ($dbc, $query);
 
 				while ($s = mysqli_fetch_array($students)) {
@@ -205,7 +210,7 @@
 
       // BELOW IS JAKE's GPA STUFF
 
-      if (strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 && isset($_GET['student'])) {
+      if (strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 || strcmp($_SESSION['p_level'], 'Faculty') == 0 && isset($_GET['student'])) {
         $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = $selected_student_id and catalog.c_id = courses_taken.crn;";
       } else {
         $query = "select DISTINCT u_id, semester, year, grade, title, credits, courses_taken.crn from courses_taken join schedule join catalog WHERE u_id = ". $_SESSION['id'] ." and catalog.c_id = courses_taken.crn;";
@@ -221,7 +226,7 @@
           $row = $result->fetch_assoc();
 
           echo "<br><center><h4>GPA : ".$row["gpa"]."</h4></center>";
-        } else if (strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0) {
+        } else if (strcmp($_SESSION['p_level'], 'GS') == 0 || strcmp($_SESSION['p_level'], 'Admin') == 0 || strcmp($_SESSION['p_level'], 'Faculty') == 0) {
           $id = $selected_student_id;
           $queryA = "SELECT SUM(CASE grade WHEN 'A' THEN 1 ELSE 0 END) totalA FROM courses_taken WHERE u_id = $id;";
           $numberOfAs = mysqli_query($dbc, $queryA);

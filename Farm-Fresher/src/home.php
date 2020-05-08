@@ -294,6 +294,19 @@
                 </div>
               </div>
 
+              <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="feature-1 border">
+                  <div class="icon-wrapper bg-primary">
+                    <span class="flaticon-mortarboard text-white"></span>
+                  </div>
+                  <div class="feature-1-content">
+                    <h2>View Transcripts</h2>
+                    <p>Search and View All of Your Advisee's Transcripts.</p>
+                    <p><a href="transcript.php" class="btn btn-primary px-4 rounded-0">View Transcripts</a></p>
+                  </div>
+                </div>
+              </div>
+
           </div>
     </div>
 <?php
