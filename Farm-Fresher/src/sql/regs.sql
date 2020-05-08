@@ -150,7 +150,7 @@ CREATE TABLE advisingform (
   cid  varchar(8),
   primary key (u_id, cid),
   foreign key (u_id) references users(id),
-  foreign key (cid) references schedule(crn) /* this gives a foreign key error*/
+  foreign key (cid) references schedule(crn)
 );
 
 ALTER TABLE alumni
@@ -165,15 +165,6 @@ ALTER TABLE formone
 ADD foreign key (universityid) references student(u_id);
 ALTER TABLE transcript
 ADD foreign key (crseid) references course(courseid);
-
-/* -----------------------------------------------------------------------------
-
-                            ╔══════════════╗
-----------------------------    APPS SQL    ------------------------------------
-                            ╚══════════════╝
-
---------------------------------------------------------------------------------
-*/
 
 drop table if exists applicant cascade;
 drop table if exists application cascade;
@@ -215,11 +206,11 @@ CREATE TABLE `application` (
   `B_University` varchar(255),
   `experience` varchar(1000),
   `interests` varchar(1000),
-  `completion` int, /* 0=application not complete, 1=complete*/
-  `recommendation` int, /*0=under review 1=reject, 2=borderline, 3=admit without aid, 4=admit with aid*/
+  `completion` int,
+  `recommendation` int,
   `reviewer_comment` varchar(255),
   `degree_type` varchar(255),
-  `final_decision` int, /*reject/accept/accept with aid/applicant denied admissions*/
+  `final_decision` int,
   `year` int
 );
 
@@ -265,22 +256,6 @@ INSERT INTO `application` VALUES (4,00001235, 0,'musiclover@gwu.edu', '100', '60
 INSERT INTO `application` VALUES (5,00001236, 0,'soulsacrifice@gwu.edu', '100', '600', '2018', '100', 'English', '2019',
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 0, '', 'phd', 4, 2017);
 
-SET FOREIGN_KEY_CHECKS = 1;
-/*
-  ┌─┐  ─┐
-　│▒│ /▒/
-　│▒│/▒/
-　│▒ /▒/─┬─┐
-　│▒│▒|▒│▒│
-┌┴─┴─┐-┘─┘
-│▒┌──┘▒▒▒│
-└┐▒▒▒▒▒▒┌┘
- └┐▒▒▒▒┌
-*/
-
--- Populate catalog with courses
-SET FOREIGN_KEY_CHECKS = 0;
-
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6221, 'SW Paradigms', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6461, 'Computer Architecture', 3);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('CSCI', 6212, 'Algorithms', 3);
@@ -304,7 +279,7 @@ INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6241, 'Com
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('ECE', 6242, 'Information Theory', 2);
 INSERT INTO catalog (department, c_no, title, credits) VALUES ('MATH', 6210, 'Logic', 2);
 
--- Populate schedule with courses
+/* Populate schedule with courses */
 
 INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (1, 1, 'Fall', 2019, 'M', '15:00', '17:30');
 INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (2, 1, 'Fall', 2019, 'T', '15:00', '17:30');
@@ -369,7 +344,7 @@ INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, en
 INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (22, 1, 'Fall', 2020, 'W', '18:00', '20:30');
 INSERT INTO schedule (course_id, section_no, semester, year, day, start_time, end_time) VALUES (18, 1, 'Fall', 2020, 'R', '16:00', '18:30');
 
--- Populate pre-requisites
+/*Populate pre-requisites*/
 
 
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (6, 'CSCI 6232', NULL);
@@ -384,57 +359,56 @@ INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (17, 'CSCI 6212', NULL);
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (18, 'CSCI 6461','CSCI 6212');
 INSERT INTO prereqs(course_Id, prereq1, prereq2) VALUES (19, 'CSCI 6284', NULL);
 
--- Populating Faculty
+/* Populating Faculty */
 
-
--- ADMIN
+/*ADMIN*/
 INSERT INTO users (id, p_level, password) VALUES (10000000, "Admin", "pass");
--- GS
+/*GS*/
 INSERT INTO users (id, p_level, password) VALUES (10000001, "GS", "pass");
--- CAC
+/*CAC*/
 INSERT INTO users (id, p_level, password) VALUES (10000002, "CAC", "pass");
 
 
--- Populating Applicants
+/*Populating Applicants*/
 
 
--- TODO: Need reviewer_application, reccomender, application and applicant?
+/*TODO: Need reviewer_application, reccomender, application and applicant?*/
 
--- John Lennon
+/*John Lennon*/
 INSERT INTO users (id, p_level, password) VALUES (15555555, "Applicant", "pass");
 
--- Ringo Starr
+/*Ringo Starr*/
 INSERT INTO users (id, p_level, password) VALUES (19999999, "Applicant", "pass");
 
--- Louis Armstrong
+/*Louis Armstrong*/
 INSERT INTO users (id, p_level, password) VALUES (00001234, "Applicant", "pass");
 
--- Aretha Franklin
+/*Aretha Franklin*/
 INSERT INTO users (id, p_level, password) VALUES (00001235, "Applicant", "pass");
 
--- Carlos Santana
+/*Carlos Santana*/
 INSERT INTO users (id, p_level, password) VALUES (00001236, "Applicant", "pass");
 
 
--- Populating Students
+/*Populating Students*/
 
 
--- Billie Holiday
+/*Billie Holiday*/
 INSERT INTO users (id, p_level, password) VALUES (88888888, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (88888888, "Billie", "Holiday", "88888 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340007, 0, 0, 2018);
 INSERT INTO courses_taken (u_id, crn, grade) VALUES
 (88888888, 22, "IP"),
 (88888888, 23, "IP");
 
--- Diana Krall 
+/*Diana Krall */
 INSERT INTO users (id, p_level, password) VALUES (99999999, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (99999999, "Diana", "Krall", "99999 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340004, 0, 1, 2019);
 
--- Ella Fitzgerald
+/*Ella Fitzgerald*/
 INSERT INTO users (id, p_level, password) VALUES (23456789, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (23456789, "Ella", "Fitzgerald", "23456 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "phd", 12340002, 0, 1, 2019);
 
--- Eva Cassidy
+/*Eva Cassidy*/
 INSERT INTO users (id, p_level, password) VALUES (87654321, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (87654321, "Eva", "Cassidy", "87654 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340006, 0, 0, 2017);
 INSERT INTO courses_taken (u_id, crn, grade) VALUES 
@@ -460,7 +434,7 @@ INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6241");
 INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6246");
 INSERT INTO formone (universityid, cid) VALUES (87654321, "CSCI6262");
 
--- Jimi Hendrix
+/*Jimi Hendrix*/
 INSERT INTO users (id, p_level, password) VALUES (45678901, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (45678901, "Jimi", "Hendrix", "87654 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340005, 0, 0, 2017);
 INSERT INTO courses_taken (u_id, crn, grade) VALUES 
@@ -476,7 +450,7 @@ INSERT INTO courses_taken (u_id, crn, grade) VALUES
 (45678901, 18, "B"),
 (45678901, 19, "B");
 
--- Paul McCartney
+/*Paul McCartney*/
 INSERT INTO users (id, p_level, password) VALUES (14444444, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (14444444, "Paul", "McCartney", "14444 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340002, 0, 0, 2017);
 INSERT INTO courses_taken (u_id, crn, grade) VALUES 
@@ -502,7 +476,7 @@ INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6241");
 INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6246");
 INSERT INTO formone (universityid, cid) VALUES (14444444, "CSCI6262");
 
--- George Harrison
+/*George Harrison*/
 INSERT INTO users (id, p_level, password) VALUES (16666666, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (16666666, "George", "Harrison", "16666 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS", 12340005, 0, 0, 2016);
 INSERT INTO courses_taken (u_id, crn, grade) VALUES 
@@ -517,7 +491,7 @@ INSERT INTO courses_taken (u_id, crn, grade) VALUES
 (16666666, 13, "B"),
 (16666666, 14, "B");
 
--- Stevie Nicks
+/*Stevie Nicks*/
 INSERT INTO users (id, p_level, password) VALUES (12345678, "Student", "pass");
 INSERT INTO student (u_id, fname, lname, addr, email, major, program, advisorid, applied_to_grad, has_hold, admission_year) VALUES (12345678, "Stevie", "Nicks", "12345 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "phd", 12340007, 0, 0, 2017);
 
@@ -549,9 +523,9 @@ INSERT INTO formone (universityid, cid) VALUES (12345678, "CSCI6283");
 
 
 
--- Populating alumni
+/*Populating alumni*/
 
--- Eric Clapton
+/*Eric Clapton*/
 INSERT INTO users (id, p_level, password) VALUES (77777777, "Alumni", "pass");
 INSERT INTO alumni (univid, yeargrad, fname, lname, addr, email, major, program) VALUES (77777777, 2014, "Eric", "Clapton", "77777 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "MS");
 INSERT INTO courses_taken (u_id, crn, grade) VALUES 
@@ -566,7 +540,7 @@ INSERT INTO courses_taken (u_id, crn, grade) VALUES
 (77777777, 15, "A"),
 (77777777, 16, "A");
 
--- Kurt Cobain
+/*Kurt Cobain*/
 INSERT INTO users (id, p_level, password) VALUES (34567890, "Alumni", "pass");
 INSERT INTO alumni (univid, yeargrad, fname, lname, addr, email, major, program) VALUES (34567890, 2015, "Kurt", "Cobain", "34567 Street St. City, ST 22222", "zbodnick@gwu.edu", "Computer Science", "phd");
 INSERT INTO courses_taken (u_id, crn, grade) VALUES 
@@ -584,109 +558,109 @@ INSERT INTO courses_taken (u_id, crn, grade) VALUES
 (34567890, 12, "B");
 
 
--- Populating faculty
+/*Populating faculty*/
 
 
--- Bhagi Narahari
+/*Bhagi Narahari*/
 INSERT INTO users (id, p_level, password) VALUES (12340002, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340002, 'Bhagi', 'Narahari', '55555 Road Rd. City, ST 66666', 'zbodnick@gwu.edu', 'CSCI');
 INSERT INTO courses_taught (f_id, crn) VALUES 
--- Fall 2019
+/*Fall 2019*/
 (12340002, 1),
 (12340002, 2),
 (12340002, 9),
 (12340002, 10),
 (12340002, 11),
--- Sprint 2020
+/*Sprint 2020*/
 (12340002, 21),
 (12340002, 22),
 (12340002, 29),
 (12340002, 30),
 (12340002, 31),
--- Fall 2020
+/*Fall 2020*/
 (12340002, 41),
 (12340002, 42),
 (12340002, 49),
 (12340002, 50),
 (12340002, 51);
 
--- Hyeong-Ah Choi
+/*Hyeong-Ah Choi*/
 INSERT INTO users (id, p_level, password) VALUES (12340003, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340003, 'Hyeong-Ah', 'Choi', '77777 Place Pl. City, ST 88888', 'jacobpritchard9@gwu.edu', 'CSCI');
 INSERT INTO courses_taught (f_id, crn) VALUES
--- Fall 2019
+/*Fall 2019*/
 (12340003, 3),
 (12340003, 4),
 (12340003, 5),
 (12340003, 12),
 (12340003, 13),
--- Sprint 2020
+/*Sprint 2020*/
 (12340003, 23),
 (12340003, 24),
 (12340003, 25),
 (12340003, 32),
 (12340003, 33),
--- Fall 2020
+/*Fall 2020*/
 (12340003, 43),
 (12340003, 44),
 (12340003, 45),
 (12340003, 52),
 (12340003, 53);
 
--- Gabe Parmer
+/*Gabe Parmer*/
 INSERT INTO users (id, p_level, password) VALUES (12340004, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340004, 'Gabe', 'Parmer', '38273 C St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
 
--- Tim Wood
+/*Tim Wood*/
 INSERT INTO users (id, p_level, password) VALUES (12340005, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000008, 'Tim', 'Wood', '24681 D St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
 INSERT INTO courses_taught (f_id, crn) VALUES 
--- Fall 2019
+/*Fall 2019*/
 (12340005, 6),
 (12340005, 8),
 (12340005, 14),
 (12340005, 15),
 (12340005, 16),
--- Spring 2020
+/*Spring 2020*/
 (12340005, 26),
 (12340005, 28),
 (12340005, 34),
 (12340005, 35),
 (12340005, 36),
--- Fall 2020
+/*Fall 2020*/
 (12340005, 46),
 (12340005, 48),
 (12340005, 54),
 (12340005, 55),
 (12340005, 56);
 
--- Shelly Heller
+/*Shelly Heller*/
 INSERT INTO users (id, p_level, password) VALUES (12340006, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (10000006, 'Shelly', 'Heller', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
 
--- Sarah Morin
+/*Sarah Morin*/
 INSERT INTO users (id, p_level, password) VALUES (12340007, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340007, 'Sarah', 'Morin', '56789 I St. Washington, D.C. 11111', 'jacobpritchard9@gwu.edu', 'CSCI');
 
--- Kevin Deems
+/*Kevin Deems*/
 INSERT INTO users (id, p_level, password) VALUES (12340008, "Faculty", "pass");
 INSERT INTO faculty (f_id, fname, lname, addr, email, dept) VALUES (12340008, 'Kevin', 'Deems', '12345 E St. Washington, D.C. 11111', 'zbodnick@gwu.edu', 'CSCI');
 INSERT INTO courses_taught (f_id, crn) VALUES 
--- Fall 2019
+/*Fall 2019*/
 (12340008, 7),
 (12340008, 17),
 (12340008, 18),
 (12340008, 19),
 (12340008, 20),
 
--- Spring 2020
+/*Spring 2020*/
 (12340008, 27),
 (12340008, 37),
 (12340008, 38),
 (12340008, 39),
 (12340008, 40),
 
--- Fall 2020
+/*Fall 2020*/
 (12340008, 47),
 (12340008, 57),
 (12340008, 58),

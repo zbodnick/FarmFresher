@@ -46,8 +46,10 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 // Get the contents of the sql file
 $reset_query = file_get_contents ('sql/regs.sql');
 
-$reset_query = mysqli_real_escape_string($dbc,$reset_query);
+$reset_query = str_replace("\n", "", $reset_query); 
 
+//$reset_query = mysqli_real_escape_string($dbc,$reset_query);
+echo 'res:'.$reset_query;
 // Run the query
 $result = mysqli_multi_query ($dbc, $reset_query);
 
