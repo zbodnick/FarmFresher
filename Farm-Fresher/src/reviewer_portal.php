@@ -153,16 +153,17 @@
         <thead>
           <tr class="text-center table-primary">
             <th scope="col"> # Applicants </th>
-            <th scope="col"> # Admitted </th>
             <th scope="col"> Avg. GRE </th>
-            <th scope="col"> Avg. GPA </th>
+            <th scope="col"> Avg. Adv. GRE  </th>
+            <th scope="col"> Year </th>
+            <th scope="col"> Semester </th>
+            <th scope="col"> Degree Program </th>
           </tr>
         </thead>
         <tbody id="student_table2">
           <?php
           //accepted list
-            $query = 'SELECT username as U_ID, program, year, semester
-                  FROM accepted';
+            $query = 'SELECT count(username), avg(GRE_ScoreQuantitative), avg(AdvGRE_Score), year, semester, degree_type FROM application group by year, semester, degree_type';
             $students = mysqli_query ($dbc, $query);
 
             while ($students && $s = mysqli_fetch_assoc ($students)) {
