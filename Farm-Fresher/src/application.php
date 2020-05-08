@@ -117,7 +117,8 @@ if (isset($_POST['submit'])) {
 		'',
 		'".$_POST['dgr']."',
 		0,
-		".date("Y").")";
+		".date("Y").",
+		1)";
 	$applicationdata = mysqli_query($dbc, $application);
 
 	$i = 0;
@@ -359,7 +360,7 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md text-left ml-0">
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" id="ms" name="dgr" value="ms" required>
+						<input class="form-check-input" type="radio" id="ms" name="dgr" value="MS" required>
 						<label class="form-check-label" for="ms">MS</label>
 					</div>
 					<div class="form-check form-check-inline">

@@ -79,6 +79,9 @@
       $sql = "UPDATE application SET recommendation =". ceil($rec) ." WHERE username=".$_POST['id'];
       $res = mysqli_query($dbc,$sql);
 
+      $sql = "UPDATE reviewer_application SET status=1 WHERE applicantid=".$_POST['id']." AND username=".$_SESSION['id'];
+      $res = mysqli_query($dbc,$sql);
+
       header("Location: reviewer_portal.php?success=yes"); 
     }
     else if (strcmp($permLevel, "GS") == 0) {
@@ -123,6 +126,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
 ?>
     <br><br>
     <div class="container pt-3">
+    <br><br>
     <h1 class="text-primary">Review Form</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
@@ -196,6 +200,7 @@ if (strcmp($permLevel, "Faculty") == 0) {
 <br><br>
     <div class="container pt-3">
     <?php if(isset($_POST['submit'])) { echo "<div class='alert alert-success' role='alert'>Changes Submitted Successfully</div>"; } ?>
+    <br><br>
     <h1 class="text-primary">Update Application</h1>
     <form method="post" class="card p-5 mt-4" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
       <div class="row">
