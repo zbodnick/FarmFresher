@@ -1,3 +1,4 @@
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS users CASCADE;
@@ -149,8 +150,7 @@ CREATE TABLE advisingform (
   u_id int,
   cid  varchar(8),
   primary key (u_id, cid),
-  foreign key (u_id) references users(id),
-  foreign key (cid) references schedule(crn)
+  foreign key (u_id) references users(id)
 );
 
 ALTER TABLE alumni
