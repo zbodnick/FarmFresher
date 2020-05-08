@@ -101,6 +101,9 @@
               echo '
                 <li>
 								  <a href="application_view.php" class="nav-link text-left">View Application</a>
+                </li>
+                <li>
+								  <a href="application_edit.php" class="nav-link text-left">Edit Application</a>
 							  </li>
               ';
               break;

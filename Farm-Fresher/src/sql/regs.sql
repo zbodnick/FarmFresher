@@ -217,7 +217,7 @@ CREATE TABLE application (
 );
 
 CREATE TABLE reviewer_application (
-  username int(8) PRIMARY KEY,
+  username int(8),
   applicantid int(8),
   status int
 );
@@ -266,9 +266,9 @@ INSERT INTO application VALUES (5,00001236, 1,'soulsacrifice@gwu.edu', '100', '6
                                '', '', '', '', '', '', '', 'BA', '3.4', 'Music', '1970', 'Cambridge', 'Played at Woodstock', 'Fusion of amazing musics', 1, 4, '', 'phd', 4, 2017,1);
 
 INSERT INTO reviewer_application VALUES (12340002,15555555,0);
-INSERT INTO reviewer_application VALUES (12340003,15555555,0);
-INSERT INTO reviewer_application VALUES (12340004,19999999,1);
-INSERT INTO reviewer_application VALUES (12340005,19999999,1);
+INSERT INTO reviewer_application VALUES (12340005,15555555,0);
+INSERT INTO reviewer_application VALUES (12340006,19999999,1);
+INSERT INTO reviewer_application VALUES (12340002,19999999,1);
 
 INSERT INTO accepted VALUES (00001235,"MS",2017,1);
 INSERT INTO accepted VALUES (00001236,"phd",2017,1);
