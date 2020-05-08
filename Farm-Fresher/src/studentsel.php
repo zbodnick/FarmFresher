@@ -257,6 +257,7 @@
                   //IF THEY ARE, GIVE A BUTTON FOR ADVISOR TO GRADUATE THEM
                 echo  '<form action="" method="post">';
                 echo  '<button type="submit" name="cleargrad" value="'.$_POST["univID"].'">Clear For Graduation</button>';
+                echo  '<input type="hidden" name="univID" value="'.$_POST["univID"].'">';
                 echo	'</form>';
               }
             }
