@@ -1,6 +1,8 @@
 # Farm-Fresher
 Phase 2 || Members: Will, Zach, Jake || Advisors: Billy &amp; Huzefa
 
+## [VIEW SCREENSHOTS OF BASIC PAGES](/screenshots)
+
 [Click here to check it out!](http://gwupyterhub.seas.gwu.edu/~sp20DBp2-FarmFresher/Farm-Fresher/Farm-Fresher/src/login.php) - Requires GW AnyConnect VPN
  
 # Login Credentials
